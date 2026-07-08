@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-06
+> Dernière mise à jour : 2026-07-08
 
 ## Le projet
 
@@ -28,6 +28,13 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 - **Tous les filets 1px sont orange**. Les filets « pleine page » (menu, footer, séparateurs de section) font toujours **100% de largeur avec 18px de marge de chaque côté** (`--rule-margin`), à toutes les tailles d'écran. Les filets internes aux colonnes de contenu (ex. accordéon) restent à la largeur de leur bloc.
 - Menu : lien actif **blanc** (`aria-current="page"` posé dans le HTML de chaque page), les autres **orange**. Le menu est **collant (sticky) sur toutes les pages**. Hauteur réelle : `--header-h: 55px`.
 - Titres condensés (ex. titre instrument) : `font-stretch: 88%` / accordéon `76%` — la police auto-hébergée inclut l'axe wdth.
+
+## Git / GitHub
+
+- Dépôt : **https://github.com/simeonbrandner-gif/Instruments-a-vent** (public), branche `main`.
+- Le dossier `1. Crea/` (83 Go) est exclu via `.gitignore` — seuls le code, le build et les docs sont versionnés.
+- GitHub CLI installé dans `~/.local/bin/gh` (pas dans le PATH), connecté au compte **simeonbrandner-gif** (HTTPS, credentials gérés par gh).
+- Après un changement notable : `git add -A && git commit -m "…" && git push`.
 
 ## Structure des dossiers
 
@@ -91,6 +98,11 @@ Site_Chr/
 4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
 
 ## Journal des sessions
+
+### 2026-07-08 — Mise en place GitHub
+
+- Installation de GitHub CLI (`~/.local/bin/gh`), connexion au compte **simeonbrandner-gif** via device flow.
+- `git init` à la racine du projet, `.gitignore` (exclut `1. Crea/` 83 Go, `.DS_Store`, réglages locaux), premier commit (65 fichiers) poussé sur **Instruments-a-vent** (`main`).
 
 ### 2026-07-05 / 06 — Fondations, Home, Instruments, Biographie, Contact
 
