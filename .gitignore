@@ -1,0 +1,8 @@
+# Fichiers sources créa (83 Go — trop volumineux pour GitHub)
+1. Crea/
+
+# Fichiers système macOS
+.DS_Store
+
+# Réglages locaux Claude
+.claude/settings.local.json

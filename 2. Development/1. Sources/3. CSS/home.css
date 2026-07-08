@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Page Accueil — héro + section « Pourquoi fabriquer… »
+   Cotes issues de la maquette Figma D - Home (1440px)
+   ========================================================================== */
+
+/* ---- Héro -------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+}
+
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 1440 / 873;
+  object-fit: cover;
+  margin-top: 119px; /* espace noir entre le menu et la photo */
+}
+
+/* Bloc titre superposé, calé à droite du rail (bord droit à 316px du rail) */
+.hero-title {
+  position: absolute;
+  top: 73px;
+  left: 0;
+  right: 0;
+}
+
+.hero-title-block {
+  width: 456px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: clamp(0px, 22.5%, 316px);
+  text-align: right;
+}
+
+.hero-title h1 {
+  font-size: var(--text-heading-size);
+  font-weight: 700;
+  letter-spacing: 1.52px;
+  line-height: 57px; /* 48px de ligne + 9px d'interligne maquette */
+  color: var(--color-accent);
+}
+
+.hero-title .hero-tagline {
+  margin-top: 18px;
+  font-size: 22px;
+  line-height: 28px;
+  color: var(--color-text);
+}
+
+/* ---- Section « Pourquoi fabriquer… » ----------------------------------- */
+
+/* Le filet chevauche le bas (noir) de la photo dans la maquette */
+.why {
+  position: relative;
+  margin-top: -44px;
+}
+
+.why .why-heading {
+  font-size: var(--text-heading-size);
+  font-weight: 400;
+  line-height: var(--text-heading-line);
+  color: var(--color-text);
+  max-width: calc(772px + 157px);
+  margin: 72px 0;
+  padding-left: min(157px, 11%);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 456px) minmax(0, 772px);
+  justify-content: space-between;
+  padding-left: min(157px, 11%);
+}
+
+.why-text {
+  padding-top: 72px;
+}
+
+.why-text p + p {
+  margin-top: var(--text-body-line); /* ligne vide entre paragraphes */
+}
+
+.why-figure img {
+  width: 100%;
+  height: auto;
+}

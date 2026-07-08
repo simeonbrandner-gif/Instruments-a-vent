@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Page Biographie — cotes issues de la maquette Figma 7:171 (1440px)
+   Portrait + nom, filet pleine largeur, photo d'atelier + texte.
+   ========================================================================== */
+
+.bio-grid {
+  display: grid;
+  grid-template-columns: 298px minmax(0, 772px);
+  column-gap: clamp(40px, 12.2%, 176px);
+  padding-left: min(157px, 11%);
+  align-items: start;
+}
+
+.bio-head {
+  margin-top: 84px; /* photo à 139px du haut de page */
+}
+
+.bio-photo {
+  width: 298px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.bio-head .bio-photo {
+  height: 295px;
+  object-position: 50% 72%; /* recadrage proche de la maquette */
+}
+
+.bio-name {
+  font-size: var(--text-heading-size);
+  font-weight: 400;
+  line-height: var(--text-heading-line);
+  color: var(--color-text);
+  margin-top: 253px; /* nom calé en bas du portrait (maquette : y 392) */
+}
+
+.bio .rule {
+  margin-top: 27px;
+  margin-bottom: 34px;
+}
+
+.bio-body .bio-photo {
+  height: 290px;
+  object-position: 52% 0;
+}
+
+.bio-body {
+  margin-bottom: 154px; /* espace noir avant le footer */
+}
+
+.bio-text {
+  max-width: 614px;
+}

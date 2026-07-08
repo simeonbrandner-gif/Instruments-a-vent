@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Page Contact — cotes issues de la maquette Figma 9:274 (1440px)
+   Carte de Genève + coordonnées en grand, filet pleine largeur, photo hautbois.
+   ========================================================================== */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 772px) minmax(0, 614px);
+  column-gap: 17px;
+  align-items: start;
+}
+
+/* Cadre façon « Fill » Figma : le cadre s'adapte, l'image le remplit
+   en restant centrée (rognée si plus étroit, agrandie si plus large).
+   Le cadre s'étire à gauche jusqu'à la marge de 18px, comme les filets. */
+.contact-map-link {
+  display: block;
+  height: 676px;
+  overflow: hidden; /* contient le léger zoom au survol */
+  margin-left: calc(var(--rule-margin) - max((100vw - var(--rail-max)) / 2, var(--rail-gutter)));
+}
+
+.contact-map {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease, transform 0.4s ease;
+}
+
+.contact-map-link:hover .contact-map,
+.contact-map-link:focus-visible .contact-map {
+  opacity: 0.85; /* léger retour visuel : la carte est cliquable */
+  transform: scale(1.05); /* léger zoom au survol */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-map { transition: opacity 0.2s ease; }
+  .contact-map-link:hover .contact-map,
+  .contact-map-link:focus-visible .contact-map { transform: none; }
+}
+
+.contact-details {
+  padding-top: 218px; /* bloc Atelier à 269px du haut de page */
+  font-size: var(--text-heading-size);
+  line-height: var(--text-heading-line);
+}
+
+.contact-details h1 {
+  font-size: inherit;
+  line-height: inherit;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.contact-details address {
+  font-style: normal;
+}
+
+.contact-details .contact-rule {
+  border: none;
+  border-top: var(--rule);
+  margin: 41px 0;
+}
+
+.contact-details a:hover,
+.contact-details a:focus-visible {
+  color: var(--color-accent);
+}
+
+/* Photo hautbois : bord gauche à 9.24 %, file jusqu'au bord droit */
+.contact-oboe {
+  margin: 138px 0 138px 9.24%;
+}
+
+.contact-oboe img {
+  width: 100%;
+  aspect-ratio: 1311 / 278;
+  object-fit: cover;
+}

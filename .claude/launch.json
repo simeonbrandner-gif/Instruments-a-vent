@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site-staging",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8642",
+        "--directory",
+        "/Users/simeon.brandner/Work/3. Crea_Perso/Site_Chr/2. Development/3. Build : export/1. Staging"
+      ],
+      "port": 8642
+    }
+  ]
+}

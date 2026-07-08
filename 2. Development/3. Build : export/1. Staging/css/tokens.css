@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Site Christoph Brandner — Design tokens
+   Source : Figma "Site_CHR", frame D - Home (1440px)
+   ========================================================================== */
+
+:root {
+  /* Couleurs */
+  --color-bg: #000000;
+  --color-text: #fafafa;
+  --color-accent: #fe990a;
+
+  /* Typographie */
+  --font-sans: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
+
+  --text-body-size: 20px;
+  --text-body-line: 32px;
+
+  --text-heading-size: 38px;
+  --text-heading-line: 48px;
+
+  --text-menu-size: 22px;
+  --text-menu-tracking: 0.88px;
+
+  --text-footer-size: 16px;
+  --text-footer-line: 24px;
+
+  --text-small-size: 12px;
+
+  /* Mise en page — rail central 1403px, gouttières 19px (design 1440) */
+  --rail-max: 1403px;
+  --rail-gutter: 19px;
+  --header-h: 55px; /* hauteur réelle du menu (padding 17+15 + texte 22 + filet 1) */
+
+  /* Filet 1px orange utilisé partout (menu, sections, footer) :
+     toujours pleine largeur avec 18px de marge de chaque côté */
+  --rule: 1px solid var(--color-accent);
+  --rule-margin: 18px;
+}

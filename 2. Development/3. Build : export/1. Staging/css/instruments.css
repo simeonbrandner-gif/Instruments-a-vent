@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Page Instruments — Soprano en do (Buis / Olivier / Cormier)
+   Cotes issues des maquettes Figma 1:34 / 1:56 / 1:78 (1440px)
+   Photo à gauche qui défile, panneau texte collant à droite, accordéon bois.
+   ========================================================================== */
+
+/* Grille avec chevauchement : photo 0→790, panneau 650→1440 (base 1440) */
+.instrument {
+  display: grid;
+  grid-template-columns: 45.14% 9.72% 45.14%;
+}
+
+.instrument-media {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  margin-top: 43px; /* photo à 98px du haut de page (maquette : 97) */
+}
+
+.instrument-media img {
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+.instrument-panel {
+  grid-column: 2 / 4;
+  grid-row: 1;
+  position: sticky;
+  top: var(--header-h); /* sous le menu collant */
+  align-self: start;
+  padding: 211px 18px 40px 0; /* titre à ~266px du haut, comme la maquette */
+}
+
+/* Titre condensé (axe largeur 88%, optique 96) */
+.instrument-title {
+  font-size: 62px;
+  font-weight: 800;
+  font-stretch: 88%;
+  font-variation-settings: "opsz" 96;
+  letter-spacing: 1.24px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.instrument-info {
+  margin-top: 35px;
+  max-width: 772px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.instrument-intro {
+  border-top: var(--rule);
+  padding-top: 18px;
+}
+
+.instrument-intro p,
+.wood-body p {
+  max-width: 624px;
+}
+
+/* ---- Accordéon bois ----------------------------------------------------- */
+
+.wood-head {
+  border-bottom: var(--rule);
+  padding-bottom: 9px;
+}
+
+.wood-head button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 32px;
+  font-weight: 800;
+  font-stretch: 76%;
+  line-height: 1;
+  color: var(--color-text);
+  transition: color 0.25s ease;
+}
+
+.wood-head button:hover,
+.wood-head button:focus-visible {
+  color: var(--color-accent);
+}
+
+.wood.open .wood-head button {
+  color: var(--color-accent);
+}
+
+/* Volet repliable : animation de hauteur via grid-template-rows */
+.wood-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s ease;
+}
+
+.wood.open .wood-body {
+  grid-template-rows: 1fr;
+}
+
+.wood-body > div {
+  overflow: hidden;
+}
+
+.wood-body p {
+  padding-top: 18px;
+}

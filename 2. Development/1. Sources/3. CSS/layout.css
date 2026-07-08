@@ -1,0 +1,140 @@
+/* ==========================================================================
+   Layout — en-tête (menu) et pied de page communs à toutes les pages
+   ========================================================================== */
+
+/* ---- Menu ------------------------------------------------------------- */
+
+.site-header {
+  background: var(--color-bg);
+  margin-inline: var(--rule-margin);
+  border-bottom: var(--rule);
+  position: sticky; /* menu collant sur toutes les pages */
+  top: 0;
+  z-index: 20;
+}
+
+.site-header .rail {
+  padding-top: 17px;
+  padding-bottom: 15px;
+}
+
+.site-nav > ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(40px, 8.33vw, 120px);
+  line-height: 1; /* sinon les li héritent des 32px du body */
+}
+
+.site-nav a {
+  font-size: var(--text-menu-size);
+  font-weight: 800;
+  letter-spacing: var(--text-menu-tracking);
+  line-height: 1;
+  color: var(--color-accent);
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible,
+.site-nav a[aria-current="page"] {
+  color: var(--color-text);
+}
+
+/* ---- Sous-menu Instruments (maquette 8:212) ---------------------------- */
+
+.site-nav li {
+  position: relative;
+}
+
+.site-nav .sub-menu {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 245px;
+  background: var(--color-bg);
+  background-clip: padding-box; /* le bord transparent fait pont de survol */
+  border-top: 16px solid transparent; /* rejoint le bas du menu sans trou */
+  text-align: left;
+}
+
+.site-nav .has-sub:hover .sub-menu,
+.site-nav .has-sub:focus-within .sub-menu {
+  display: block;
+}
+
+.site-nav .sub-menu li {
+  border-bottom: var(--rule); /* filet orange entre chaque instrument */
+}
+
+.site-nav .sub-menu a {
+  display: block;
+  padding: 18px 0; /* 18px au-dessus et en dessous de chaque libellé */
+  font-size: 20px;
+  letter-spacing: 0.8px;
+}
+
+/* ---- Pied de page ------------------------------------------------------ */
+
+.site-footer {
+  margin: auto var(--rule-margin) 52px; /* 52px d'espace noir sous le filet du bas */
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+}
+
+.site-footer .rail {
+  padding: 23px 0 23px 78px;
+  display: grid;
+  grid-template-columns: 376px 316px 316px 298px;
+  align-items: start;
+}
+
+.footer-logo {
+  width: 260px;
+  height: auto;
+  margin-top: 40px;
+}
+
+.site-footer h2 {
+  font-size: var(--text-footer-size);
+  line-height: var(--text-footer-line);
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.site-footer p,
+.site-footer li,
+.site-footer address {
+  font-style: normal;
+  font-size: var(--text-footer-size);
+  line-height: var(--text-footer-line);
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  color: var(--color-accent);
+}
+
+.footer-contact {
+  margin-top: 37px;
+}
+
+.footer-copyright {
+  grid-column: 3 / 5;
+  font-size: var(--text-small-size);
+  line-height: 32px;
+  margin-top: 58px;
+  white-space: nowrap;
+}
+
+/* Corps de page en colonne pour pousser le footer en bas des pages courtes */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
