@@ -35,6 +35,7 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 - Le dossier `1. Crea/` (83 Go) est exclu via `.gitignore` — seuls le code, le build et les docs sont versionnés.
 - GitHub CLI installé dans `~/.local/bin/gh` (pas dans le PATH), connecté au compte **simeonbrandner-gif** (HTTPS, credentials gérés par gh).
 - Après un changement notable : `git add -A && git commit -m "…" && git push`.
+- **GitHub Pages** : chaque push sur `main` publie automatiquement le dossier Staging (workflow `.github/workflows/deploy-pages.yml`) sur **https://simeonbrandner-gif.github.io/Instruments-a-vent/**. Quand Simeon aura acheté le nom de domaine, le brancher ici (Settings → Pages → Custom domain + DNS) — GitHub Pages peut remplacer l'hébergeur FTP prévu initialement.
 
 ## Structure des dossiers
 
@@ -98,6 +99,11 @@ Site_Chr/
 4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
 
 ## Journal des sessions
+
+### 2026-07-09 — GitHub Pages : le site est en ligne
+
+- Workflow Actions `deploy-pages.yml` : chaque push sur `main` publie le Staging sur **https://simeonbrandner-gif.github.io/Instruments-a-vent/** (vérifié : toutes les pages et assets répondent 200).
+- Le domaine définitif sera branché plus tard (achat à venir).
 
 ### 2026-07-08 — Mise en place GitHub
 
