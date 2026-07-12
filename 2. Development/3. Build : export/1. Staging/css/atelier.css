@@ -1,0 +1,76 @@
+/* ==========================================================================
+   Page Atelier — cotes issues de la maquette Figma 22:201 (1440px)
+   Colonne de photos d'atelier à gauche, grand titre condensé + texte à droite,
+   bloc vidéo (rectangle gris en attendant la vidéo), photo pleine largeur.
+   Même géométrie de grille que la Biographie : 298px + 772px, gouttière 176px.
+   ========================================================================== */
+
+.atelier-grid {
+  display: grid;
+  grid-template-columns: 298px minmax(0, 772px);
+  column-gap: clamp(40px, 12.2%, 176px);
+  padding-left: min(157px, 11%);
+  align-items: start;
+  margin-top: 121px; /* photos à 176px du haut de page */
+}
+
+.atelier-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.atelier-photos img {
+  width: 298px;
+  max-width: 100%;
+  height: 130px;
+  object-fit: cover;
+}
+
+/* Titre condensé, mêmes réglages que les titres instruments (axe 88%, opt. 96) */
+.atelier-title {
+  margin-top: 5px; /* titre à 181px du haut de page */
+  max-width: 614px;
+  font-size: 62px;
+  font-weight: 800;
+  font-stretch: 88%;
+  font-variation-settings: "opsz" 96;
+  letter-spacing: 1.24px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* Filet orange sur toute la colonne (772px), texte limité à 614px */
+.atelier-body {
+  border-top: var(--rule);
+  margin-top: 30px; /* filet à 564px */
+  padding-top: 42px; /* texte à 606px */
+}
+
+.atelier-body p {
+  max-width: 614px;
+}
+
+.atelier-body p + p {
+  margin-top: 32px; /* une ligne vide entre les paragraphes (maquette) */
+}
+
+/* Bloc vidéo — rectangle gris 1088×612 (16/9) aligné sur la colonne photos.
+   À remplacer par un <video> auto-hébergé quand la vidéo sera livrée. */
+.atelier-video {
+  margin: 56px min(157px, 11%) 0; /* bloc à 1250px du haut de page */
+  aspect-ratio: 16 / 9;
+  background: #d9d9d9;
+}
+
+/* Photo pleine largeur en bas de page, collée au filet du footer */
+.atelier-bottom {
+  margin-top: 68px;
+  margin-inline: var(--rule-margin);
+}
+
+.atelier-bottom img {
+  width: 100%;
+  height: auto;
+}

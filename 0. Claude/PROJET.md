@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-08
+> Dernière mise à jour : 2026-07-12
 
 ## Le projet
 
@@ -99,6 +99,12 @@ Site_Chr/
 4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
 
 ## Journal des sessions
+
+### 2026-07-12 — Page Atelier + renommage des images
+
+- **Renommage images** (par Simeon, tirets → underscores + nouveaux noms) : `soprano-do-*` → `soprano_415_reich_*`, `carte-geneve.png` → `carte_geneve.png`, `contact-hautbois` → `contact_hautbois`, `gravure-flutes` → `gravure_flutes` — toutes les références HTML/CSS mises à jour. Nouveaux webp livrés : `alto_415_bressan_{buis,cormier,olivier}.webp` (future page Alto) et `tetes_flutes_atelier.webp` (**6,2 MB, 4772px — à re-exporter plus léger**, comme la gravure).
+- **Page Atelier** (maquette 22:201) : même grille que la Biographie (298px + 772px, gouttière 176px). Colonne de 7 photos d'atelier (placeholders `atelier_01..07.jpg` tirés de Figma, redimensionnés 800px — Simeon livrera les webp finaux), titre condensé 62px (mêmes réglages que les titres instruments), filet + 3 paragraphes, **rectangle gris 16/9 en placeholder vidéo**, photo pleine largeur `tetes_flutes_atelier.webp` collée au filet du footer. CSS : `atelier.css`.
+- **Vidéo de l'atelier (à venir, Simeon la tourne)** : décision = **auto-hébergée en MP4 dans le repo** (balise `<video>`, pas de YouTube — trackers Google incompatibles avec la posture protection des données ; limite GitHub 100 MB par fichier → compresser avec ffmpeg à la livraison, viser < 50 MB).
 
 ### 2026-07-09 — GitHub Pages : le site est en ligne
 
