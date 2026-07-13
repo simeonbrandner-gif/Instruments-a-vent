@@ -84,14 +84,16 @@
 }
 
 .site-footer .rail {
-  padding: 23px 0 23px 78px;
+  padding: 23px 0 23px min(78px, 5.5%);
   display: grid;
-  grid-template-columns: 376px 316px 316px 298px;
+  /* proportions de la maquette (376/316/316/298), en fr pour que les
+     colonnes rétrécissent ensemble avec la fenêtre */
+  grid-template-columns: 376fr 316fr 316fr 298fr;
   align-items: start;
 }
 
 .footer-logo {
-  width: 260px;
+  width: min(260px, 90%);
   height: auto;
   margin-top: 40px;
 }
@@ -125,7 +127,25 @@
   font-size: var(--text-small-size);
   line-height: 32px;
   margin-top: 58px;
-  white-space: nowrap;
+}
+
+/* Fenêtres étroites : le footer passe en 2 colonnes
+   (logo + adresse/contact, puis les deux navigations, copyright dessous) */
+@media (max-width: 800px) {
+  .site-footer .rail {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    padding-left: 24px;
+  }
+
+  .footer-logo {
+    margin-top: 8px;
+  }
+
+  .footer-copyright {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
 }
 
 /* Corps de page en colonne pour pousser le footer en bas des pages courtes */

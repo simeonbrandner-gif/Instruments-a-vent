@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-12
+> Dernière mise à jour : 2026-07-13
 
 ## Le projet
 
@@ -99,6 +99,12 @@ Site_Chr/
 4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
 
 ## Journal des sessions
+
+### 2026-07-13 — Héro Home homothétique + footer fluide
+
+- **Héro Home** (home.css) : plus aucune cote px fixe. Une unité `--hero-px: min(calc(100vw / 1440), 1px)` vaut 1px à 1440 et rétrécit avec la fenêtre ; position du titre, largeur du bloc, tailles de police et interlignes sont exprimés en `calc(N * var(--hero-px))` → le bloc titre se réduit de façon **homothétique avec la photo** et reste dans la zone sombre à toutes les largeurs. À 1440px, rendu identique à la maquette. (Le `margin-top` est désormais sur `.hero`, plus sur l'image — l'ancien montage dépendait d'une fusion de marges peu lisible.)
+- **Footer fluide** (layout.css) : colonnes en fractions proportionnelles à la maquette (`376fr 316fr 316fr 298fr`), `padding-left: min(78px, 5.5%)`, logo `min(260px, 90%)`, copyright sans `white-space: nowrap`. Sous **800px** : 2 colonnes (logo | adresse+contact, puis les deux navigations), copyright pleine largeur. Plus aucun débordement horizontal.
+- ⚠️ Reste connu : le **menu** déborde sous ~900px — sera traité avec les maquettes mobiles de Simeon (toggle).
 
 ### 2026-07-12 — Page Atelier + renommage des images
 

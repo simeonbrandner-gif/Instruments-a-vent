@@ -5,27 +5,32 @@
 
 /* ---- Héro -------------------------------------------------------------- */
 
+/* Le héro se réduit de façon homothétique : --hero-px vaut 1px à 1440 de
+   large et rétrécit avec la fenêtre. Toutes les cotes de la maquette sont
+   exprimées dans cette unité, si bien que le titre garde exactement la même
+   place sur la photo (zone sombre) à toutes les tailles de fenêtre. */
 .hero {
+  --hero-px: min(calc(100vw / 1440), 1px);
   position: relative;
+  margin-top: calc(119 * var(--hero-px)); /* espace noir entre le menu et la photo */
 }
 
 .hero-photo {
   width: 100%;
   aspect-ratio: 1440 / 873;
   object-fit: cover;
-  margin-top: 119px; /* espace noir entre le menu et la photo */
 }
 
 /* Bloc titre superposé, calé à droite du rail (bord droit à 316px du rail) */
 .hero-title {
   position: absolute;
-  top: 73px;
+  top: calc(73 * var(--hero-px));
   left: 0;
   right: 0;
 }
 
 .hero-title-block {
-  width: 456px;
+  width: calc(456 * var(--hero-px));
   max-width: 100%;
   margin-left: auto;
   margin-right: clamp(0px, 22.5%, 316px);
@@ -33,17 +38,17 @@
 }
 
 .hero-title h1 {
-  font-size: var(--text-heading-size);
+  font-size: calc(38 * var(--hero-px));
   font-weight: 700;
-  letter-spacing: 1.52px;
-  line-height: 57px; /* 48px de ligne + 9px d'interligne maquette */
+  letter-spacing: calc(1.52 * var(--hero-px));
+  line-height: calc(57 * var(--hero-px)); /* 48px de ligne + 9px d'interligne maquette */
   color: var(--color-accent);
 }
 
 .hero-title .hero-tagline {
-  margin-top: 18px;
-  font-size: 22px;
-  line-height: 28px;
+  margin-top: calc(18 * var(--hero-px));
+  font-size: calc(22 * var(--hero-px));
+  line-height: calc(28 * var(--hero-px));
   color: var(--color-text);
 }
 
