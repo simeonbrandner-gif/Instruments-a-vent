@@ -4,13 +4,20 @@
 
 /* ---- Menu ------------------------------------------------------------- */
 
+/* Fond noir jusqu'aux bords (rien ne dépasse quand une image passe dessous) ;
+   le filet, lui, garde ses 18px de marge de chaque côté */
 .site-header {
   background: var(--color-bg);
-  margin-inline: var(--rule-margin);
-  border-bottom: var(--rule);
   position: sticky; /* menu collant sur toutes les pages */
   top: 0;
   z-index: 20;
+}
+
+.site-header::after {
+  content: "";
+  display: block;
+  border-top: var(--rule);
+  margin-inline: var(--rule-margin);
 }
 
 .site-header .rail {
