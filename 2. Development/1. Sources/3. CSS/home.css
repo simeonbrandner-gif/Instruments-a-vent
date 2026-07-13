@@ -12,7 +12,7 @@
 .hero {
   --hero-px: min(calc(100vw / 1440), 1px);
   position: relative;
-  margin-top: calc(119 * var(--hero-px)); /* espace noir entre le menu et la photo */
+  padding-top: calc(180 * var(--hero-px)); /* espace noir entre le menu et la photo */
 }
 
 .hero-photo {
@@ -21,10 +21,12 @@
   object-fit: cover;
 }
 
-/* Bloc titre superposé, calé à droite du rail (bord droit à 316px du rail) */
+/* Bloc titre superposé, calé à droite du rail (bord droit à 316px du rail).
+   top est mesuré depuis le bas du menu (127 au-dessus du haut de la photo) :
+   le sous-titre ne touche jamais la tête de la flûte. */
 .hero-title {
   position: absolute;
-  top: calc(73 * var(--hero-px));
+  top: calc(53 * var(--hero-px));
   left: 0;
   right: 0;
 }

@@ -94,15 +94,33 @@ Site_Chr/
 ## Reste à faire (phases)
 
 1. Pages restantes au fil des maquettes Figma
-2. Responsive d'après les frames mobiles de Simeon (le menu deviendra un toggle)
-3. Finitions : favicon, Open Graph, SEO/meta par page, Lighthouse, validation
+2. Responsive d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
+3. Finitions : favicon, Open Graph, SEO (voir checklist ci-dessous), Lighthouse, validation
 4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
+
+### Checklist SEO (audit du 2026-07-13 — à faire vers la fin, la plupart après l'achat du domaine)
+
+Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 par page, alt partout, `lang="fr"`, HTML sémantique). Par ordre d'impact :
+
+1. **Domaine + Google Business Profile** — le levier n°1. Acheter le domaine, le brancher sur GitHub Pages, puis créer une fiche Google Business (« Christoph Brandner, facteur d'instruments à vent, 15 rue des Gares, Genève ») : pour les recherches locales, la carte Google passe devant tous les résultats organiques.
+2. **Backlinks monde de la musique ancienne** — annuaires de facteurs (FLAME…), pages de festivals/ensembles, conservatoires, forums (flute-a-bec.com). Pour un site de niche, quelques bons liens pèsent plus que tout le reste. (Action de Christoph/Simeon, pas de code.)
+3. **Quick wins code (~1-2h, Claude)** : balises canonical sur chaque page (URLs du domaine final → attendre l'achat), robots.txt + sitemap.xml, JSON-LD `LocalBusiness` sur contact.html + `Person` sur biographie.html, squelette Open Graph + favicon (déjà en phase 3).
+4. **Titles à retravailler** : mettre le mot-clé avant le nom (personne ne cherche encore « Christoph Brandner »). Ex. instruments.html : « Flûte à bec soprano en do (Reich, 415 Hz) — Christoph Brandner » (le title actuel ne contient même pas « flûte à bec ») ; atelier.html : « Atelier de facture de flûtes à bec et hautbois baroques à Genève — … ».
+5. **Poids des images = problème Core Web Vitals** : les re-exports prévus (qualité ~80) + `loading="lazy"` + attributs `width`/`height` explicites (évite le layout shift).
+6. **Une page par instrument** (déjà envisagé pour la structure) : c'est aussi le bon découpage SEO — un title/URL par instrument cible les recherches longue traîne des musiciens (« flûte à bec alto 415 Hz Bressan »…).
+7. **⚠️ Contenu dupliqué au lancement** : quand le domaine sera en ligne, le Staging GitHub Pages deviendra un doublon — soit le passer en noindex, soit y pointer les canonical vers le domaine final.
+8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
 
+### 2026-07-13 — Audit SEO → checklist dans la roadmap
+
+- Audit SEO du site (pages, meta, images, staging) : bases on-page déjà bonnes ; le reste est consigné dans la **« Checklist SEO »** ajoutée à la section « Reste à faire » — à dérouler vers la fin du projet, l'essentiel après l'achat du domaine. Aucun changement de code.
+
 ### 2026-07-13 — Héro Home homothétique + footer fluide
 
-- **Héro Home** (home.css) : plus aucune cote px fixe. Une unité `--hero-px: min(calc(100vw / 1440), 1px)` vaut 1px à 1440 et rétrécit avec la fenêtre ; position du titre, largeur du bloc, tailles de police et interlignes sont exprimés en `calc(N * var(--hero-px))` → le bloc titre se réduit de façon **homothétique avec la photo** et reste dans la zone sombre à toutes les largeurs. À 1440px, rendu identique à la maquette. (Le `margin-top` est désormais sur `.hero`, plus sur l'image — l'ancien montage dépendait d'une fusion de marges peu lisible.)
+- **Héro Home** (home.css) : plus aucune cote px fixe. Une unité `--hero-px: min(calc(100vw / 1440), 1px)` vaut 1px à 1440 et rétrécit avec la fenêtre ; position du titre, largeur du bloc, tailles de police et interlignes sont exprimés en `calc(N * var(--hero-px))` → le bloc titre se réduit de façon **homothétique avec la photo** et reste dans la zone sombre à toutes les largeurs.
+- **Placement du titre revu à la demande de Simeon** (⚠️ diverge de la maquette Figma 0:38) : l'espace noir menu→photo passe de 119 à **180** unités (`padding-top` sur `.hero`) et le titre est calé à **53** unités sous le menu (au lieu de 73 sous le haut de la photo) → le sous-titre « fabriqués par… » ne touche plus jamais la tête de la flûte.
 - **Footer fluide** (layout.css) : colonnes en fractions proportionnelles à la maquette (`376fr 316fr 316fr 298fr`), `padding-left: min(78px, 5.5%)`, logo `min(260px, 90%)`, copyright sans `white-space: nowrap`. Sous **800px** : 2 colonnes (logo | adresse+contact, puis les deux navigations), copyright pleine largeur. Plus aucun débordement horizontal.
 - ⚠️ Reste connu : le **menu** déborde sous ~900px — sera traité avec les maquettes mobiles de Simeon (toggle).
 
