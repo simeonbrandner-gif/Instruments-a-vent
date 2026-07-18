@@ -139,6 +139,7 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 - **instruments.html** : la redirection est remplacée par la vraie page « D - Instruments » (maquette 31:816) — 7 instruments couchés, zoom lent au scroll (détails dans « Gabarit page Instruments » ci-dessus). Nouveau CSS `instruments-index.css`, bloc zoom ajouté dans main.js, utilitaire `.visually-hidden` ajouté à base.css (h1 masqué pour le SEO).
 - Liens « Instruments » (menu + footer) de **toutes** les pages + `_template-stub.html` → instruments.html.
 - `.claude/launch.json` : `autoPort: true` (le port 8642 peut être occupé par une autre session ; le serveur lit désormais `$PORT`).
+- **Webp atelier livrés par Simeon** : `atelier_01..07.webp` (600×260) remplacent les placeholders .jpg — références et attributs `width`/`height` mis à jour dans atelier.html.
 
 ### 2026-07-18 — 7 pages instrument + scroll différencié + auto-scroll
 
