@@ -77,7 +77,7 @@
 
 .site-nav .sub-menu a {
   display: block;
-  padding: 18px 0; /* 18px au-dessus et en dessous de chaque libellé */
+  padding: 18px 0 18px 9px; /* 18px au-dessus/dessous, 9px à gauche du libellé */
   font-size: 20px;
   letter-spacing: 0.8px;
 }
