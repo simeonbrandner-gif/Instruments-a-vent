@@ -102,6 +102,7 @@ Site_Chr/
 1. Pages restantes au fil des maquettes Figma
 2. Responsive d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
 3. Finitions : favicon, Open Graph, SEO (voir checklist ci-dessous), Lighthouse, validation
+   - ⚠️ **Footer : ajouter 36px de bottom margin**
 4. Validation finale : snapshot dans `2. Versioning/V1` (GitHub Pages publie automatiquement chaque push sur `main`)
 
 ### Gabarit pages instrument (fait le 2026-07-18)
@@ -131,7 +132,7 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 - **7 pages instrument créées** (maquettes 30:…) : soprano-{buis,olivier,cormier}, alto-{buis,olivier,cormier}, hautbois — gabarit décrit dans « Gabarit pages instrument » ci-dessus. `instruments.html` devient une redirection vers soprano-buis.html ; l'accordéon des bois disparaît (remplacé par des liens entre pages), le code accordéon retiré de main.js.
 - **Sous-menu Instruments** mis à jour dans toutes les pages + `_template-stub.html` : Soprano/Alto/Hautbois 415Hz ; liens « Instruments » (menu + footer) → soprano-buis.html.
 - **Scroll différencié + auto-scroll** implémentés dans main.js (détails dans le gabarit) — vérifiés en préview : cotes pixel-perfect à 1440, texte finissant exactement 60px au-dessus du footer en bas de page.
-- ⚠️ Poids images : les alto webp livrées font **5,9–6,2 MB** chacune (2000×8686) et le hautbois 2,3 MB — à re-exporter qualité ~80 comme les sopranos (3,4–3,8 MB, déjà notées trop lourdes).
+- ~~⚠️ Poids images~~ **✅ résolu le 2026-07-18** : Simeon a re-exporté les 7 webp instruments aux largeurs 2× (sopranos 1000×3777, altos 1250×~5430, hautbois 1600×9705), qualité ~80 → **0,2–0,6 MB par image** (au lieu de 2,3–6,2 MB). Mêmes cadrages, attributs `width`/`height` mis à jour dans les 7 pages.
 
 ### 2026-07-13 — Audit SEO → checklist dans la roadmap
 
