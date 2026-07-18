@@ -1,7 +1,9 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-13
+> Dernière mise à jour : 2026-07-18
+
+**🌐 Site en ligne :** https://simeonbrandner-gif.github.io/Instruments-a-vent/
 
 ## Le projet
 
@@ -16,7 +18,8 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 
 - Fichier : `c7zvOYoKuuDCGfB5bYqpo0` (Site_CHR)
 - Frames desktop en **1440px**, préfixe « D - » (D - Home, D - Instruments…)
-- Frames existantes : Home (0:38), Instruments Soprano Buis (1:34) / Olivier (1:56) / Cormier (1:78), sous-menu Instruments (8:212), Biographie (7:171), Contact (9:274)
+- Frames existantes : Home (0:38), sous-menu Instruments (8:212), Biographie (7:171), Contact (9:274), Atelier (22:201)
+- **Frames instruments (une par instrument/bois)** : Soprano Reich 415 Buis (30:256) / Olivier (30:312) / Cormier (30:358), Alto Bressan 415 Buis (30:233) / Olivier (30:748) / Cormier (30:680), Hautbois Schlegel 415 (30:279). Les anciennes frames accordéon (1:34/1:56/1:78) sont obsolètes.
 - **Mobile : Simeon designera ses propres frames mobiles** — ne pas inventer de responsive, attendre ses maquettes.
 - Pour chaque nouvelle page : Simeon donne le lien avec le node sélectionné → récupérer via le MCP Figma (get_design_context + get_screenshot).
 
@@ -69,7 +72,7 @@ Site_Chr/
 **Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html.
 
 **Sous-menu Instruments (maquette Figma 8:212) :** l'entrée « Instruments » du menu porte un menu déroulant (`li.has-sub` > `ul.sub-menu`, styles dans layout.css) — panneau noir 245px sous le menu, libellés 20px ExtraBold orange avec 18px au-dessus/en-dessous, filet orange 1px entre chaque entrée. Ouverture au survol et au clavier (focus-within).
-⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → instruments.html.
+⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano-buis.html, « Alto 415Hz » → alto-buis.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur soprano-buis.html.
 
 ## Images — règles
 
@@ -85,7 +88,10 @@ Site_Chr/
 | Page | État | Notes |
 |---|---|---|
 | index.html (Accueil) | ✅ faite | héro + section « Pourquoi fabriquer… » |
-| instruments.html | ✅ faite (Soprano en do) | accordéon 3 bois (Buis/Olivier/Cormier), photo qui change avec fondu, panneau texte + menu sticky, photo défile. D'autres instruments viendront peut-être → la structure pourrait devenir une page par instrument. |
+| soprano-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:256/312/358 — une page par bois (voir gabarit commun ci-dessous) |
+| alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
+| hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
+| instruments.html | 🔁 redirection | meta refresh + noindex → soprano-buis.html (l'ancienne page accordéon est remplacée par une page par bois) |
 | atelier.html | ⏳ stub | attend la maquette Figma |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
@@ -96,7 +102,14 @@ Site_Chr/
 1. Pages restantes au fil des maquettes Figma
 2. Responsive d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
 3. Finitions : favicon, Open Graph, SEO (voir checklist ci-dessous), Lighthouse, validation
-4. Livraison : copie Staging → `2. Final`, snapshot dans `2. Versioning/V1`, upload FTP par Simeon
+4. Validation finale : snapshot dans `2. Versioning/V1` (GitHub Pages publie automatiquement chaque push sur `main`)
+
+### Gabarit pages instrument (fait le 2026-07-18)
+
+- **Une page par instrument et par bois** (7 pages). Grande photo à gauche en flux normal (c'est elle qui fait la hauteur de page), colonne texte absolue à droite (titre 62px à 207px du haut, intro à 478px, largeur 772/624). Le bois de la page : entête 32px orange + texte ; les autres bois : entêtes blanches = **liens vers les pages sœurs**. CSS : `instruments.css` (variantes `.instrument--soprano/alto/hautbois` pour les cotes photo).
+- **Défilement différencié** (main.js) : la photo suit le scroll normal ; la colonne texte est ralentie par un `translate3d` recalculé à chaque scroll — sa course est calée pour finir 60px au-dessus du footer quand la page atteint le bas (ratio auto : ~40% de la vitesse sur les sopranos, ~14% sur le hautbois).
+- **Défilement automatique** (main.js) : la page descend seule à 22px/s après 2,5s ; toute interaction (molette, touche, toucher, écart de position) rend la main à l'utilisateur, reprise après 4s d'inactivité ; arrêt en bas de page ; désactivé si `prefers-reduced-motion`.
+- Les `<img>` portent `width`/`height` explicites (mesures du scroll fiables avant chargement + pas de layout shift).
 
 ### Checklist SEO (audit du 2026-07-13 — à faire vers la fin, la plupart après l'achat du domaine)
 
@@ -112,6 +125,13 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-18 — 7 pages instrument + scroll différencié + auto-scroll
+
+- **7 pages instrument créées** (maquettes 30:…) : soprano-{buis,olivier,cormier}, alto-{buis,olivier,cormier}, hautbois — gabarit décrit dans « Gabarit pages instrument » ci-dessus. `instruments.html` devient une redirection vers soprano-buis.html ; l'accordéon des bois disparaît (remplacé par des liens entre pages), le code accordéon retiré de main.js.
+- **Sous-menu Instruments** mis à jour dans toutes les pages + `_template-stub.html` : Soprano/Alto/Hautbois 415Hz ; liens « Instruments » (menu + footer) → soprano-buis.html.
+- **Scroll différencié + auto-scroll** implémentés dans main.js (détails dans le gabarit) — vérifiés en préview : cotes pixel-perfect à 1440, texte finissant exactement 60px au-dessus du footer en bas de page.
+- ⚠️ Poids images : les alto webp livrées font **5,9–6,2 MB** chacune (2000×8686) et le hautbois 2,3 MB — à re-exporter qualité ~80 comme les sopranos (3,4–3,8 MB, déjà notées trop lourdes).
 
 ### 2026-07-13 — Audit SEO → checklist dans la roadmap
 

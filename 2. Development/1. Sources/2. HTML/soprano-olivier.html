@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Biographie — Christoph Brandner</title>
-  <meta name="description" content="Biographie de Christoph Brandner, facteur d'instruments à vent baroques à Genève : du hautbois à la fabrication de flûtes à bec et de hautbois baroques.">
+  <title>Flûte à bec soprano en do de B. Reich en olivier, 415 Hz — Christoph Brandner</title>
+  <meta name="description" content="Flûte à bec soprano en do d’après B. Reich, accordée en 415 Hz, fabriquée en olivier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
-  <link rel="stylesheet" href="css/biographie.css">
+  <link rel="stylesheet" href="css/instruments.css">
   <script src="js/main.js" defer></script>
 </head>
-<body>
+<body class="page-instrument">
 
   <header class="site-header">
     <div class="rail">
@@ -20,46 +20,46 @@
           <li><a href="index.html">Accueil</a></li>
           <li><a href="atelier.html">Atelier</a></li>
           <li class="has-sub">
-            <a href="soprano-buis.html">Instruments</a>
+            <a href="soprano-buis.html" aria-current="page">Instruments</a>
             <ul class="sub-menu" aria-label="Instruments">
               <li><a href="soprano-buis.html">Soprano 415Hz</a></li>
               <li><a href="alto-buis.html">Alto 415Hz</a></li>
               <li><a href="hautbois.html">Hautbois 415Hz</a></li>
             </ul>
           </li>
-          <li><a href="biographie.html" aria-current="page">Biographie</a></li>
+          <li><a href="biographie.html">Biographie</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="bio">
+  <main class="instrument instrument--soprano">
 
-    <section class="bio-head">
-      <div class="rail">
-        <div class="bio-grid">
-          <img class="bio-photo" src="assets/img/bio-portrait.jpg"
-               alt="Portrait de Christoph Brandner">
-          <h1 class="bio-name">Christoph Brandner</h1>
+    <div class="instrument-media">
+      <img src="assets/img/soprano_415_reich_olivier.webp" width="1580" height="5967" alt="Flûte à bec soprano en do en olivier, posée sur un socle de pierre">
+    </div>
+
+    <div class="instrument-panel">
+      <h1 class="instrument-title">Soprano en do<br>de B. Reich<br>en 415hz</h1>
+
+      <div class="instrument-info">
+
+        <div class="instrument-intro">
+          <p>Cet instrument se trouve dans un musée à Bruxelles, après avoir disparu un certain temps suite probablement à un vol. L’original a été fabriqué en buis.</p>
+          <p>Il se distingue par une intonation et un accordage presque parfait. Et cet instrument possède un très bel équilibre entre tous les registre.</p>
         </div>
-      </div>
-    </section>
 
-    <hr class="rule">
+        <a class="wood-head" href="soprano-buis.html">Buis</a>
 
-    <section class="bio-body">
-      <div class="rail">
-        <div class="bio-grid">
-          <img class="bio-photo" src="assets/img/bio-atelier.jpg"
-               alt="Christoph Brandner au travail sur le tour dans son atelier">
-          <div class="bio-text">
-            <p>Ayant pratiqué pendant de longues années le hautbois, il était quasi naturel pour moi un jour de fabriquer des instruments à vent.</p>
-            <p>Mon chemin n'était pourtant pas rectiligne, mais a au contraire comporté de nombreux détours. J'ai cependant l'espoir que ces détours, loin d'avoir nuit à ma pratique de ce métier, puissent enrichir la fabrication de mes instruments et qu'ils en portent le timbre.</p>
-          </div>
-        </div>
+        <section class="wood">
+          <h2 class="wood-head">Olivier</h2>
+          <p>Je fabrique cette flûte soprano également en olivier, ce qui donne un instrument visuellement très charmant et au son chaleureux et équilibré. Peut-être plus adapté pour la musique de chambre ou en petite formation.</p>
+        </section>
+
+        <a class="wood-head" href="soprano-cormier.html">Cormier</a>
       </div>
-    </section>
+    </div>
 
   </main>
 
