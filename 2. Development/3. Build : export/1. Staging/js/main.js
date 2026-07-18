@@ -12,40 +12,53 @@ document.addEventListener("DOMContentLoaded", () => {
   const panel = document.querySelector(".instrument-panel");
   if (!panel) return;
 
-  /* ---- Défilement différencié du texte ---------------------------------- */
+  /* ---- Défilement différencié du texte ----------------------------------
+     Le panneau passe en position:fixed : le défilement natif ne le déplace
+     plus, seul notre transform le fait. Sans cela, le compositeur fait
+     défiler le panneau à pleine vitesse puis le transform le recale une
+     frame plus tard → saccades (très visibles sur le hautbois où le texte
+     ne bouge qu'à ~14% de la vitesse). En fixed, l'amplitude d'un éventuel
+     retard n'est que la petite course du texte. Sans JS, le CSS (absolute)
+     garde un défilement normal. */
 
   const footer = document.querySelector(".site-footer");
   const END_GAP = 60; // espace gardé entre le bas du texte et le footer en fin de course
+  const PANEL_TOP = 207; // position du panneau à scroll 0 (CSS : 152 + menu 55)
+
+  panel.style.position = "fixed";
+  panel.style.top = PANEL_TOP + "px";
 
   let scrollMax = 1;
-  let slack = 0; // descente totale du panneau sur toute la hauteur de page (px)
+  let rate = 0; // vitesse du texte, en fraction de la vitesse de la page
+  let measuredDocH = 0; // hauteur du document lors de la dernière mesure
 
   const applyShift = () => {
     const y = Math.max(0, Math.min(window.scrollY, scrollMax));
-    panel.style.transform = "translate3d(0, " + (slack * y) / scrollMax + "px, 0)";
+    panel.style.transform = "translate3d(0, " + -(y * rate) + "px, 0)";
   };
 
   const measure = () => {
     panel.style.transform = "none";
-    scrollMax = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-    const panelBottom = panel.getBoundingClientRect().bottom + window.scrollY;
+    measuredDocH = document.documentElement.scrollHeight;
+    scrollMax = Math.max(1, measuredDocH - window.innerHeight);
+    const panelH = panel.getBoundingClientRect().height;
     const footerTop = footer
       ? footer.getBoundingClientRect().top + window.scrollY
-      : document.documentElement.scrollHeight;
-    slack = Math.max(0, Math.min(scrollMax, footerTop - END_GAP - panelBottom));
+      : measuredDocH;
+    // Descente restante du panneau (en coordonnées document) jusqu'au footer
+    const slack = Math.max(0, Math.min(scrollMax, footerTop - END_GAP - (PANEL_TOP + panelH)));
+    rate = (scrollMax - slack) / scrollMax;
     applyShift();
   };
 
-  let ticking = false;
+  // Directement dans l'événement (pas de rAF différé) : le transform part
+  // dans la même frame que le défilement. Si la hauteur de page a changé
+  // depuis la mesure (police/image tardive), on remesure d'abord.
   window.addEventListener(
     "scroll",
     () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        applyShift();
-        ticking = false;
-      });
+      if (document.documentElement.scrollHeight !== measuredDocH) measure();
+      else applyShift();
     },
     { passive: true }
   );
