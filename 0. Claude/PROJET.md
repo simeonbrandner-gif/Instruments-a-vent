@@ -81,7 +81,8 @@ Site_Chr/
 - Cibles de poids : héro ≤ 400 KB, grandes images ≤ 500–600 KB.
 - Noms en kebab-case français : `hero-home.webp`, `gravure-flutes.webp`, `soprano-do-buis.webp`…
 - Logo footer : `logo-footer.svg` (déjà en place, vectoriel).
-- Manquants au 2026-07-06 : re-export `gravure-flutes.webp` (8,6 MB → trop lourd), `bio-portrait.webp` (596×590), `bio-atelier.webp` (596×580), `carte-geneve` (1544×1352, **avec transparence** — webp sans perte ou PNG, c'est du trait), favicon 512×512. Les 3 soprano webp sont livrées (1580×5967) mais lourdes (3,4–3,6 MB chacune) — un re-export qualité ~80 les ramènerait vers ~1–1,5 MB. `contact-hautbois.webp` livrée ✅ (347 KB, alpha) — renommée depuis `hautbois_page_Contact.webp` (garder les noms kebab-case).
+- Livrées le 2026-07-18 ✅ : les 7 webp instruments (2×, 0,2–0,6 MB), `atelier_01..07.webp` (600×260, 25–71 KB), `bio-portrait.webp` + `bio-atelier.webp` (600×600, cadrage carré fait par Simeon → `object-position` retirés du CSS). `contact_hautbois.webp` ✅ (347 KB, alpha).
+- Manquants : re-export `gravure_flutes.webp` (8,6 MB → trop lourd) et `tetes_flutes_atelier.webp` (6,2 MB), `carte_geneve` en webp (le PNG 1,3 MB fait l'affaire en attendant, **garder la transparence**), vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
 
 ## Pages
 

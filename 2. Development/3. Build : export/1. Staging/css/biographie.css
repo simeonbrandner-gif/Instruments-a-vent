@@ -22,8 +22,7 @@
 }
 
 .bio-head .bio-photo {
-  height: 295px;
-  object-position: 50% 72%; /* recadrage proche de la maquette */
+  height: 295px; /* cadrage désormais dans le webp carré livré par Simeon */
 }
 
 .bio-name {
@@ -41,7 +40,6 @@
 
 .bio-body .bio-photo {
   height: 290px;
-  object-position: 52% 0;
 }
 
 .bio-body {
