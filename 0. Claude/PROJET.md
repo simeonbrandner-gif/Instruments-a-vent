@@ -72,7 +72,7 @@ Site_Chr/
 **Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html.
 
 **Sous-menu Instruments (maquette Figma 8:212) :** l'entrée « Instruments » du menu porte un menu déroulant (`li.has-sub` > `ul.sub-menu`, styles dans layout.css) — panneau noir 245px sous le menu, libellés 20px ExtraBold orange avec 18px au-dessus/en-dessous, filet orange 1px entre chaque entrée. Ouverture au survol et au clavier (focus-within).
-⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano-buis.html, « Alto 415Hz » → alto-buis.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur soprano-buis.html.
+⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano-buis.html, « Alto 415Hz » → alto-buis.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
 
 ## Images — règles
 
@@ -91,7 +91,7 @@ Site_Chr/
 | soprano-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:256/312/358 — une page par bois (voir gabarit commun ci-dessous) |
 | alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
 | hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
-| instruments.html | 🔁 redirection | meta refresh + noindex → soprano-buis.html (l'ancienne page accordéon est remplacée par une page par bois) |
+| instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom lent au défilement (voir gabarit ci-dessous) |
 | atelier.html | ⏳ stub | attend la maquette Figma |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
@@ -112,6 +112,13 @@ Site_Chr/
 - **Défilement automatique** (main.js) : la page descend seule à 22px/s après 2,5s ; toute interaction (molette, touche, toucher, écart de position) rend la main à l'utilisateur, reprise après 4s d'inactivité ; arrêt en bas de page ; désactivé si `prefers-reduced-motion`.
 - Les `<img>` portent `width`/`height` explicites (mesures du scroll fiables avant chargement + pas de layout shift).
 
+### Gabarit page Instruments — vue d'ensemble (fait le 2026-07-18)
+
+- **instruments.html** (maquette 31:816, CSS `instruments-index.css`) : les 7 photos portrait sont couchées à l'horizontale (rotation CSS 90°, socle de pierre à gauche) et débordent du bord gauche comme sur la maquette (hautbois −154px, altos −82px, sopranos −39px à 1440). Composition entièrement homothétique via `--u: min(100vw/1440, 1px)` (même principe que le héro Home) → aucune collision à aucune largeur. `flex: none` sur le main (le `flex: 1` de layout.css écraserait sa hauteur, tous ses enfants étant absolus).
+- **Zoom au défilement** (main.js) : chaque photo grossit de 100% à **+5%** (`GROW = 0.05`) à mesure qu'elle traverse la fenêtre, origine haut-gauche → le bord haut ne bouge pas (jamais de chevauchement avec l'entête au-dessus) et le hautbois reste dans le bord droit (à +5% il finit à 1423px sur 1440 — ne pas augmenter GROW sans re-vérifier). Désactivé si `prefers-reduced-motion`.
+- Chaque photo, entête de bois et titre est un **lien vers la page instrument** correspondante (survol → orange).
+- ⚠️ Dans la maquette Figma, les calques photo des sopranos « Buis » et « Olivier » semblent intervertis (le calque nommé olivier est sous l'entête Buis) ; le code suit les **entêtes** (buis sous Buis).
+
 ### Checklist SEO (audit du 2026-07-13 — à faire vers la fin, la plupart après l'achat du domaine)
 
 Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 par page, alt partout, `lang="fr"`, HTML sémantique). Par ordre d'impact :
@@ -126,6 +133,12 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-18 — Page Instruments (vue d'ensemble) + zoom au défilement
+
+- **instruments.html** : la redirection est remplacée par la vraie page « D - Instruments » (maquette 31:816) — 7 instruments couchés, zoom lent au scroll (détails dans « Gabarit page Instruments » ci-dessus). Nouveau CSS `instruments-index.css`, bloc zoom ajouté dans main.js, utilitaire `.visually-hidden` ajouté à base.css (h1 masqué pour le SEO).
+- Liens « Instruments » (menu + footer) de **toutes** les pages + `_template-stub.html` → instruments.html.
+- `.claude/launch.json` : `autoPort: true` (le port 8642 peut être occupé par une autre session ; le serveur lit désormais `$PORT`).
 
 ### 2026-07-18 — 7 pages instrument + scroll différencié + auto-scroll
 

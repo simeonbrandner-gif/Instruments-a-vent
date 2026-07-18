@@ -9,6 +9,31 @@
       automatique ne repart qu'après une pause d'inactivité. */
 
 document.addEventListener("DOMContentLoaded", () => {
+  /* ---- Page Instruments (vue d'ensemble) : zoom lent au défilement ------
+     Chaque photo grossit à mesure qu'elle remonte dans la fenêtre : de
+     100% quand elle entre par le bas à +5% quand elle sort par le haut.
+     Origine haut-gauche (voir instruments-index.css) : le bord haut ne
+     bouge pas, les marges de la maquette absorbent la croissance vers le
+     bas et la droite → jamais de chevauchement avec les textes. */
+
+  const figs = document.querySelectorAll(".instr-fig");
+  if (figs.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const GROW = 0.05; // agrandissement maximal (+5%)
+    const update = () => {
+      const vh = window.innerHeight;
+      figs.forEach((fig) => {
+        // rect.top est insensible au scale (origine en haut) ; offsetHeight
+        // est la hauteur de mise en page, elle aussi insensible au scale.
+        const p = (vh - fig.getBoundingClientRect().top) / (vh + fig.offsetHeight);
+        const s = 1 + GROW * Math.min(1, Math.max(0, p));
+        fig.style.transform = "scale(" + s.toFixed(4) + ")";
+      });
+    };
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
   const panel = document.querySelector(".instrument-panel");
   if (!panel) return;
 

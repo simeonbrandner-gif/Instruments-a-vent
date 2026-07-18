@@ -65,6 +65,16 @@ ul {
   list-style: none;
 }
 
+/* Texte présent pour les lecteurs d'écran / le SEO mais invisible à l'écran */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Rail central : 1403px max, gouttières 19px */
 .rail {
   width: min(var(--rail-max), 100% - 2 * var(--rail-gutter));

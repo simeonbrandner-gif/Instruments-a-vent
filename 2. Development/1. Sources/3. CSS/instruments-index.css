@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Page Instruments — vue d'ensemble des 7 instruments
+   Maquette Figma (1440px) : 31:816.
+   Composition homothétique : l'unité --u vaut 1px à 1440 et rétrécit avec
+   la fenêtre (même principe que le héro Home). Les photos portrait sont
+   couchées à l'horizontale (rotation 90°, socle de pierre à gauche) et
+   débordent du bord gauche comme sur la maquette (hautbois −154, altos −82,
+   sopranos −39). main.js les agrandit lentement au fil du défilement
+   (origine haut-gauche, +5 % max — borné pour que le hautbois reste dans le
+   bord droit et que les photos ne recouvrent jamais les textes).
+   ========================================================================== */
+
+.instr-index {
+  --u: min(calc(100vw / 1440), 1px);
+  position: relative;
+  height: calc(2401 * var(--u)); /* 2754 (maquette) − 55 (menu) − 298 (footer) */
+  flex: none; /* annule le flex:1 de layout.css (flex-basis:0 écraserait notre hauteur) */
+}
+
+/* ---- Titres (48px) et entêtes de bois (32.67px) ------------------------- */
+
+.instr-head,
+.instr-wood {
+  position: absolute;
+  left: calc(248 * var(--u));
+  z-index: 1; /* toujours au-dessus des photos */
+  font-weight: 800;
+  font-stretch: 88%;
+  font-variation-settings: "opsz" 96;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.instr-head { font-size: calc(48 * var(--u)); }
+.instr-wood { font-size: calc(32.67 * var(--u)); }
+
+.instr-head a,
+.instr-wood a {
+  transition: color 0.2s ease;
+}
+
+.instr-head a:hover,
+.instr-head a:focus-visible,
+.instr-wood a:hover,
+.instr-wood a:focus-visible {
+  color: var(--color-accent);
+}
+
+.instr-head--hautbois { top: calc(96 * var(--u)); }
+.instr-head--alto     { top: calc(449 * var(--u)); }
+.instr-head--soprano  { top: calc(1461 * var(--u)); }
+
+.instr-wood--alto-buis       { top: calc(499 * var(--u)); }
+.instr-wood--alto-olivier    { top: calc(836 * var(--u)); }
+.instr-wood--alto-cormier    { top: calc(1173 * var(--u)); }
+.instr-wood--soprano-buis    { top: calc(1511 * var(--u)); }
+.instr-wood--soprano-olivier { top: calc(1808 * var(--u)); }
+.instr-wood--soprano-cormier { top: calc(2105 * var(--u)); }
+
+/* ---- Photos couchées -----------------------------------------------------
+   Chaque figure est une boîte horizontale (--len × --thick) ; la photo
+   portrait est posée dedans puis pivotée de 90° (le bas du portrait — le
+   socle — arrive à gauche). Le zoom au défilement (main.js) s'applique à la
+   figure entière, origine haut-gauche : le bord haut ne bouge pas, donc la
+   photo ne remonte jamais sur l'entête posée juste au-dessus. */
+
+.instr-fig {
+  position: absolute;
+  display: block;
+  width: calc(var(--len) * var(--u));
+  height: calc(var(--thick) * var(--u));
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.instr-fig img {
+  width: calc(var(--thick) * var(--u));
+  height: calc(var(--len) * var(--u));
+  max-width: none;
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-100%);
+}
+
+.instr-fig--hautbois        { top: calc(128 * var(--u));    left: calc(-154 * var(--u)); --len: 1502;  --thick: 247.6; }
+.instr-fig--alto-buis       { top: calc(520.5 * var(--u));  left: calc(-82 * var(--u));  --len: 837.3; --thick: 192.8; }
+.instr-fig--alto-olivier    { top: calc(858.3 * var(--u));  left: calc(-82 * var(--u));  --len: 836.8; --thick: 191.6; }
+.instr-fig--alto-cormier    { top: calc(1194.9 * var(--u)); left: calc(-82 * var(--u));  --len: 836.8; --thick: 192.9; }
+.instr-fig--soprano-buis    { top: calc(1532.8 * var(--u)); left: calc(-39 * var(--u));  --len: 573.8; --thick: 151.9; }
+.instr-fig--soprano-olivier { top: calc(1829.7 * var(--u)); left: calc(-39 * var(--u));  --len: 573.9; --thick: 151.9; }
+.instr-fig--soprano-cormier { top: calc(2126.8 * var(--u)); left: calc(-39 * var(--u));  --len: 573.9; --thick: 151.9; }

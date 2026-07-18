@@ -3,15 +3,13 @@
   "configurations": [
     {
       "name": "site-staging",
-      "runtimeExecutable": "python3",
+      "runtimeExecutable": "sh",
       "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8642",
-        "--directory",
-        "/Users/simeon.brandner/Work/3. Crea_Perso/Site_Chr/2. Development/3. Build : export/1. Staging"
+        "-c",
+        "exec python3 -m http.server \"${PORT:-8642}\" --directory \"/Users/simeon.brandner/Work/3. Crea_Perso/Site_Chr/2. Development/3. Build : export/1. Staging\""
       ],
-      "port": 8642
+      "port": 8642,
+      "autoPort": true
     }
   ]
 }
