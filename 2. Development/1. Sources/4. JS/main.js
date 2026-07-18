@@ -59,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const SPEED = 22; // px par seconde
-  const START_DELAY = 2500; // avant le premier départ
   const RESUME_DELAY = 4000; // d'inactivité avant de reprendre la descente
 
   let pos = 0;
@@ -106,5 +105,5 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener(type, pause, { passive: true });
   });
 
-  resumeTimer = setTimeout(start, START_DELAY);
+  start();
 });
