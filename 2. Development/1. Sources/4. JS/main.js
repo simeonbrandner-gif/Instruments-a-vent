@@ -9,16 +9,17 @@
       automatique ne repart qu'après une pause d'inactivité. */
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* ---- Page Instruments (vue d'ensemble) : zoom lent au défilement ------
+  /* ---- Page Instruments (vue d'ensemble) : zoom au défilement -----------
      Chaque photo grossit à mesure qu'elle remonte dans la fenêtre : de
-     100% quand elle entre par le bas à +5% quand elle sort par le haut.
+     100% quand elle entre par le bas à +20% quand elle sort par le haut.
      Origine haut-gauche (voir instruments-index.css) : le bord haut ne
      bouge pas, les marges de la maquette absorbent la croissance vers le
-     bas et la droite → jamais de chevauchement avec les textes. */
+     bas → pas de chevauchement avec les textes ; à droite, le hautbois
+     peut dépasser du cadre, clippé par overflow sur .instr-index. */
 
   const figs = document.querySelectorAll(".instr-fig");
   if (figs.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const GROW = 0.05; // agrandissement maximal (+5%)
+    const GROW = 0.2; // agrandissement maximal (+20%)
     const update = () => {
       const vh = window.innerHeight;
       figs.forEach((fig) => {

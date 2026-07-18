@@ -5,9 +5,10 @@
    la fenêtre (même principe que le héro Home). Les photos portrait sont
    couchées à l'horizontale (rotation 90°, socle de pierre à gauche) et
    débordent du bord gauche comme sur la maquette (hautbois −154, altos −82,
-   sopranos −39). main.js les agrandit lentement au fil du défilement
-   (origine haut-gauche, +5 % max — borné pour que le hautbois reste dans le
-   bord droit et que les photos ne recouvrent jamais les textes).
+   sopranos −39). main.js les agrandit au fil du défilement (origine
+   haut-gauche, +20 % max — la croissance part vers le bas et la droite,
+   les marges verticales de la maquette l'absorbent sans toucher les
+   textes ; le hautbois peut dépasser du bord droit, d'où l'overflow clip).
    ========================================================================== */
 
 .instr-index {
@@ -15,6 +16,7 @@
   position: relative;
   height: calc(2401 * var(--u)); /* 2754 (maquette) − 55 (menu) − 298 (footer) */
   flex: none; /* annule le flex:1 de layout.css (flex-basis:0 écraserait notre hauteur) */
+  overflow: clip; /* le hautbois zoomé sort à droite sans créer de scroll horizontal */
 }
 
 /* ---- Titres (48px) et entêtes de bois (32.67px) ------------------------- */
