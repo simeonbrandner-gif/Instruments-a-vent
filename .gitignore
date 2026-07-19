@@ -6,3 +6,6 @@
 
 # Réglages locaux Claude
 .claude/settings.local.json
+
+# Documents administratifs (factures…) — jamais sur le dépôt public
+2. Development/0. Admin/
