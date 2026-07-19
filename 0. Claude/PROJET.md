@@ -3,7 +3,7 @@
 > Document de référence pour toute nouvelle session de travail sur ce projet.
 > Dernière mise à jour : 2026-07-19
 
-**🌐 Site en ligne :** https://simeonbrandner-gif.github.io/Instruments-a-vent/
+**🌐 Site en ligne :** https://atelier-brandner.ch (GitHub Pages, publication automatique à chaque push — miroir : https://simeonbrandner-gif.github.io/Instruments-a-vent/)
 
 ## Le projet
 
@@ -11,7 +11,7 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 
 - **Simeon** fait le design dans Figma → **Claude** écrit tout le code (HTML/CSS/JS vanilla, aucun framework, aucune dépendance).
 - Site **français uniquement**.
-- Déploiement : **hébergeur classique via FTP** — le dossier Staging est directement uploadable.
+- Déploiement : **GitHub Pages + domaine atelier-brandner.ch** (chaque push sur `main` publie le Staging). L'option FTP classique est abandonnée.
 - Contact : liens **mailto/tel uniquement**, pas de formulaire, pas de backend.
 
 ## Figma
@@ -50,19 +50,21 @@ Site_Chr/
 │   └── Textes/textes_pour_le_site_03.doc  ← textes du site
 └── 2. Development/
     ├── 1. Sources/       ← on développe ICI
-    │   ├── 1. assets/    → img/ (webp finaux + placeholders .jpg), fonts/
+    │   ├── 1. assets/    → img/ (webp finaux — plus aucun placeholder), fonts/
     │   ├── 2. HTML/      → pages (+ _template-stub.html pour les pages à venir,
     │   │                    exclu du build ; symlinks css/js/assets pour ouvrir
     │   │                    les fichiers directement pendant le dev)
     │   ├── 3. CSS/       → tokens.css, base.css, layout.css (menu+sous-menu+footer),
-    │   │                    home.css, instruments.css, biographie.css,
-    │   │                    contact.css (1 fichier par page)
-    │   ├── 4. JS/        → main.js (accordéon instruments ; garder minimal)
+    │   │                    home.css, instruments.css (pages instrument),
+    │   │                    instruments-index.css (vue d'ensemble), atelier.css,
+    │   │                    biographie.css, contact.css, legal.css
+    │   ├── 4. JS/        → main.js (scroll différencié + auto-scroll des pages
+    │   │                    instrument, zoom de la vue d'ensemble ; garder minimal)
     │   └── build.sh      → assemble le site déployable dans Staging
     ├── 2. Versioning/V1/ ← snapshots aux jalons
     └── 3. Build : export/
         ├── 1. Staging/   ← résultat du build (préviews, tests)
-        ├── 2. Final/     ← copie validée prête pour le FTP
+        ├── 2. Final/     ← copie validée aux jalons
         └── 3. Archive/
 ```
 
@@ -80,13 +82,11 @@ Site_Chr/
 - Simeon exporte les **WebP finaux** : **2× la taille d'affichage** de la maquette, qualité 80–85, à déposer dans `1. assets/img/`.
 - En attendant, Claude pose des **placeholders** tirés des assets Figma ; quand le webp final arrive, remplacer l'extension dans le HTML et supprimer le placeholder. ⚠️ Pour les images à fond transparent (carte, hautbois détouré…), placeholder en **PNG** — pas de JPEG, qui remplace l'alpha par du blanc (le Mac n'a pas d'encodeur webp en ligne de commande).
 - Cibles de poids : héro ≤ 400 KB, grandes images ≤ 500–600 KB.
-- Noms en kebab-case français : `hero-home.webp`, `gravure-flutes.webp`, `soprano-do-buis.webp`…
+- Noms : suivre les exports de Simeon — **underscores** pour les photos (`soprano_415_reich_buis.webp`, `carte_geneve.webp`…) ; quelques anciens fichiers restent en kebab-case (`hero-home.webp`, `bio-portrait.webp`, `logo-footer.svg`, favicons).
 - Logo footer : `logo-footer.svg` (déjà en place, vectoriel).
-- Livrées le 2026-07-18 ✅ : les 7 webp instruments (2×, 0,2–0,6 MB), `atelier_01..07.webp` (600×260, 25–71 KB), `bio-portrait.webp` + `bio-atelier.webp` (600×600, cadrage carré fait par Simeon → `object-position` retirés du CSS). `contact_hautbois.webp` ✅ (347 KB, alpha).
-- Livrées le 2026-07-19 ✅ : `hero-home.webp` re-exportée (2880×1621, 231 KB), `gravure_flutes.webp` (950×1541, 495 KB — affichée 772px de large, densité 1,23×), `carte_geneve.webp` (1544×1352, 554 KB, transparence conservée — le PNG est supprimé, contact.html pointe sur le webp). ⚠️ Le héro garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
-- Livrée le 2026-07-19 ✅ : `tetes_flutes_atelier.webp` re-exportée (2880×1509, 202 KB). **Toutes les images du site sont désormais aux poids cibles.**
-- Livré le 2026-07-19 ✅ : favicon (logo orange sur fond blanc, `favicon-512.png` fourni par Simeon → `favicon-32.png` et `apple-touch-icon.png` 180×180 dérivés via sips, liens `<link rel="icon">` dans les 15 pages + gabarit).
-- Manquant : vidéo atelier (MP4 auto-hébergé, < 50 MB) — dernier asset du site.
+- **✅ Toutes les images du site sont livrées et aux poids cibles (2026-07-19)** : 7 instruments (2×, 0,2–0,6 MB), atelier ×7 (600×260), bio ×2 (600×600, cadrage carré par Simeon), héro (2880×1621, 231 KB), gravure (950×1541, 495 KB), carte Genève webp (alpha, 554 KB), têtes de flûtes (2880×1509, 202 KB), hautbois contact (alpha, 347 KB), nouveau `logo-footer.svg`, favicon (`favicon-512.png` de Simeon → `favicon-32.png` + `apple-touch-icon.png` dérivés via sips, liés dans toutes les pages).
+- ⚠️ Le héro Home garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
+- Manquant : **vidéo atelier** (MP4 auto-hébergé, < 50 MB) — dernier asset du site.
 
 ## Pages
 
@@ -97,24 +97,26 @@ Site_Chr/
 | alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
 | hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
 | instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom lent au défilement (voir gabarit ci-dessous) |
-| atelier.html | ⏳ stub | attend la maquette Figma |
+| atelier.html | ✅ faite | maquette 22:201 — colonne de 7 photos, titre condensé, 3 paragraphes, **placeholder vidéo** (rectangle gris 16/9) en attente du MP4, photo têtes de flûtes pleine largeur |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
 | mentions-legales.html, protection-des-donnees.html | ✅ faites | pages légales (legal.css). Les Conditions générales ont été supprimées le 2026-07-19 (inutiles sans vente en ligne) — leur clause « caractéristiques et photos indicatives » est fusionnée dans les Mentions légales (section « Instruments et informations »). Notes de vérification retirées. TVA : non assujetti (< 100 000 CHF/an, confirmé par Simeon) — indiqué dans la section Statut ; pas de crédit de conception (choix de Simeon).
 
 ## Reste à faire (phases)
 
-1. Pages restantes au fil des maquettes Figma
-2. Responsive d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
-3. Finitions : favicon, Open Graph, SEO (voir checklist ci-dessous), Lighthouse, validation
+Toutes les pages sont faites, toutes les images sont livrées, le domaine est en ligne. Reste :
+
+1. **Vidéo atelier** (Simeon la tourne) → remplacer le placeholder gris d'atelier.html par un `<video>` MP4 auto-hébergé (< 50 MB, compresser via ffmpeg)
+2. **Responsive** d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
+3. **Finitions SEO/qualité** : voir checklist ci-dessous (canonical/sitemap/JSON-LD débloqués maintenant que le domaine est live), Open Graph, Lighthouse, validation HTML
    - ⚠️ **Footer : ajouter 36px de bottom margin**
-4. Validation finale : snapshot dans `2. Versioning/V1` (GitHub Pages publie automatiquement chaque push sur `main`)
+4. Validation finale : snapshot dans `2. Versioning/V1`
 
 ### Gabarit pages instrument (fait le 2026-07-18)
 
 - **Une page par instrument et par bois** (7 pages). Grande photo à gauche en flux normal (c'est elle qui fait la hauteur de page), colonne texte absolue à droite (titre 62px à 207px du haut, intro à 478px, largeur 772/624). Le bois de la page : entête 32px orange + texte ; les autres bois : entêtes blanches = **liens vers les pages sœurs**. CSS : `instruments.css` (variantes `.instrument--soprano/alto/hautbois` pour les cotes photo).
 - **Défilement différencié** (main.js) : la photo suit le scroll normal ; la colonne texte est passée en `position: fixed` par le JS (le CSS reste `absolute` = défilement normal sans JS) et déplacée par un `translate3d` appliqué directement dans l'événement scroll — sa course est calée pour finir 60px au-dessus du footer en bas de page (vitesse auto : ~40% sur les sopranos, ~14% sur le hautbois). ⚠️ Ne pas revenir à un panneau qui suit le flux + correction au rAF suivant : le compositeur le fait défiler à pleine vitesse avant la correction → saccades. Le handler remesure si la hauteur du document change (police/image tardive).
-- **Défilement automatique** (main.js) : la page descend seule à 22px/s après 2,5s ; toute interaction (molette, touche, toucher, écart de position) rend la main à l'utilisateur, reprise après 4s d'inactivité ; arrêt en bas de page ; désactivé si `prefers-reduced-motion`.
+- **Défilement automatique** (main.js) : la page descend seule à 22px/s **dès le chargement** (délai initial supprimé à la demande de Simeon) ; toute interaction (molette, touche, toucher, écart de position) rend la main à l'utilisateur, reprise après 4s d'inactivité ; arrêt en bas de page ; désactivé si `prefers-reduced-motion`.
 - Les `<img>` portent `width`/`height` explicites (mesures du scroll fiables avant chargement + pas de layout shift).
 
 ### Gabarit page Instruments — vue d'ensemble (fait le 2026-07-18)
@@ -125,17 +127,17 @@ Site_Chr/
 - Chaque photo, entête de bois et titre est un **lien vers la page instrument** correspondante (survol → orange).
 - ⚠️ Dans la maquette Figma, les calques photo des sopranos « Buis » et « Olivier » semblent intervertis (le calque nommé olivier est sous l'entête Buis) ; le code suit les **entêtes** (buis sous Buis).
 
-### Checklist SEO (audit du 2026-07-13 — à faire vers la fin, la plupart après l'achat du domaine)
+### Checklist SEO (audit du 2026-07-13, statuts mis à jour au 2026-07-19)
 
 Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 par page, alt partout, `lang="fr"`, HTML sémantique). Par ordre d'impact :
 
-1. **Domaine + Google Business Profile** — le levier n°1. Acheter le domaine, le brancher sur GitHub Pages, puis créer une fiche Google Business (« Christoph Brandner, facteur d'instruments à vent, 15 rue des Gares, Genève ») : pour les recherches locales, la carte Google passe devant tous les résultats organiques.
+1. **Domaine ✅ (atelier-brandner.ch en ligne) + Google Business Profile — le levier n°1, reste à faire.** Créer une fiche Google Business (« Christoph Brandner, facteur d'instruments à vent, 15 rue des Gares, Genève ») : pour les recherches locales, la carte Google passe devant tous les résultats organiques.
 2. **Backlinks monde de la musique ancienne** — annuaires de facteurs (FLAME…), pages de festivals/ensembles, conservatoires, forums (flute-a-bec.com). Pour un site de niche, quelques bons liens pèsent plus que tout le reste. (Action de Christoph/Simeon, pas de code.)
-3. **Quick wins code (~1-2h, Claude)** : balises canonical sur chaque page (URLs du domaine final → attendre l'achat), robots.txt + sitemap.xml, JSON-LD `LocalBusiness` sur contact.html + `Person` sur biographie.html, squelette Open Graph + favicon (déjà en phase 3).
-4. **Titles à retravailler** : mettre le mot-clé avant le nom (personne ne cherche encore « Christoph Brandner »). Ex. instruments.html : « Flûte à bec soprano en do (Reich, 415 Hz) — Christoph Brandner » (le title actuel ne contient même pas « flûte à bec ») ; atelier.html : « Atelier de facture de flûtes à bec et hautbois baroques à Genève — … ».
-5. **Poids des images = problème Core Web Vitals** : les re-exports prévus (qualité ~80) + `loading="lazy"` + attributs `width`/`height` explicites (évite le layout shift).
-6. **Une page par instrument** (déjà envisagé pour la structure) : c'est aussi le bon découpage SEO — un title/URL par instrument cible les recherches longue traîne des musiciens (« flûte à bec alto 415 Hz Bressan »…).
-7. **⚠️ Contenu dupliqué au lancement** : quand le domaine sera en ligne, le Staging GitHub Pages deviendra un doublon — soit le passer en noindex, soit y pointer les canonical vers le domaine final.
+3. **Quick wins code (~1-2h, Claude, débloqués)** : balises canonical `https://atelier-brandner.ch/…` sur chaque page, robots.txt + sitemap.xml, JSON-LD `LocalBusiness` sur contact.html + `Person` sur biographie.html, Open Graph. Favicon ✅.
+4. **Titles** : en grande partie fait (pages instrument « Flûte à bec … 415 Hz — Christoph Brandner ») ; à revoir éventuellement pour atelier.html (« Atelier de facture de flûtes à bec et hautbois baroques à Genève — … ») et la Home.
+5. **Poids des images ✅** (tous les re-exports sont faits, attributs `width`/`height` posés) — vérifier au passage les `loading="lazy"` sous la ligne de flottaison.
+6. **Une page par instrument ✅** (fait le 2026-07-18) — un title/URL par instrument pour la longue traîne.
+7. **Contenu dupliqué ✅ réglé de fait** : avec le domaine personnalisé configuré, GitHub Pages redirige les URLs github.io vers atelier-brandner.ch. Les canonical (point 3) finiront de verrouiller.
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
@@ -144,6 +146,12 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 
 - Décision de Simeon (site vitrine, pas de vente en ligne) : **conditions-generales.html supprimée**, lien retiré du footer des 15 pages + gabarit. Sa clause utile (« caractéristiques, bois, délais indicatifs ; photos non contractuelles ; demandes traitées de gré à gré avec l'atelier ») est reprise dans les Mentions légales, section « Instruments et informations ».
 - Les **notes internes `.legal-note`** des deux pages restantes sont supprimées : l'hébergement GitHub Pages est confirmé (domaine branché). Questions résolues le jour même : Christoph n'est **pas assujetti à la TVA** (< 100 000 CHF/an) — ligne ajoutée à la section « Statut » des Mentions légales (art. 10 al. 2 LTVA) ; **pas de crédit de conception** (choix de Simeon).
+
+### 2026-07-19 — Domaine en ligne, tous les assets finaux, purge git
+
+- **atelier-brandner.ch est en ligne** (DNS Infomaniak + custom domain GitHub Pages, configuré par Simeon).
+- **Derniers assets livrés par Simeon et intégrés** : héro, gravure (950px), carte Genève en webp (alpha — contact.html basculé du .png), têtes de flûtes (2880×1509), nouveau `logo-footer.svg`, favicon 512 (→ 32 + apple-touch-icon dérivés, liens posés sur toutes les pages). Leçon : **pas d'attribut height sur le héro** (il écraserait l'`aspect-ratio` CSS).
+- **Incident facture** : un `git add -A` avait embarqué `2. Development/0. Admin/Facture 8031732.pdf` sur le dépôt public → fichier retiré, **historique réécrit** (filter-branch + force push, plus aucune trace), dossier admin gitignoré. La facture vit désormais dans `1. Crea/Admin/` (hors git). Simeon renonce à la purge du cache GitHub (fenêtre d'exposition ~1h, risque jugé nul).
 
 ### 2026-07-19 — Pages légales rédigées (mentions / données / conditions)
 
