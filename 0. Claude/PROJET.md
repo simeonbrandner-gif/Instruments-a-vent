@@ -100,7 +100,7 @@ Site_Chr/
 | atelier.html | ⏳ stub | attend la maquette Figma |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
-| mentions-legales.html, protection-des-donnees.html | ✅ faites | pages légales (legal.css). Les Conditions générales ont été supprimées le 2026-07-19 (inutiles sans vente en ligne) — leur clause « caractéristiques et photos indicatives » est fusionnée dans les Mentions légales (section « Instruments et informations »). Notes de vérification retirées ; reste ouvert : statut TVA à confirmer avec Christoph, éventuel crédit de conception.
+| mentions-legales.html, protection-des-donnees.html | ✅ faites | pages légales (legal.css). Les Conditions générales ont été supprimées le 2026-07-19 (inutiles sans vente en ligne) — leur clause « caractéristiques et photos indicatives » est fusionnée dans les Mentions légales (section « Instruments et informations »). Notes de vérification retirées. TVA : non assujetti (< 100 000 CHF/an, confirmé par Simeon) — indiqué dans la section Statut ; pas de crédit de conception (choix de Simeon).
 
 ## Reste à faire (phases)
 
@@ -143,7 +143,7 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 ### 2026-07-19 — Conditions générales supprimées, notes internes retirées
 
 - Décision de Simeon (site vitrine, pas de vente en ligne) : **conditions-generales.html supprimée**, lien retiré du footer des 15 pages + gabarit. Sa clause utile (« caractéristiques, bois, délais indicatifs ; photos non contractuelles ; demandes traitées de gré à gré avec l'atelier ») est reprise dans les Mentions légales, section « Instruments et informations ».
-- Les **notes internes `.legal-note`** des deux pages restantes sont supprimées : l'hébergement GitHub Pages est confirmé (domaine branché). Restent ouverts, hors site : statut TVA de Christoph (l'indiquer si non assujetti) et éventuel crédit de conception.
+- Les **notes internes `.legal-note`** des deux pages restantes sont supprimées : l'hébergement GitHub Pages est confirmé (domaine branché). Questions résolues le jour même : Christoph n'est **pas assujetti à la TVA** (< 100 000 CHF/an) — ligne ajoutée à la section « Statut » des Mentions légales (art. 10 al. 2 LTVA) ; **pas de crédit de conception** (choix de Simeon).
 
 ### 2026-07-19 — Pages légales rédigées (mentions / données / conditions)
 
