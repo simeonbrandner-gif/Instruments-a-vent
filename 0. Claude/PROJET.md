@@ -39,7 +39,7 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 - GitHub CLI installé dans `~/.local/bin/gh` (pas dans le PATH), connecté au compte **simeonbrandner-gif** (HTTPS, credentials gérés par gh).
 - Après un changement notable : `git add -A && git commit -m "…" && git push`.
 - **GitHub Pages** : chaque push sur `main` publie automatiquement le dossier Staging (workflow `.github/workflows/deploy-pages.yml`) sur **https://simeonbrandner-gif.github.io/Instruments-a-vent/**. 
-- **Domaine personnalisé** : **atelier-brandner.ch** — une fois acheté et enregistré, le configurer dans Settings → Pages → Custom domain + records DNS (CNAME vers simeonbrandner-gif.github.io). GitHub Pages peut remplacer l'hébergeur FTP prévu initialement.
+- **Domaine personnalisé** : **atelier-brandner.ch** ✅ **LIVE** (2026-07-19) — enregistrements DNS A configurés chez Infomaniak, CNAME pour www ajouté, domaine personnalisé activé dans GitHub Pages Settings. Site accessible sur https://atelier-brandner.ch/
 
 ## Structure des dossiers
 
@@ -83,7 +83,8 @@ Site_Chr/
 - Noms en kebab-case français : `hero-home.webp`, `gravure-flutes.webp`, `soprano-do-buis.webp`…
 - Logo footer : `logo-footer.svg` (déjà en place, vectoriel).
 - Livrées le 2026-07-18 ✅ : les 7 webp instruments (2×, 0,2–0,6 MB), `atelier_01..07.webp` (600×260, 25–71 KB), `bio-portrait.webp` + `bio-atelier.webp` (600×600, cadrage carré fait par Simeon → `object-position` retirés du CSS). `contact_hautbois.webp` ✅ (347 KB, alpha).
-- Manquants : re-export `gravure_flutes.webp` (8,6 MB → trop lourd) et `tetes_flutes_atelier.webp` (6,2 MB), `carte_geneve` en webp (le PNG 1,3 MB fait l'affaire en attendant, **garder la transparence**), vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
+- Livrées le 2026-07-19 ✅ : `hero-home.webp` re-exportée (2880×1621, 231 KB), `gravure_flutes.webp` (950×1541, 495 KB — affichée 772px de large, densité 1,23×), `carte_geneve.webp` (1544×1352, 554 KB, transparence conservée — le PNG est supprimé, contact.html pointe sur le webp). ⚠️ Le héro garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
+- Manquants : re-export `tetes_flutes_atelier.webp` (6,2 MB), vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
 
 ## Pages
 
