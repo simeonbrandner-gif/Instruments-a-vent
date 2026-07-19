@@ -18,7 +18,7 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 
 - Fichier : `c7zvOYoKuuDCGfB5bYqpo0` (Site_CHR)
 - Frames desktop en **1440px**, préfixe « D - » (D - Home, D - Instruments…)
-- Frames existantes : Home (0:38), sous-menu Instruments (8:212), Biographie (7:171), Contact (9:274), Atelier (22:201)
+- Frames existantes : Home (0:38), sous-menu Instruments (8:212), Instruments vue d'ensemble (31:816), Biographie (7:171), Contact (9:274), Atelier (22:201)
 - **Frames instruments (une par instrument/bois)** : Soprano Reich 415 Buis (30:256) / Olivier (30:312) / Cormier (30:358), Alto Bressan 415 Buis (30:233) / Olivier (30:748) / Cormier (30:680), Hautbois Schlegel 415 (30:279). Les anciennes frames accordéon (1:34/1:56/1:78) sont obsolètes.
 - **Mobile : Simeon designera ses propres frames mobiles** — ne pas inventer de responsive, attendre ses maquettes.
 - Pour chaque nouvelle page : Simeon donne le lien avec le node sélectionné → récupérer via le MCP Figma (get_design_context + get_screenshot).
@@ -28,9 +28,9 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 - Fond `#000000`, texte `#fafafa`, accent orange `#fe990a`
 - Police : **Bricolage Grotesque variable** (graisse 200–800, largeur 75–100%), auto-hébergée en woff2 (pas de CDN Google — protection des données suisse)
 - Rail central : 1403px max, gouttières 19px
-- **Tous les filets 1px sont orange**. Les filets « pleine page » (menu, footer, séparateurs de section) font toujours **100% de largeur avec 18px de marge de chaque côté** (`--rule-margin`), à toutes les tailles d'écran. Les filets internes aux colonnes de contenu (ex. accordéon) restent à la largeur de leur bloc.
+- **Tous les filets 1px sont orange**. Les filets « pleine page » (menu, footer, séparateurs de section) font toujours **100% de largeur avec 18px de marge de chaque côté** (`--rule-margin`), à toutes les tailles d'écran. Les filets internes aux colonnes de contenu (ex. entêtes de bois des pages instrument) restent à la largeur de leur bloc.
 - Menu : lien actif **blanc** (`aria-current="page"` posé dans le HTML de chaque page), les autres **orange**. Le menu est **collant (sticky) sur toutes les pages**. Hauteur réelle : `--header-h: 55px`.
-- Titres condensés (ex. titre instrument) : `font-stretch: 88%` / accordéon `76%` — la police auto-hébergée inclut l'axe wdth.
+- Titres condensés (ex. titre instrument) : `font-stretch: 88%` / entêtes de bois `76%` — la police auto-hébergée inclut l'axe wdth.
 
 ## Git / GitHub
 
@@ -80,7 +80,7 @@ Site_Chr/
 ## Images — règles
 
 - Simeon exporte les **WebP finaux** : **2× la taille d'affichage** de la maquette, qualité 80–85, à déposer dans `1. assets/img/`.
-- En attendant, Claude pose des **placeholders** tirés des assets Figma ; quand le webp final arrive, remplacer l'extension dans le HTML et supprimer le placeholder. ⚠️ Pour les images à fond transparent (carte, hautbois détouré…), placeholder en **PNG** — pas de JPEG, qui remplace l'alpha par du blanc (le Mac n'a pas d'encodeur webp en ligne de commande).
+- Pour une future image sans webp livré : placeholder tiré des assets Figma en attendant, puis remplacer et supprimer à la livraison. ⚠️ Placeholder d'image à fond transparent en **PNG** — pas de JPEG, qui remplace l'alpha par du blanc (le Mac n'a pas d'encodeur webp en ligne de commande). Toujours poser les attributs `width`/`height` (sauf héro, voir plus bas).
 - Cibles de poids : héro ≤ 400 KB, grandes images ≤ 500–600 KB.
 - Noms : suivre les exports de Simeon — **underscores** pour les photos (`soprano_415_reich_buis.webp`, `carte_geneve.webp`…) ; quelques anciens fichiers restent en kebab-case (`hero-home.webp`, `bio-portrait.webp`, `logo-footer.svg`, favicons).
 - Logo footer : `logo-footer.svg` (déjà en place, vectoriel).
@@ -96,7 +96,7 @@ Site_Chr/
 | soprano-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:256/312/358 — une page par bois (voir gabarit commun ci-dessous) |
 | alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
 | hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
-| instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom lent au défilement (voir gabarit ci-dessous) |
+| instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom au défilement (×1 en bas de fenêtre → ×1,20 en haut) + zoom +10% au survol croisé photo ↔ entête (voir gabarit ci-dessous) |
 | atelier.html | ✅ faite | maquette 22:201 — colonne de 7 photos, titre condensé, 3 paragraphes, **placeholder vidéo** (rectangle gris 16/9) en attente du MP4, photo têtes de flûtes pleine largeur |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
