@@ -147,6 +147,12 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 - Décision de Simeon (site vitrine, pas de vente en ligne) : **conditions-generales.html supprimée**, lien retiré du footer des 15 pages + gabarit. Sa clause utile (« caractéristiques, bois, délais indicatifs ; photos non contractuelles ; demandes traitées de gré à gré avec l'atelier ») est reprise dans les Mentions légales, section « Instruments et informations ».
 - Les **notes internes `.legal-note`** des deux pages restantes sont supprimées : l'hébergement GitHub Pages est confirmé (domaine branché). Questions résolues le jour même : Christoph n'est **pas assujetti à la TVA** (< 100 000 CHF/an) — ligne ajoutée à la section « Statut » des Mentions légales (art. 10 al. 2 LTVA) ; **pas de crédit de conception** (choix de Simeon).
 
+### 2026-07-19 (soir) — Panne DNS du domaine, réparée
+
+- **atelier-brandner.ch a cessé de résoudre** dans l'après-midi : la zone Infomaniak affichait les 4 A records GitHub Pages (couche « Adresse web ») mais les serveurs nsany1/nsany2 les servaient à vide (NOERROR, 0 réponse) — TXT/CNAME de la même zone OK. Incohérence côté Infomaniak.
+- **Réparation** : suppression des 4 lignes « Adresse web » et recréation **à la main** comme enregistrements A ordinaires dans la Zone DNS → publication immédiate, site de retour (HTTPS 200, certificat OK).
+- ⚠️ **Piège Infomaniak** : à partir du 2ᵉ enregistrement A, un dialogue propose « Remplacer » (pré-coché) ou « Ajouter en complément » — toujours choisir **Ajouter en complément** (GitHub Pages a besoin des 4 IP côte à côte). Après une panne, les résolveurs gardent la réponse négative en cache jusqu'à 1h (TTL SOA 3600).
+
 ### 2026-07-19 — Domaine en ligne, tous les assets finaux, purge git
 
 - **atelier-brandner.ch est en ligne** (DNS Infomaniak + custom domain GitHub Pages, configuré par Simeon).
