@@ -84,7 +84,8 @@ Site_Chr/
 - Logo footer : `logo-footer.svg` (déjà en place, vectoriel).
 - Livrées le 2026-07-18 ✅ : les 7 webp instruments (2×, 0,2–0,6 MB), `atelier_01..07.webp` (600×260, 25–71 KB), `bio-portrait.webp` + `bio-atelier.webp` (600×600, cadrage carré fait par Simeon → `object-position` retirés du CSS). `contact_hautbois.webp` ✅ (347 KB, alpha).
 - Livrées le 2026-07-19 ✅ : `hero-home.webp` re-exportée (2880×1621, 231 KB), `gravure_flutes.webp` (950×1541, 495 KB — affichée 772px de large, densité 1,23×), `carte_geneve.webp` (1544×1352, 554 KB, transparence conservée — le PNG est supprimé, contact.html pointe sur le webp). ⚠️ Le héro garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
-- Manquants : re-export `tetes_flutes_atelier.webp` (6,2 MB), vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
+- Livrée le 2026-07-19 ✅ : `tetes_flutes_atelier.webp` re-exportée (2880×1509, 202 KB). **Toutes les images du site sont désormais aux poids cibles.**
+- Manquants : vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
 
 ## Pages
 
