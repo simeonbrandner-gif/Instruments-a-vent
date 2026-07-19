@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-18
+> Dernière mise à jour : 2026-07-19
 
 **🌐 Site en ligne :** https://simeonbrandner-gif.github.io/Instruments-a-vent/
 
@@ -85,7 +85,8 @@ Site_Chr/
 - Livrées le 2026-07-18 ✅ : les 7 webp instruments (2×, 0,2–0,6 MB), `atelier_01..07.webp` (600×260, 25–71 KB), `bio-portrait.webp` + `bio-atelier.webp` (600×600, cadrage carré fait par Simeon → `object-position` retirés du CSS). `contact_hautbois.webp` ✅ (347 KB, alpha).
 - Livrées le 2026-07-19 ✅ : `hero-home.webp` re-exportée (2880×1621, 231 KB), `gravure_flutes.webp` (950×1541, 495 KB — affichée 772px de large, densité 1,23×), `carte_geneve.webp` (1544×1352, 554 KB, transparence conservée — le PNG est supprimé, contact.html pointe sur le webp). ⚠️ Le héro garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
 - Livrée le 2026-07-19 ✅ : `tetes_flutes_atelier.webp` re-exportée (2880×1509, 202 KB). **Toutes les images du site sont désormais aux poids cibles.**
-- Manquants : vidéo atelier (MP4 auto-hébergé, < 50 MB), favicon 512×512.
+- Livré le 2026-07-19 ✅ : favicon (logo orange sur fond blanc, `favicon-512.png` fourni par Simeon → `favicon-32.png` et `apple-touch-icon.png` 180×180 dérivés via sips, liens `<link rel="icon">` dans les 15 pages + gabarit).
+- Manquant : vidéo atelier (MP4 auto-hébergé, < 50 MB) — dernier asset du site.
 
 ## Pages
 
@@ -99,7 +100,7 @@ Site_Chr/
 | atelier.html | ⏳ stub | attend la maquette Figma |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
-| mentions-legales.html, protection-des-donnees.html, conditions-generales.html | ⏳ stubs | gabarit typographique simple, pas de maquette prévue |
+| mentions-legales.html, protection-des-donnees.html, conditions-generales.html | ✅ faites | textes rédigés (droit suisse : Impressum / nLPD / CGU), CSS partagé `legal.css`. ⚠️ 3 notes internes `.legal-note` à vérifier puis supprimer (voir journal 2026-07-19) |
 
 ## Reste à faire (phases)
 
@@ -138,6 +139,13 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-19 — Pages légales rédigées (mentions / données / conditions)
+
+- Les 3 stubs légaux sont remplis, **cadre juridique suisse** (pas de RGPD/mentions légales à la française) : **mentions-legales.html** = Impressum (éditeur, statut artisan non inscrit au RC, activité, hébergement, PI) ; **protection-des-donnees.html** = nLPD (site vitrine sans collecte active, journaux serveur de l'hébergeur, aucun cookie/analytics, polices auto-hébergées, contact courriel, transfert USA via GitHub Pages + Swiss–U.S. DPF, droits, PFPDT) ; **conditions-generales.html** = CGU (titre « Conditions générales d'utilisation » car **pas de vente en ligne** → des CGV de vente n'ont pas d'objet ; objet, PI, responsabilité, droit suisse / for Genève).
+- Nouveau CSS partagé **`3. CSS/legal.css`** (colonne de lecture ~68ch sur le rail, tokens du site, h1 orange comme le stub, h2 condensés 88 %). Header/footer dupliqués comme les autres pages ; `aria-current="page"` posé sur le lien légal actif du footer.
+- ⚠️ **3 notes internes `.legal-note`** laissées en bas de chaque page (à vérifier avec Christoph puis **supprimer**) : (1) hébergeur réel si passage GitHub Pages → FTP suisse — supprimer alors la section « Hébergement hors de Suisse » des données ; (2) statut TVA (assujetti ou non < 100 000 CHF) ; (3) crédit conception éventuel ; (4) une vraie page CGV deviendra nécessaire le jour d'une vente en ligne.
+- Build : `rm -rf` du Staging refusé dans le sandbox (droits mount) — les 4 fichiers (3 HTML + legal.css) ont été copiés directement dans Staging. **À relancer `build.sh` proprement sur le Mac** pour régénérer un Staging complet et cohérent.
 
 ### 2026-07-18 — Page Instruments (vue d'ensemble) + zoom au défilement
 

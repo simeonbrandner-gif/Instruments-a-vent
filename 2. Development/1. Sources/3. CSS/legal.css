@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Pages légales — Mentions légales, Protection des données, Conditions
+   Gabarit typographique simple (pas de maquette Figma). Partagé par les 3 pages.
+   ========================================================================== */
+
+.legal {
+  padding: 96px 0 120px;
+}
+
+/* Colonne de lecture confortable à l'intérieur du rail */
+.legal-inner {
+  max-width: 68ch;
+}
+
+.legal h1 {
+  font-size: var(--text-heading-size);
+  line-height: var(--text-heading-line);
+  font-weight: 700;
+  letter-spacing: 1.52px;
+  color: var(--color-accent);
+}
+
+.legal .legal-updated {
+  margin-top: 12px;
+  font-size: var(--text-small-size);
+  line-height: 1.4;
+  opacity: 0.6;
+}
+
+.legal h2 {
+  margin-top: 56px;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  font-stretch: 88%;
+  letter-spacing: 0.3px;
+  color: var(--color-accent);
+}
+
+.legal p {
+  margin-top: 16px;
+}
+
+.legal ul.legal-list {
+  margin-top: 16px;
+  padding-left: 1.2em;
+  list-style: disc;
+}
+
+.legal ul.legal-list li {
+  margin-top: 8px;
+}
+
+.legal a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal address {
+  margin-top: 16px;
+  font-style: normal;
+}
+
+.legal .legal-note {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: var(--rule);
+  font-size: var(--text-footer-size);
+  line-height: var(--text-footer-line);
+  opacity: 0.7;
+}
