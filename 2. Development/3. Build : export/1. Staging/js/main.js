@@ -10,29 +10,50 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ---- Page Instruments (vue d'ensemble) : zoom au défilement -----------
-     Chaque photo grossit à mesure qu'elle remonte dans la fenêtre : de
-     100% quand elle entre par le bas à +20% quand elle sort par le haut.
+     Chaque photo grossit à mesure qu'elle remonte : échelle 1 en bas de
+     fenêtre (ou au chargement pour celles déjà visibles, hautbois compris)
+     → +20% quand elle sort par le haut. Deux rampes, on prend la plus
+     basse : pView (position dans la fenêtre) et pRise (défilement depuis
+     le chargement) — les deux atteignent 1 exactement à la sortie haute.
      Origine haut-gauche (voir instruments-index.css) : le bord haut ne
      bouge pas, les marges de la maquette absorbent la croissance vers le
-     bas → pas de chevauchement avec les textes ; à droite, le hautbois
-     peut dépasser du cadre, clippé par overflow sur .instr-index. */
+     bas ; à droite, le hautbois peut dépasser du cadre, clippé par
+     overflow sur .instr-index. Le zoom +10% au survol est en CSS, sur le
+     wrapper .instr-zoom (il se multiplie avec celui-ci). */
 
   const figs = document.querySelectorAll(".instr-fig");
   if (figs.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    const GROW = 0.2; // agrandissement maximal (+20%)
+    const GROW = 0.2; // agrandissement maximal au défilement (+20%)
+    let meta = []; // {el, top0 (position document), h} par figure
+
     const update = () => {
       const vh = window.innerHeight;
-      figs.forEach((fig) => {
-        // rect.top est insensible au scale (origine en haut) ; offsetHeight
-        // est la hauteur de mise en page, elle aussi insensible au scale.
-        const p = (vh - fig.getBoundingClientRect().top) / (vh + fig.offsetHeight);
-        const s = 1 + GROW * Math.min(1, Math.max(0, p));
-        fig.style.transform = "scale(" + s.toFixed(4) + ")";
+      const y = window.scrollY;
+      meta.forEach((m) => {
+        const top = m.top0 - y; // position fenêtre (le scale n'affecte pas le haut)
+        const pView = (vh - top) / (vh + m.h); // 0 : entre en bas → 1 : sortie en haut
+        const pRise = y / (m.top0 + m.h); // 0 : au chargement → 1 : sortie en haut
+        const p = Math.min(1, Math.max(0, Math.min(pView, pRise)));
+        m.el.style.transform = "scale(" + (1 + GROW * p).toFixed(4) + ")";
       });
     };
+
+    const measureFigs = () => {
+      meta = [];
+      figs.forEach((el) => {
+        el.style.transform = "none";
+      });
+      figs.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        meta.push({ el, top0: rect.top + window.scrollY, h: rect.height });
+      });
+      update();
+    };
+
     window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    update();
+    window.addEventListener("resize", measureFigs);
+    window.addEventListener("load", measureFigs);
+    measureFigs();
   }
 
   const panel = document.querySelector(".instrument-panel");

@@ -38,7 +38,8 @@ Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur 
 - Le dossier `1. Crea/` (83 Go) est exclu via `.gitignore` — seuls le code, le build et les docs sont versionnés.
 - GitHub CLI installé dans `~/.local/bin/gh` (pas dans le PATH), connecté au compte **simeonbrandner-gif** (HTTPS, credentials gérés par gh).
 - Après un changement notable : `git add -A && git commit -m "…" && git push`.
-- **GitHub Pages** : chaque push sur `main` publie automatiquement le dossier Staging (workflow `.github/workflows/deploy-pages.yml`) sur **https://simeonbrandner-gif.github.io/Instruments-a-vent/**. Quand Simeon aura acheté le nom de domaine, le brancher ici (Settings → Pages → Custom domain + DNS) — GitHub Pages peut remplacer l'hébergeur FTP prévu initialement.
+- **GitHub Pages** : chaque push sur `main` publie automatiquement le dossier Staging (workflow `.github/workflows/deploy-pages.yml`) sur **https://simeonbrandner-gif.github.io/Instruments-a-vent/**. 
+- **Domaine personnalisé** : **atelier-brandner.ch** — une fois acheté et enregistré, le configurer dans Settings → Pages → Custom domain + records DNS (CNAME vers simeonbrandner-gif.github.io). GitHub Pages peut remplacer l'hébergeur FTP prévu initialement.
 
 ## Structure des dossiers
 
@@ -116,7 +117,8 @@ Site_Chr/
 ### Gabarit page Instruments — vue d'ensemble (fait le 2026-07-18)
 
 - **instruments.html** (maquette 31:816, CSS `instruments-index.css`) : les 7 photos portrait sont couchées à l'horizontale (rotation CSS 90°, socle de pierre à gauche) et débordent du bord gauche comme sur la maquette (hautbois −154px, altos −82px, sopranos −39px à 1440). Composition entièrement homothétique via `--u: min(100vw/1440, 1px)` (même principe que le héro Home) → aucune collision à aucune largeur. `flex: none` sur le main (le `flex: 1` de layout.css écraserait sa hauteur, tous ses enfants étant absolus).
-- **Zoom au défilement** (main.js) : chaque photo grossit de 100% à **+20%** (`GROW = 0.2`, porté de +5% à +20% le 2026-07-18 à la demande de Simeon) à mesure qu'elle traverse la fenêtre, origine haut-gauche → le bord haut ne bouge pas (jamais de chevauchement avec l'entête au-dessus). Le hautbois zoomé dépasse du bord droit : clippé par `overflow: clip` sur `.instr-index` (pas de scroll horizontal). Limite verticale : GROW ≤ ~0,29 (gap hautbois→titre alto), re-vérifier si on l'augmente. Désactivé si `prefers-reduced-motion`.
+- **Zoom au défilement** (main.js) : chaque photo est à l'échelle **1 au chargement** (hautbois compris) et grossit jusqu'à **+20%** (`GROW = 0.2`) à mesure qu'elle monte — plus bas dans la fenêtre = plus petit. Formule : p = min(pView, pRise) où pView = position dans la fenêtre et pRise = défilement depuis le chargement rapporté à la sortie de la figure ; les deux rampes valent 1 pile quand la figure sort en haut. Origine haut-gauche → le bord haut ne bouge pas. Le hautbois zoomé dépasse du bord droit : clippé par `overflow: clip` sur `.instr-index`. Désactivé si `prefers-reduced-motion`.
+- **Survol (2026-07-18)** : la photo (`a.instr-fig` > wrapper `span.instr-zoom`) grossit de **+10%** en douceur (transition CSS 0.4s sur le wrapper — se multiplie avec le zoom au défilement porté par la figure) et l'entête juste au-dessus passe à l'orange (`:has(+ .instr-fig:hover)`). Symétrique : survoler l'entête (« Buis », « Olivier »…, ou le titre pour le hautbois) zoome la photo adjacente (`entête:hover + .instr-fig`). Les paires reposent sur l'adjacence entête→figure dans le HTML — la préserver.
 - Chaque photo, entête de bois et titre est un **lien vers la page instrument** correspondante (survol → orange).
 - ⚠️ Dans la maquette Figma, les calques photo des sopranos « Buis » et « Olivier » semblent intervertis (le calque nommé olivier est sous l'entête Buis) ; le code suit les **entêtes** (buis sous Buis).
 

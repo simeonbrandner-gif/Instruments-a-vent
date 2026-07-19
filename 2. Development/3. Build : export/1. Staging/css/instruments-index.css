@@ -77,12 +77,37 @@
   will-change: transform;
 }
 
+/* Wrapper interne : porte le zoom +10% au survol (transition CSS), qui se
+   multiplie avec le zoom au défilement posé par main.js sur .instr-fig */
+.instr-zoom {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: top left;
+  transition: transform 0.4s ease;
+}
+
 .instr-fig img {
   width: calc(var(--thick) * var(--u));
   height: calc(var(--len) * var(--u));
   max-width: none;
   transform-origin: top left;
   transform: rotate(90deg) translateY(-100%);
+}
+
+/* Survol de la photo — ou de l'entête juste au-dessus : la photo grossit
+   de 10% en douceur (même origine haut-gauche que le zoom au défilement) */
+.instr-fig:hover .instr-zoom,
+.instr-head:hover + .instr-fig .instr-zoom,
+.instr-wood:hover + .instr-fig .instr-zoom {
+  transform: scale(1.1);
+}
+
+/* Survol de la photo : l'entête juste au-dessus passe à l'orange
+   (le survol direct de l'entête est déjà orange via a:hover) */
+.instr-head:has(+ .instr-fig:hover) a,
+.instr-wood:has(+ .instr-fig:hover) a {
+  color: var(--color-accent);
 }
 
 .instr-fig--hautbois        { top: calc(128 * var(--u));    left: calc(-154 * var(--u)); --len: 1502;  --thick: 247.6; }
