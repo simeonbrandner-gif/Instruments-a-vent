@@ -56,14 +56,6 @@
   margin-top: 32px; /* une ligne vide entre les paragraphes (maquette) */
 }
 
-/* Bloc vidéo — rectangle gris 1088×612 (16/9) aligné sur la colonne photos.
-   À remplacer par un <video> auto-hébergé quand la vidéo sera livrée. */
-.atelier-video {
-  margin: 56px min(157px, 11%) 0; /* bloc à 1250px du haut de page */
-  aspect-ratio: 16 / 9;
-  background: #d9d9d9;
-}
-
 /* Photo pleine largeur en bas de page, collée au filet du footer */
 .atelier-bottom {
   margin-top: 68px;

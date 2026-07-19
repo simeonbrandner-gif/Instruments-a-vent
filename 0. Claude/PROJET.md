@@ -97,7 +97,7 @@ Site_Chr/
 | alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
 | hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
 | instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom au défilement (×1 en bas de fenêtre → ×1,20 en haut) + zoom +10% au survol croisé photo ↔ entête (voir gabarit ci-dessous) |
-| atelier.html | ✅ faite | maquette 22:201 — colonne de 7 photos, titre condensé, 3 paragraphes, **placeholder vidéo** (rectangle gris 16/9) en attente du MP4, photo têtes de flûtes pleine largeur |
+| atelier.html | ✅ faite | maquette 22:201 — colonne de 7 photos, titre condensé, 3 paragraphes, photo têtes de flûtes pleine largeur. Le bloc vidéo (16/9) sera ajouté à la livraison du MP4 — placeholder retiré du site en ligne |
 | biographie.html | ✅ faite | maquette 7:171 — portrait + nom, filet, photo atelier + texte |
 | contact.html | ✅ faite | maquette 9:274 — carte Genève + coordonnées 38px (mailto/tel), photo hautbois pleine largeur. La carte : cliquable → Google Maps sur l'adresse (nouvel onglet, `rel="noopener"`), cadre façon « Fill » Figma (hauteur fixe 676px, `object-fit: cover` centré) qui s'étire à gauche jusqu'à la marge de 18px comme les filets |
 | mentions-legales.html, protection-des-donnees.html | ✅ faites | pages légales (legal.css). Les Conditions générales ont été supprimées le 2026-07-19 (inutiles sans vente en ligne) — leur clause « caractéristiques et photos indicatives » est fusionnée dans les Mentions légales (section « Instruments et informations »). Notes de vérification retirées. TVA : non assujetti (< 100 000 CHF/an, confirmé par Simeon) — indiqué dans la section Statut ; pas de crédit de conception (choix de Simeon).
@@ -106,7 +106,7 @@ Site_Chr/
 
 Toutes les pages sont faites, toutes les images sont livrées, le domaine est en ligne. Reste :
 
-1. **Vidéo atelier** (Simeon la tourne) → remplacer le placeholder gris d'atelier.html par un `<video>` MP4 auto-hébergé (< 50 MB, compresser via ffmpeg)
+1. **Vidéo atelier** (Simeon la tourne) → ajouter un bloc `<video>` MP4 auto-hébergé dans atelier.html entre le texte et la photo des têtes de flûtes (< 50 MB, compresser via ffmpeg). Le placeholder gris a été **retiré du site en ligne le 2026-07-19** (demande de Simeon) — le bloc sera recréé à la livraison (ancien CSS : `.atelier-video`, marge `56px min(157px, 11%) 0`, `aspect-ratio: 16/9`).
 2. **Responsive** d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
 3. **Finitions SEO/qualité** : voir checklist ci-dessous (canonical/sitemap/JSON-LD débloqués maintenant que le domaine est live), Open Graph, Lighthouse, validation HTML
    - ⚠️ **Footer : ajouter 36px de bottom margin**
