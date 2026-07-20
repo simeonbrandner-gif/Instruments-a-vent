@@ -61,7 +61,9 @@ Site_Chr/
     │   ├── 4. JS/        → main.js (scroll différencié + auto-scroll des pages
     │   │                    instrument, zoom de la vue d'ensemble ; garder minimal)
     │   └── build.sh      → assemble le site déployable dans Staging
-    ├── 2. Versioning/V1/ ← snapshots aux jalons
+    ├── 2. Versioning/    ← snapshots aux jalons : un dossier AAAA-MM-JJ/
+    │                       (copie de Sources + LISEZMOI.txt), hors git —
+    │                       convention posée par Simeon le 2026-07-20
     └── 3. Build : export/
         ├── 1. Staging/   ← résultat du build (préviews, tests)
         ├── 2. Final/     ← copie validée aux jalons
@@ -75,7 +77,7 @@ Site_Chr/
 **Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html.
 
 **Sous-menu Instruments (maquette Figma 8:212) :** l'entrée « Instruments » du menu porte un menu déroulant (`li.has-sub` > `ul.sub-menu`, styles dans layout.css) — panneau noir 245px sous le menu, libellés 20px ExtraBold orange avec 18px au-dessus/en-dessous, filet orange 1px entre chaque entrée. Ouverture au survol et au clavier (focus-within).
-⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano-buis.html, « Alto 415Hz » → alto-buis.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
+⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano.html, « Alto 415Hz » → alto.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
 
 ## Images — règles
 
@@ -93,8 +95,8 @@ Site_Chr/
 | Page | État | Notes |
 |---|---|---|
 | index.html (Accueil) | ✅ faite | héro + section « Pourquoi fabriquer… » |
-| soprano-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:256/312/358 — une page par bois (voir gabarit commun ci-dessous) |
-| alto-{buis,olivier,cormier}.html | ✅ faites | maquettes 30:233/748/680 |
+| soprano.html | ✅ faite | gabarit une-page (maquette 38:908 transposée) — les 3 bois sur la même page : rail vertical, accordéon, bascule animée |
+| alto.html | ✅ faite | maquette 38:908 — même gabarit une-page |
 | hautbois.html | ✅ faite | maquette 30:279 — un seul bois (buis), pas de section bois |
 | instruments.html | ✅ faite | maquette 31:816 — vue d'ensemble des 7 instruments couchés à l'horizontale, zoom au défilement (×1 en bas de fenêtre → ×1,20 en haut) + zoom +10% au survol croisé photo ↔ entête (voir gabarit ci-dessous) |
 | atelier.html | ✅ faite | maquette 22:201 — colonne de 7 photos, titre condensé, 3 paragraphes, photo têtes de flûtes pleine largeur. Le bloc vidéo (16/9) sera ajouté à la livraison du MP4 — placeholder retiré du site en ligne |
@@ -112,10 +114,15 @@ Toutes les pages sont faites, toutes les images sont livrées, le domaine est en
    - ⚠️ **Footer : ajouter 36px de bottom margin**
 4. Validation finale : snapshot dans `2. Versioning/V1`
 
-### Gabarit pages instrument (fait le 2026-07-18)
+### Gabarit pages instrument (2026-07-18, refondu une-page le 2026-07-20)
 
-- **Une page par instrument et par bois** (7 pages). Grande photo à gauche en flux normal (c'est elle qui fait la hauteur de page), colonne texte absolue à droite (titre 62px à 207px du haut, intro à 478px, largeur 772/624). Le bois de la page : entête 32px orange + texte ; les autres bois : entêtes blanches = **liens vers les pages sœurs**. CSS : `instruments.css` (variantes `.instrument--soprano/alto/hautbois` pour les cotes photo).
-- **Défilement différencié** (main.js) : la photo suit le scroll normal ; la colonne texte est passée en `position: fixed` par le JS (le CSS reste `absolute` = défilement normal sans JS) et déplacée par un `translate3d` appliqué directement dans l'événement scroll — sa course est calée pour finir 60px au-dessus du footer en bas de page (vitesse auto : ~40% sur les sopranos, ~14% sur le hautbois). ⚠️ Ne pas revenir à un panneau qui suit le flux + correction au rAF suivant : le compositeur le fait défiler à pleine vitesse avant la correction → saccades. Le handler remesure si la hauteur du document change (police/image tardive).
+- **Une page par instrument** (3 pages : soprano, alto, hautbois). Grande photo à gauche en flux normal (c'est elle qui fait la hauteur de page), colonne texte absolue à droite (titre 62px à 207px du haut, largeur 772/624 ; intro à **544px** sur les pages à bois, 478px sur le hautbois). CSS : `instruments.css` (variantes `.instrument--soprano/alto/hautbois` pour les cotes photo ; `.instrument--bois` = page à bois multiples).
+- **Pages à bois multiples (soprano, alto — maquette 38:908)** : les 3 bois vivent sur la même page.
+  - **Rail vertical** de 90px à gauche (`.wood-rail-track` absolu sur le main + `.wood-rail` sticky sous le menu, pleine hauteur de fenêtre, fond noir, filet orange à droite) ; mots verticaux (`writing-mode: vertical-rl`) répartis en `space-evenly`, bois affiché en orange (`aria-current`). Le rail s'efface à l'arrivée du footer (sa piste s'arrête avec le main). La photo alto est décalée à 55px (`--media-left: 3.82%`) pour dégager le rail.
+  - **Accordéon des bois** en bas de colonne (`.wood-acc` > bouton `.acc-head` + `.wood-body` animé par `grid-template-rows`) : un seul ouvert, entête orange quand ouvert.
+  - **Bascule d'instrument** (rail OU accordéon, main.js), **en deux temps** : 1) l'ancienne photo s'éloigne (scale 0.7 + fondu, 0.45s ease-out, origine posée au centre de la fenêtre) ; 2) la nouvelle arrive du bas en plus grand (translateY 9vh + scale 1.4 → place, 0.7s). Les 3 webp sont empilées dans une grille (hauteur de page stable, préchargées) ; photos inactives en `visibility: hidden` (⚠️ pas de `will-change` permanent : 3 calques GPU géants). Le passage entering→active se fait par **reflow forcé synchrone** (pas de rAF, suspendu en onglet caché).
+  - **Liens profonds** : `#buis` / `#olivier` / `#cormier` ouvrent la page sur ce bois sans animation ; la bascule met à jour le hash (`history.replaceState`). Les anciennes URL par bois redirigent dessus.
+- **Défilement différencié « ancré »** (main.js) : la photo suit le scroll normal ; la colonne texte est passée en `position: fixed` par le JS (le CSS reste `absolute` = défilement normal sans JS) et déplacée par un `translate3d` appliqué directement dans l'événement scroll — sa course est calée pour finir 60px au-dessus du footer en bas de page. **Modèle affine ancré** : `shift(y) = anchorShift + (y − anchorY) × slope` ; premier calage linéaire depuis le haut de page, puis chaque recalage (accordéon ouvert/fermé, resize) **préserve la position visuelle courante au pixel près** (demande de Simeon) et ne recalcule que la pente restante jusqu'au footer. ⚠️ Ne pas revenir à un panneau qui suit le flux + correction au rAF suivant : le compositeur le fait défiler à pleine vitesse avant la correction → saccades. Le handler recale si la hauteur du document change (police/image tardive).
 - **Défilement automatique** (main.js) : la page descend seule à 22px/s **dès le chargement** (délai initial supprimé à la demande de Simeon) ; toute interaction (molette, touche, toucher, écart de position) rend la main à l'utilisateur, reprise après 4s d'inactivité ; arrêt en bas de page ; désactivé si `prefers-reduced-motion`.
 - Les `<img>` portent `width`/`height` explicites (mesures du scroll fiables avant chargement + pas de layout shift).
 
@@ -141,6 +148,30 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-20 — Pages une-page Soprano et Alto pour de vrai
+
+- **Le prototype est promu en vraies pages** : nouveaux `soprano.html` et `alto.html` (gabarit une-page complet, décrit dans « Gabarit pages instrument » ci-dessus). Le CSS du proto est intégré à `instruments.css` (section « Pages à bois multiples », scope `.instrument--bois`), la logique JS à `main.js` (bascule de bois + défilement différencié **ancré**, qui remplace le modèle linéaire — le hautbois passe aussi sur le modèle ancré, comportement identique vérifié).
+- **Les 6 anciennes pages par bois sont supprimées** (décision de Simeon : d'abord transformées en redirections, puis jugées inutiles — les URLs par bois n'ont vécu que ~2 jours sur un domaine tout neuf, sans sitemap ni lien externe ; les anciennes URL renverront un 404 GitHub Pages).
+- **Sous-menu Instruments** mis à jour dans toutes les pages + gabarit (« Soprano 415Hz » → soprano.html, « Alto 415Hz » → alto.html). **instruments.html** (vue d'ensemble) : titres → pages instrument, entêtes de bois et photos → `page#bois`.
+- `_alto-proto.html` supprimé (conservé dans le snapshot V1) ; la préview « site-sources » (8643) reste dans launch.json.
+- **Vérifié en préview staging (1440×900)** : rendu soprano/alto, lien profond `#cormier`, redirection `soprano-olivier.html` → `soprano.html#olivier`, bascule par rail et par accordéon (hash/image/rail/accordéon synchrones), panneau immobile au recalage (0px), arrivée à ~60px du footer sur les 3 pages instrument, aucune erreur console.
+- **Pas encore commité/poussé** — publication en ligne à la demande de Simeon.
+
+### 2026-07-20 — Prototype « Alto une-page » (local, non déployé)
+
+- **Essai demandé par Simeon** (maquette Figma **38:908**) : une seule page Alto où le changement de bois (Buis/Olivier/Cormier) se fait **sur place, animé** — les 3 pages alto-*.html existantes restent la version en ligne, intactes.
+- Fichier : **`2. HTML/_alto-proto.html`** — préfixe `_` = **exclu du build**, donc impossible à publier par accident ; tout le CSS/JS spécifique est **inline dans ce seul fichier** (les feuilles partagées et main.js sont chargés via les symlinks, non modifiés).
+- **Préview** : nouvelle config `site-sources` dans `.claude/launch.json` (port 8643, sert « 2. HTML » directement grâce aux symlinks) → http://localhost:8643/_alto-proto.html
+- Contenu du prototype :
+  - **Rail vertical des bois** : colonne collante de **90px** à gauche (sous le menu, pleine hauteur de fenêtre, fond noir, filet orange à droite), mots verticaux (`writing-mode: vertical-rl`) répartis en `space-evenly` (espace, Buis, espace, Olivier, espace, Cormier, espace). Piste absolue calée sur le main → le rail s'efface à l'arrivée du footer.
+  - **Accordéon des bois** en bas de la colonne texte (remplace les liens vers les pages sœurs) : un seul ouvert, entête orange quand ouvert, animation `grid-template-rows`.
+  - **Bascule d'instrument** (rail OU accordéon), **en deux temps** : 1) l'ancienne photo **s'éloigne** (scale **0.7** + fondu, 0.45s ease-out, origine posée au centre de la fenêtre) ; 2) une fois partie, la nouvelle **arrive du bas en plus grand** (translateY 9vh + scale **1.4** → place, 0.7s) — « comme depuis derrière la caméra ». Les 3 webp alto sont empilées dans une grille (hauteur de page stable, préchargées). Le passage entering→active se fait par reflow forcé synchrone (pas de rAF : suspendu quand l'onglet n'est pas visible).
+  - Photo décalée à 55px du bord (maquette), intro à 544px (au lieu de 478).
+  - **Défilement différencié « ancré »** : le panneau s'appelle `.proto-panel` (main.js ne le trouve pas et s'arrête) ; le script local reprend le défilement différencié **et** l'auto-scroll de main.js, avec un modèle affine ancré — au recalage après un accordéon, la position visuelle du panneau est **préservée au pixel près** (demande de Simeon : « je ne veux pas qu'il bouge »), seule la pente restante jusqu'au footer change (arrivée toujours ~60px au-dessus du footer, vérifié 59,5px).
+- ⚠️ Leçon : pas de `will-change` permanent sur les 3 grandes photos (calques GPU géants) — les photos inactives sont en `visibility: hidden`, visibles seulement pendant la transition.
+- **Rien n'est commité** : prototype + launch.json + cette note restent locaux tant que Simeon n'a pas validé l'essai.
+- Après validation du rendu par Simeon (animation deux temps + panneau immobile) : **snapshot** dans `2. Versioning/` (copie de « 1. Sources », LISEZMOI.txt inclus) — renommé ensuite `2026-07-20/` par Simeon, qui fixe la convention : un dossier `AAAA-MM-JJ/` par jalon, directement sous `2. Versioning/` (le niveau V1 disparaît). Dossier exclu de git le jour même.
 
 ### 2026-07-19 — Conditions générales supprimées, notes internes retirées
 

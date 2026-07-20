@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flûte à bec alto en fa de P.J. Bressan en olivier, 415 Hz — Christoph Brandner</title>
-  <meta name="description" content="Flûte à bec alto en fa d’après P.J. Bressan, accordée en 415 Hz, fabriquée en olivier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
+  <title>Flûte à bec alto en fa de P.J. Bressan, 415 Hz — buis, olivier ou cormier — Christoph Brandner</title>
+  <meta name="description" content="Flûte à bec alto en fa d’après P.J. Bressan, accordée en 415 Hz, fabriquée en buis, en olivier ou en cormier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -25,8 +25,8 @@
           <li class="has-sub">
             <a href="instruments.html" aria-current="page">Instruments</a>
             <ul class="sub-menu" aria-label="Instruments">
-              <li><a href="soprano-buis.html">Soprano 415Hz</a></li>
-              <li><a href="alto-buis.html">Alto 415Hz</a></li>
+              <li><a href="soprano.html">Soprano 415Hz</a></li>
+              <li><a href="alto.html">Alto 415Hz</a></li>
               <li><a href="hautbois.html">Hautbois 415Hz</a></li>
             </ul>
           </li>
@@ -37,10 +37,20 @@
     </div>
   </header>
 
-  <main class="instrument instrument--alto">
+  <main class="instrument instrument--alto instrument--bois">
+
+    <div class="wood-rail-track">
+      <nav class="wood-rail" aria-label="Choix du bois">
+        <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buis</button>
+        <button type="button" class="wood-rail-btn" data-wood="olivier">Olivier</button>
+        <button type="button" class="wood-rail-btn" data-wood="cormier">Cormier</button>
+      </nav>
+    </div>
 
     <div class="instrument-media">
-      <img src="assets/img/alto_415_bressan_olivier.webp" width="1250" height="5458" alt="Flûte à bec alto en fa en olivier, posée sur un socle de pierre">
+      <img class="is-active" data-wood="buis" src="assets/img/alto_415_bressan_buis.webp" width="1250" height="5429" alt="Flûte à bec alto en fa en buis, posée sur un socle de pierre">
+      <img data-wood="olivier" src="assets/img/alto_415_bressan_olivier.webp" width="1250" height="5458" alt="Flûte à bec alto en fa en olivier, posée sur un socle de pierre">
+      <img data-wood="cormier" src="assets/img/alto_415_bressan_cormier.webp" width="1250" height="5422" alt="Flûte à bec alto en fa en cormier, posée sur un socle de pierre">
     </div>
 
     <div class="instrument-panel">
@@ -55,14 +65,33 @@
           <p>Je l’ai modifié afin d’obtenir un instrument en 415hz. Il possède des graves splendides, volumineux et puissants. Mais il se distingue également par un excellent équilibre et une homogénéité dans tous les registres jusqu’aux notes aiguës.</p>
         </div>
 
-        <a class="wood-head" href="alto-buis.html">Buis</a>
-
-        <section class="wood">
-          <h2 class="wood-head">Olivier</h2>
-          <p>J’utilise également l’olivier pour cet instrument. L’olivier donne un instrument très chaleureux et extrêmement équilibré. C’est un bois qui a l’avantage de contenir des tannins qui contribuent à empêcher la moisissure.</p>
+        <section class="wood-acc is-open" data-wood="buis">
+          <h2><button type="button" class="acc-head" aria-expanded="true">Buis</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Je fabrique cet instrument en buis. C’était le bois privilégié par les facteurs de l’époque baroque, un bois indigène et très dense. Il possède un peu l’inconvénient d’avoir tendance à la déformation et pour le facteur de présenter des nœuds imprévisibles.</p>
+              <p>C’est pourtant un bois qui donne des instruments absolument puissants et sonores.</p>
+            </div>
+          </div>
         </section>
 
-        <a class="wood-head" href="alto-cormier.html">Cormier</a>
+        <section class="wood-acc" data-wood="olivier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Olivier</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>J’utilise également l’olivier pour cet instrument. L’olivier donne un instrument très chaleureux et extrêmement équilibré. C’est un bois qui a l’avantage de contenir des tannins qui contribuent à empêcher la moisissure.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="cormier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Cormier</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Enfin je fabrique une version en cormier. Le cormier donne des instruments avec un charme discret et chaleureux. Cette version est particulièrement adapté à la musique de chambre ou en ensemble de flûte.</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 

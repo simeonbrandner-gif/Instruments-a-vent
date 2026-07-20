@@ -1,10 +1,14 @@
 /* ==========================================================================
-   Pages Instruments — une page par instrument et par bois
-   Maquettes Figma (1440px) : 30:279 hautbois, 30:233/748/680 alto,
-   30:256/312/358 soprano.
+   Pages Instruments — une page par instrument
+   Maquettes Figma (1440px) : 30:279 hautbois, 38:908 alto une-page
+   (le gabarit s'applique aussi au soprano ; anciennes maquettes par bois
+   30:233/748/680 alto, 30:256/312/358 soprano).
    La photo défile normalement (c'est elle qui donne sa hauteur à la page) ;
    la colonne texte est ralentie par main.js — sa course est calée pour
    qu'elle finisse juste au-dessus du footer en bas de page.
+   Soprano et alto (.instrument--bois) : les trois bois vivent sur la même
+   page — rail vertical à gauche, accordéon des bois, photos empilées avec
+   bascule animée (main.js).
    ========================================================================== */
 
 .instrument {
@@ -21,7 +25,7 @@
 }
 
 .instrument--soprano  { --media-top: 113px; --media-left: 6.18%; --media-width: 33.89%; }
-.instrument--alto     { --media-top: 58px;  --media-left: 0.21%; --media-width: 42.99%; }
+.instrument--alto     { --media-top: 58px;  --media-left: 3.82%; --media-width: 42.99%; } /* 55px : dégage le rail des bois (maquette 38:908) */
 .instrument--hautbois { --media-top: 66px;  --media-left: 0;     --media-width: 55.21%; }
 
 .instrument-media img {
@@ -103,4 +107,162 @@ a.wood-head:focus-visible {
 
 .wood p {
   padding-top: 18px;
+}
+
+/* ==========================================================================
+   Pages à bois multiples (soprano, alto) — maquette 38:908
+   ========================================================================== */
+
+/* L'intro descend à 544px du haut de page (au lieu de 478) */
+.instrument--bois .instrument-info {
+  margin-top: 160px;
+}
+
+/* ---- Rail vertical des bois ---------------------------------------------
+   Colonne de 90px à gauche, fond noir, filet orange à droite. Collante sous
+   le menu, elle occupe toute la hauteur de la fenêtre ; les 3 mots sont
+   répartis : espace, Buis, espace, Olivier, espace, Cormier, espace
+   (space-evenly). Sa piste absolue s'arrête avec le main : le rail s'efface
+   à l'arrivée du footer. */
+
+.wood-rail-track {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 90px;
+  z-index: 5;
+}
+
+.wood-rail {
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: var(--color-bg);
+  border-right: var(--rule);
+}
+
+.wood-rail-btn {
+  writing-mode: vertical-rl;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 32px;
+  font-weight: 800;
+  font-stretch: 76%;
+  line-height: 1;
+  color: var(--color-text);
+  transition: color 0.2s ease;
+}
+
+.wood-rail-btn:hover,
+.wood-rail-btn:focus-visible,
+.wood-rail-btn[aria-current] {
+  color: var(--color-accent);
+}
+
+/* ---- Photos empilées + bascule en deux temps ----------------------------
+   Les 3 photos partagent la même cellule de grille (préchargées, hauteur du
+   bloc = la plus haute → hauteur de page stable). 1. l'ancienne s'éloigne
+   (scale 0.7 + fondu) ; 2. la nouvelle arrive du bas, trop grande (1.4), et
+   se pose. L'origine du transform est posée par main.js au centre de la
+   fenêtre. Hors transition, les photos inactives ne sont pas peintes
+   (visibility) : pas de calques GPU géants. */
+
+.instrument--bois .instrument-media {
+  display: grid;
+}
+
+.instrument--bois .instrument-media img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.instrument--bois .instrument-media img.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.instrument--bois .instrument-media img.is-entering {
+  transition: none;
+  opacity: 0;
+  visibility: visible;
+  transform: translateY(9vh) scale(1.4);
+}
+
+.instrument--bois .instrument-media img.is-leaving {
+  opacity: 0;
+  visibility: visible;
+  transform: scale(0.7);
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
+}
+
+/* ---- Accordéon des bois -------------------------------------------------
+   Même entête que .wood-head, mais en bouton ; un seul ouvert à la fois,
+   corps animé par grid-template-rows. Entête orange quand ouvert. */
+
+.acc-head {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: var(--rule);
+  padding: 0 0 9px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 32px;
+  font-weight: 800;
+  font-stretch: 76%;
+  line-height: 1;
+  color: var(--color-text);
+  transition: color 0.2s ease;
+}
+
+.acc-head:hover,
+.acc-head:focus-visible {
+  color: var(--color-accent);
+}
+
+.wood-acc.is-open .acc-head {
+  color: var(--color-accent);
+}
+
+.wood-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.45s ease;
+}
+
+.wood-acc.is-open .wood-body {
+  grid-template-rows: 1fr;
+}
+
+.wood-body-inner {
+  overflow: hidden;
+}
+
+.wood-body-inner p {
+  max-width: 624px;
+  padding-top: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .instrument--bois .instrument-media img,
+  .wood-body,
+  .wood-rail-btn,
+  .acc-head {
+    transition: none;
+  }
 }

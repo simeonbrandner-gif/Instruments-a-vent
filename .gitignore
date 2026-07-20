@@ -9,3 +9,6 @@
 
 # Documents administratifs (factures…) — jamais sur le dépôt public
 2. Development/0. Admin/
+
+# Snapshots locaux aux jalons (copies de Sources — git garde déjà l'historique)
+2. Development/2. Versioning/
