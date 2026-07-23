@@ -110,6 +110,183 @@
   color: var(--color-accent);
 }
 
+/* ==========================================================================
+   Cartes mobiles (maquettes 44:766 / 44:777 / 44:791)
+   Une carte plein écran par instrument, balayage horizontal en scroll-snap
+   natif (la carte suit le doigt, sort à gauche pendant que la suivante entre
+   par la droite). Pas de footer ni de défilement vertical : la carte occupe
+   exactement la hauteur restante sous la barre. 3 traits en bas : l'actif se
+   remplit de gauche à droite (main.js pose .is-active au fil du balayage).
+   Cotes de la maquette (375×667) : l'unité --k = hauteur de carte / 623
+   met à l'échelle photos et jalons verticaux sur toute hauteur d'écran.
+   ========================================================================== */
+
+.instr-cards {
+  display: none; /* cartes mobiles uniquement */
+}
+
+@media (max-width: 900px) {
+  /* Page sans défilement vertical et sans footer */
+  body:has(.instr-cards) {
+    height: 100dvh;
+    overflow: hidden;
+  }
+  body:has(.instr-cards) .site-footer {
+    display: none;
+  }
+  body:has(.instr-cards) main {
+    position: static; /* pas de footer-rideau ici */
+  }
+
+  /* La composition desktop disparaît, le main devient l'écran de cartes */
+  .instr-index {
+    height: calc(100dvh - var(--header-h-m));
+    overflow: visible;
+  }
+  .instr-index > :not(.instr-cards):not(h1) {
+    display: none; /* le h1 (déjà .visually-hidden) reste pour le SEO */
+  }
+
+  .instr-cards {
+    --k: calc((100dvh - var(--header-h-m)) / 623);
+    display: block;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .cards-track {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+  .cards-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .instr-card {
+    position: relative;
+    flex: 0 0 100%;
+    height: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always; /* une carte à la fois */
+    overflow: hidden;
+  }
+
+  /* ---- Photos (cotes maquette × --k, ancrées comme sur Figma) ---------- */
+
+  .card-media {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .card-media img {
+    position: absolute;
+    max-width: none;
+    height: auto;
+  }
+
+  /* Hautbois : une seule grande photo qui file sous le bas de l'écran */
+  .card--hautbois .card-media img {
+    left: calc(37 * var(--k));
+    top: calc(22 * var(--k));
+    width: calc(105 * var(--k));
+  }
+
+  /* Alto : buis à gauche, cormier à droite, olivier devant */
+  .card--alto .card-img--back-left  { left: calc(-6 * var(--k));    top: calc(49.7 * var(--k)); width: calc(113.4 * var(--k)); }
+  .card--alto .card-img--back-right { left: calc(94.7 * var(--k));  top: calc(49.7 * var(--k)); width: calc(112.2 * var(--k)); }
+  .card--alto .card-img--front      { left: calc(42 * var(--k));    top: calc(37 * var(--k));   width: calc(121.5 * var(--k)); }
+
+  /* Soprano : olivier à gauche, cormier à droite, buis devant */
+  .card--soprano .card-img--back-left  { left: calc(-10 * var(--k));   top: calc(104.3 * var(--k)); width: calc(106.8 * var(--k)); }
+  .card--soprano .card-img--back-right { left: calc(94.7 * var(--k));  top: calc(104.3 * var(--k)); width: calc(106.8 * var(--k)); }
+  .card--soprano .card-img--front      { left: calc(34.9 * var(--k));  top: calc(85 * var(--k));    width: calc(120.7 * var(--k)); }
+
+  /* ---- Textes ---------------------------------------------------------- */
+
+  .card-text {
+    position: absolute;
+    left: calc(70% - 75.5px); /* comme la maquette */
+    top: calc(114 * var(--k));
+    width: 150px;
+  }
+
+  .card-text h2 {
+    font-size: 28px;
+    font-weight: 800;
+    font-stretch: 88%;
+    font-variation-settings: "opsz" 96;
+    letter-spacing: 0.56px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  .card-woods {
+    margin-top: 11px;
+    font-size: 17.3px;
+    font-weight: 800;
+    font-stretch: 88%;
+    font-variation-settings: "opsz" 96;
+    letter-spacing: 0.35px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .card-cta {
+    position: absolute;
+    left: calc(40% + 37px);
+    top: calc(312 * var(--k));
+    display: grid;
+    place-items: center;
+    width: 138px;
+    height: 44px;
+    border: 1px solid var(--color-accent);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.64px;
+    color: var(--color-accent);
+    background: var(--color-bg);
+  }
+
+  /* ---- Traits de progression ------------------------------------------- */
+
+  .cards-lines {
+    position: absolute;
+    left: var(--rule-margin);
+    right: var(--rule-margin);
+    bottom: calc(44 * var(--k));
+    display: flex;
+    gap: 9px;
+  }
+
+  .cards-line {
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: rgba(254, 153, 10, 0.35);
+  }
+
+  .cards-line i {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .cards-line.is-active i {
+    transform: scaleX(1); /* remplissage de gauche à droite */
+    transition: transform 0.6s ease;
+  }
+}
+
 .instr-fig--hautbois        { top: calc(128 * var(--u));    left: calc(-154 * var(--u)); --len: 1502;  --thick: 247.6; }
 .instr-fig--alto-buis       { top: calc(520.5 * var(--u));  left: calc(-82 * var(--u));  --len: 837.3; --thick: 192.8; }
 .instr-fig--alto-olivier    { top: calc(858.3 * var(--u));  left: calc(-82 * var(--u));  --len: 836.8; --thick: 191.6; }

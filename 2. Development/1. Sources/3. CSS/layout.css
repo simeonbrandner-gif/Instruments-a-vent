@@ -136,22 +136,80 @@
   margin-top: 58px;
 }
 
-/* Fenêtres étroites : le footer passe en 2 colonnes
-   (logo + adresse/contact, puis les deux navigations, copyright dessous) */
-@media (max-width: 800px) {
+/* Pied de page mobile (≤ 900px, maquette 41:446) — colonne empilée :
+   nav → légal → contact → atelier → [filet] → logo → [filet] → copyright.
+   Réordonné en flex (aucun changement de HTML) ; les 4 filets pleine largeur
+   viennent des bords : haut/bas du .site-footer, bas du bloc texte, haut du
+   copyright. Rythme de 36px autour des filets, 28px entre les blocs de texte. */
+@media (max-width: 900px) {
+  /* Footer-rideau : le contenu s'épingle (sticky, top négatif calculé par
+     main.js = 100vh − hauteur du main) quand son bas atteint le bas de la
+     fenêtre ; le footer, opaque et bord à bord, continue de monter et glisse
+     par-dessus en le recouvrant. Sans JS, top:auto = défilement normal. */
+  main {
+    position: sticky;
+    top: var(--curtain-top, auto);
+  }
+
+  .site-footer {
+    position: relative;
+    z-index: 30; /* passe devant le main épinglé (sous la barre de menu, 100) */
+    background: var(--color-bg);
+    margin: 0; /* fond noir bord à bord : rien du contenu ne dépasse du rideau */
+    border-top: 0;
+    border-bottom: 0;
+    padding-bottom: 18px; /* 18px de noir sous le filet du bas (maquette) */
+  }
+  /* Les filets haut/bas (marges 9px) redeviennent des pseudo-éléments,
+     les bords du footer étant désormais ceux de la fenêtre */
+  .site-footer::before,
+  .site-footer::after {
+    content: "";
+    display: block;
+    border-top: var(--rule);
+    margin-inline: var(--rule-margin);
+  }
   .site-footer .rail {
-    grid-template-columns: 1fr 1fr;
-    row-gap: 32px;
-    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    grid-template-columns: none; /* annule la grille desktop */
   }
 
+  /* Ordre mobile */
+  .site-footer nav[aria-label="Navigation pied de page"] { order: 1; margin-top: 36px; }
+  .site-footer nav[aria-label="Informations légales"] { order: 2; margin-top: 28px; }
+  .site-footer .rail > div { order: 3; margin-top: 28px; }
+  .footer-logo { order: 4; }
+  .footer-copyright { order: 5; }
+
+  /* Listes de liens plus aérées (maquette : interligne 36) */
+  .site-footer nav li { line-height: 36px; }
+
+  /* Bloc adresse : Contact au-dessus d'Atelier + filet en dessous */
+  .site-footer .rail > div {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 36px;
+    border-bottom: var(--rule); /* filet après le bloc texte */
+  }
+  .footer-contact { order: 1; margin-top: 0; }
+  .footer-atelier { order: 2; margin-top: 28px; }
+
+  /* Logo grand et centré, 36px sous le filet du bloc texte */
   .footer-logo {
-    margin-top: 8px;
+    width: min(304px, 85%);
+    margin: 36px auto 0;
   }
 
+  /* Copyright centré, filet au-dessus (36px sous le logo), 36px de part et d'autre */
   .footer-copyright {
-    grid-column: 1 / -1;
-    margin-top: 0;
+    border-top: var(--rule); /* filet avant le copyright */
+    margin: 36px 0 0;
+    padding: 36px 0;
+    text-align: center;
   }
 }
 
@@ -164,4 +222,194 @@ body {
 
 main {
   flex: 1;
+}
+
+/* ==========================================================================
+   Menu mobile — barre « Menu / Retour » + plein écran animé
+   (maquettes 41:441 barre, 41:492 menu ouvert)
+   ==========================================================================
+
+   La barre du haut (logo + bouton) remplace la navigation horizontale.
+   Ouverture pilotée par la classe .menu-open (posée sur <body> par main.js).
+   Séquence — les décalages (transition-delay) sont réglés séparément à
+   l'ouverture (règles .menu-open) et à la fermeture (règles de base), ce qui
+   permet un ordre inverse propre avec une seule classe :
+     Ouverture : 1) le filet orange descend → 2) le logo grandit →
+                 3) chaque entrée apparaît en fondu, décalée.
+     Fermeture : 1) les entrées disparaissent → 2) le logo rétrécit →
+                 3) le filet remonte. */
+
+/* La barre mobile et le voile n'existent qu'en dessous du point de bascule */
+.mobile-bar,
+.menu-reveal {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  /* --- En-tête : barre logo + bouton -------------------------------------- */
+  .site-header {
+    z-index: 100; /* tout le menu (voile, liste, barre) passe au-dessus du contenu */
+  }
+  .site-header::after {
+    display: none; /* le filet du haut est fourni par le voile animé (.menu-reveal) */
+  }
+  .site-header .rail {
+    width: 100%;
+    padding: 0;
+  }
+
+  .mobile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h-m);
+    padding: 9px var(--rule-margin) 0;
+    position: relative;
+    z-index: 42; /* au-dessus du voile et de la liste */
+  }
+
+  /* Logo — petit dans la barre, grandit à l'ouverture (45 → 88px) */
+  .mobile-logo {
+    display: block;
+  }
+  .mobile-logo img {
+    width: 45px;
+    height: auto;
+    transform-origin: left top;
+    transition: transform 0.4s ease;
+    transition-delay: 0.25s; /* fermeture : rétrécit après le départ des entrées */
+  }
+  .menu-open .mobile-logo img {
+    transform: scale(1.955); /* 45px → 88px (maquette 41:493) */
+    transition-delay: 0.5s; /* ouverture : grandit une fois le filet descendu */
+  }
+
+  /* Bouton Menu / Retour — les deux mots empilés, fondu croisé */
+  .menu-toggle {
+    position: relative;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: -8px 0; /* zone tactile ~52px sans décaler la barre */
+    height: 52px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .menu-toggle__label {
+    grid-area: 1 / 1; /* superposés : largeur = mot le plus long, aucun saut */
+    font-size: var(--text-menu-size);
+    font-weight: 800;
+    letter-spacing: var(--text-menu-tracking);
+    line-height: 1;
+    color: var(--color-accent);
+    white-space: nowrap;
+    transition: opacity 0.25s ease;
+  }
+  .menu-toggle__label--close {
+    opacity: 0;
+  }
+  .menu-open .menu-toggle__label--open {
+    opacity: 0;
+  }
+  .menu-open .menu-toggle__label--close {
+    opacity: 1;
+  }
+
+  /* --- Voile noir + filet orange qui descend ------------------------------ */
+  .menu-reveal {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-h-m); /* fermé : juste la barre du haut */
+    background: var(--color-bg);
+    z-index: 40;
+    transition: height 0.5s ease;
+    transition-delay: 0.55s; /* fermeture : le filet remonte en dernier */
+  }
+  .menu-reveal::after {
+    content: "";
+    position: absolute;
+    left: var(--rule-margin);
+    right: var(--rule-margin);
+    bottom: 0;
+    border-top: var(--rule); /* le filet orange, marges 18px comme partout */
+  }
+  .menu-open .menu-reveal {
+    height: 100vh;
+    height: 100dvh; /* couvre toute la page */
+    transition-delay: 0s; /* ouverture : le filet descend immédiatement */
+  }
+
+  /* --- Liste plein écran (réutilise la nav existante) --------------------- */
+  .site-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 41; /* au-dessus du voile, sous la barre */
+    padding: 96px var(--rule-margin) 40px; /* 1re entrée ~110px du haut (maquette 41:495) */
+    overflow-y: auto;
+    visibility: hidden;
+    transition: visibility 0s linear 0.6s; /* fermeture : masquée après le repli */
+  }
+  .menu-open .site-nav {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .site-nav > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* entrées alignées à droite (maquette 41:495) */
+    gap: clamp(32px, 9vh, 74px); /* 74px sur la maquette (812px de haut) */
+    min-height: 100%;
+    text-align: right;
+  }
+  .site-nav .sub-menu {
+    display: none; /* pas de sous-pages : on passe par la page Instruments */
+  }
+  .site-nav li {
+    position: static;
+    border: 0;
+  }
+  .site-nav a {
+    display: block;
+    padding: 2px 0;
+    font-size: clamp(2rem, 12.8vw, 48px);
+    font-weight: 800;
+    letter-spacing: 1.92px;
+    line-height: 1.1;
+    /* fondu décalé — état fermé/sortie */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .menu-open .site-nav a {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  /* apparition en cascade, une fois le filet descendu et le logo agrandi */
+  .menu-open .site-nav li:nth-child(1) a { transition-delay: 0.50s; }
+  .menu-open .site-nav li:nth-child(2) a { transition-delay: 0.60s; }
+  .menu-open .site-nav li:nth-child(3) a { transition-delay: 0.70s; }
+  .menu-open .site-nav li:nth-child(4) a { transition-delay: 0.80s; }
+  .menu-open .site-nav li:nth-child(5) a { transition-delay: 0.90s; }
+
+  /* Fige la page derrière le menu ouvert */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* Accessibilité : pas d'animation si l'utilisateur la refuse */
+  @media (prefers-reduced-motion: reduce) {
+    .menu-reveal,
+    .mobile-logo img,
+    .menu-toggle__label,
+    .site-nav,
+    .site-nav a {
+      transition: none;
+    }
+  }
 }

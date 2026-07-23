@@ -77,3 +77,60 @@
   aspect-ratio: 1311 / 278;
   object-fit: cover;
 }
+
+/* ==========================================================================
+   Corps mobile (maquette 43:608)
+   Coordonnées d'abord (28/48), carte pleine largeur 179px ensuite — elle
+   zoome lentement au défilement (transform posé par main.js) —, puis le
+   hautbois qui déborde du bord droit.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .contact-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* annule le start desktop : carte pleine largeur */
+  }
+
+  /* Les coordonnées passent au-dessus de la carte */
+  .contact-details {
+    order: 1;
+    padding-top: 72px; /* bloc Atelier à 116px du haut (barre 44 + 72) */
+    font-size: 28px;
+    line-height: 48px;
+  }
+
+  .contact-details .contact-rule {
+    margin: 36px 0;
+  }
+
+  .contact-map-link {
+    order: 2;
+    height: 179px;
+    margin: 36px calc(-1 * var(--rail-gutter)) 0; /* pleine largeur */
+  }
+
+  /* Cadrage serré autour du marqueur comme sur la maquette (l'image entière
+     serait trop large dans un cadre de 179px) ; le défilement (main.js)
+     multiplie ce zoom de base jusqu'à +15%. Pas de zoom au survol. */
+  .contact-map {
+    transition: none;
+    transform: scale(1.72);
+  }
+
+  /* Pas de filet entre la carte et le hautbois en mobile */
+  .contact .rule {
+    display: none;
+  }
+
+  /* Hautbois : partant à 39px du bord gauche, il file au-delà du bord droit */
+  .contact-oboe {
+    margin: 69px 0 36px 10.4vw;
+    overflow: hidden;
+  }
+
+  .contact-oboe img {
+    width: 123.5%; /* 415px pour 336 visibles à 375 (maquette) */
+    max-width: none;
+  }
+}

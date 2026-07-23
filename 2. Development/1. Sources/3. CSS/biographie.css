@@ -49,3 +49,59 @@
 .bio-text {
   max-width: 614px;
 }
+
+/* ==========================================================================
+   Corps mobile (maquette 43:597) — simple empilement :
+   portrait 284×281, nom 28px, filet, texte 16/30, photo atelier 284×276.
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .bio-grid {
+    display: block;
+    padding-left: 0;
+  }
+
+  .bio-head {
+    margin-top: 62px; /* portrait à 106px du haut (barre 44 + 62) */
+  }
+
+  .bio-photo {
+    width: 284px;
+  }
+
+  .bio-head .bio-photo {
+    height: 281px;
+  }
+
+  .bio-name {
+    margin-top: 20px; /* nom sous le portrait (maquette : y 407) */
+    font-size: 28px;
+    line-height: 48px;
+  }
+
+  .bio .rule {
+    margin-top: 41px; /* filet à 496px */
+    margin-bottom: 10px;
+  }
+
+  .bio-text p {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  /* La photo d'atelier passe sous le texte */
+  .bio-body .bio-grid {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bio-body .bio-photo {
+    order: 2;
+    margin-top: 24px; /* photo à ~831px, sous le texte */
+    height: 276px;
+  }
+
+  .bio-body {
+    margin-bottom: 36px;
+  }
+}

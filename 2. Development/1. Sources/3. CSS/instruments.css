@@ -266,3 +266,197 @@ a.wood-head:focus-visible {
     transition: none;
   }
 }
+
+/* ==========================================================================
+   Corps mobile (maquettes 44:873 / 44:891 hautbois, 44:880 / 44:902 alto ;
+   le soprano suit le gabarit alto)
+   Deux faces : Photo (grande photo + onglet vertical « Description » docké à
+   droite, pleine hauteur d'écran) et Texte (onglet photo miniature docké à
+   gauche + titre + description). La bascule (main.js, classes .m-exit puis
+   .mode-text sur le main) : la ligne orange glisse vers la gauche, la photo
+   rétrécit et vient se ranger dans l'onglet, le texte entre par la droite,
+   et on revient en haut de page. Alto/soprano : le rail des bois devient une
+   barre horizontale dockée en bas (les deux faces) + accordéon en bas du
+   texte. Le footer-rideau (layout.css) reste actif.
+   ========================================================================== */
+
+.side-dock {
+  display: none; /* bascule mobile uniquement */
+}
+
+@media (max-width: 900px) {
+  .instrument {
+    /* redevient sticky : le position:relative desktop écraserait le
+       footer-rideau de layout.css (dont le top s'appliquerait en relatif) */
+    position: sticky;
+    padding-bottom: 36px;
+    /* Les animations (texte entrant de la droite, photo qui arrive en grand)
+       débordent du cadre : clip pour ne pas élargir le viewport mobile.
+       (clip, pas hidden : pas de conteneur de défilement, le sticky vit.) */
+    overflow-x: clip;
+  }
+
+  /* ---- Photo en flux, cotes des maquettes (375) ------------------------- */
+  .instrument--hautbois { --media-top: 20px; --media-left: var(--rail-gutter); --media-width: 78.1%; }
+  .instrument--soprano,
+  .instrument--alto     { --media-top: 14px; --media-left: 0; --media-width: 80.3%; }
+
+  /* ---- Onglets dockés + ligne orange ------------------------------------ */
+  .side-dock {
+    display: block;
+    position: fixed;
+    top: var(--header-h-m);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20; /* sous le menu (100) et sous le footer-rideau (30) */
+    pointer-events: none; /* seuls les boutons sont cliquables */
+  }
+
+  .side-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% - 73px);
+    width: 1px;
+    background: var(--color-accent);
+    transition: left 0.55s ease;
+  }
+  .m-exit .side-line,
+  .mode-text .side-line {
+    left: 72px; /* la ligne glisse vers la gauche */
+  }
+
+  .side-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    pointer-events: auto;
+    font-family: inherit;
+    transition: opacity 0.3s ease;
+  }
+
+  .side-btn--desc {
+    right: 0;
+    width: 73px;
+    writing-mode: vertical-rl; /* « Description » vertical, lu de haut en bas */
+    font-size: var(--text-menu-size);
+    font-weight: 800;
+    letter-spacing: var(--text-menu-tracking);
+    color: var(--color-accent);
+  }
+  .m-exit .side-btn--desc,
+  .mode-text .side-btn--desc {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .side-btn--photo {
+    left: 0;
+    width: 72px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .mode-text .side-btn--photo {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0.3s; /* apparaît une fois la photo rangée */
+  }
+  .side-btn--photo img {
+    width: 53px;
+    height: auto;
+    max-height: calc(100vh - var(--header-h-m) - 24px);
+    object-fit: contain;
+    transform: scaleX(-1); /* miniature en miroir (maquette) */
+  }
+
+  /* ---- Face Photo / face Texte ------------------------------------------ */
+  .instrument-panel {
+    display: none;
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    will-change: auto;
+    margin: 64px var(--rail-gutter) 84px 82px; /* titre à 108px du haut (maquette) */
+  }
+
+  .mode-text .instrument-media {
+    display: none;
+  }
+  .mode-text .instrument-panel {
+    display: block;
+    animation: instr-panel-in 0.55s ease-out both; /* le texte entre par la droite */
+  }
+
+  @keyframes instr-panel-in {
+    from {
+      transform: translateX(80vw);
+      opacity: 0.4;
+    }
+  }
+
+  /* La photo qui rétrécit vers l'onglet (transform posé par main.js) */
+  .instrument .instrument-media img.is-morph {
+    transform-origin: top left;
+    transition: transform 0.55s ease, opacity 0.55s ease;
+    will-change: transform;
+  }
+
+  /* ---- Textes ----------------------------------------------------------- */
+  .instrument-title {
+    font-size: 28px;
+    letter-spacing: 0.56px;
+  }
+
+  .instrument .instrument-info {
+    margin-top: 30px; /* filet à 218px du haut (maquette) */
+    max-width: none;
+    gap: 36px;
+  }
+
+  .instrument-intro p,
+  .wood-body-inner p {
+    font-size: 16px;
+    line-height: 30px;
+    max-width: 249px;
+  }
+
+  .acc-head {
+    font-size: 24px;
+  }
+
+  /* ---- Rail des bois → barre dockée en bas (les deux faces) ------------- */
+  .wood-rail-track {
+    position: static;
+    width: auto;
+    z-index: auto;
+  }
+
+  .wood-rail {
+    position: fixed;
+    top: auto;
+    left: var(--rule-margin);
+    right: var(--rule-margin);
+    bottom: 17px;
+    height: 60px;
+    z-index: 20; /* sous le footer-rideau (30) : le footer la recouvre */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 37px;
+    border-right: 0;
+    border-top: var(--rule);
+  }
+
+  .wood-rail-btn {
+    writing-mode: horizontal-tb;
+    font-size: 22px;
+  }
+}

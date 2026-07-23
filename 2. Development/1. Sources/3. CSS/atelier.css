@@ -66,3 +66,77 @@
   width: 100%;
   height: auto;
 }
+
+/* ==========================================================================
+   Corps mobile (maquette 43:581)
+   Titre condensé 28px, filet + 3 paragraphes entrecoupés de 2 « fenêtres » :
+   l'image ne bouge pas (fixed, plein écran), seule l'ouverture de 130px
+   voyage avec le défilement. En bas, les têtes de flûtes, plus larges que
+   l'écran, glissent de droite à gauche au défilement (transform par main.js).
+   ========================================================================== */
+
+.atelier-window {
+  display: none; /* fenêtres mobiles uniquement */
+}
+
+@media (max-width: 900px) {
+  .atelier-grid {
+    display: block;
+    margin-top: 70px; /* titre à 114px du haut (barre 44 + 70) */
+    padding-left: 0;
+  }
+
+  .atelier-photos {
+    display: none; /* la colonne desktop de 7 photos disparaît */
+  }
+
+  .atelier-title {
+    max-width: 260px;
+    font-size: 28px;
+    letter-spacing: 0.56px;
+  }
+
+  .atelier-body {
+    margin-top: 36px;
+    padding-top: 10px;
+  }
+
+  .atelier-body p {
+    max-width: none;
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  /* Fenêtre sur image fixe. ⚠️ clip-path (et surtout pas transform/filter,
+     qui feraient du parent le containing block du fixed) clippe aussi les
+     descendants en position:fixed → seul un hublot de 130px reste visible. */
+  .atelier-window {
+    display: block;
+    position: relative;
+    height: 130px;
+    margin: 36px calc(-1 * var(--rail-gutter)); /* pleine largeur hors rail */
+    clip-path: inset(0);
+  }
+
+  .atelier-window img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    object-fit: cover;
+  }
+
+  .atelier-bottom {
+    margin-top: 36px;
+    margin-inline: 0;
+    overflow: hidden;
+  }
+
+  .atelier-bottom img {
+    height: min(148.3vw, 556px); /* 556px à 375 (maquette), homothétique dessous */
+    width: auto;
+    max-width: none;
+  }
+}

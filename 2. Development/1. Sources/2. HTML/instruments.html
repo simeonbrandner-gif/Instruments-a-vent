@@ -17,8 +17,18 @@
 <body class="page-instruments-index">
 
   <header class="site-header">
+    <div class="menu-reveal" aria-hidden="true"></div>
     <div class="rail">
-      <nav class="site-nav" aria-label="Navigation principale">
+      <div class="mobile-bar">
+        <a class="mobile-logo" href="index.html" aria-label="Accueil — Christoph Brandner">
+          <img src="assets/img/logo-footer.svg" alt="" width="45" height="27">
+        </a>
+        <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+          <span class="menu-toggle__label menu-toggle__label--open">Menu</span>
+          <span class="menu-toggle__label menu-toggle__label--close" aria-hidden="true">Retour</span>
+        </button>
+      </div>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
         <ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="atelier.html">Atelier</a></li>
@@ -92,6 +102,52 @@
         <img src="assets/img/soprano_415_reich_cormier.webp" width="1000" height="3777" loading="lazy" alt="Flûte à bec soprano en do en cormier, posée sur un socle de pierre">
       </span>
     </a>
+
+    <!-- Cartes mobiles (maquettes 44:766 / 44:777 / 44:791) : une carte plein
+         écran par instrument, à balayer horizontalement — invisibles en desktop -->
+    <section class="instr-cards" aria-label="Les instruments, carte par carte">
+      <div class="cards-track">
+        <article class="instr-card card--hautbois">
+          <div class="card-media" aria-hidden="true">
+            <img src="assets/img/hautbois_415_buis_schlegel.webp" alt="">
+          </div>
+          <div class="card-text">
+            <h2>Hautbois en do de Jeremias Schlegel en 415hz</h2>
+            <p class="card-woods">En buis</p>
+          </div>
+          <a class="card-cta" href="hautbois.html">Découvrir</a>
+        </article>
+        <article class="instr-card card--alto">
+          <div class="card-media" aria-hidden="true">
+            <img class="card-img--back-left" src="assets/img/alto_415_bressan_buis.webp" alt="">
+            <img class="card-img--back-right" src="assets/img/alto_415_bressan_cormier.webp" alt="">
+            <img class="card-img--front" src="assets/img/alto_415_bressan_olivier.webp" alt="">
+          </div>
+          <div class="card-text">
+            <h2>Alto en fa de P.J. Bressan en 415hz</h2>
+            <p class="card-woods">En buis, olivier et&nbsp;cormier</p>
+          </div>
+          <a class="card-cta" href="alto.html">Découvrir</a>
+        </article>
+        <article class="instr-card card--soprano">
+          <div class="card-media" aria-hidden="true">
+            <img class="card-img--back-left" src="assets/img/soprano_415_reich_olivier.webp" alt="">
+            <img class="card-img--back-right" src="assets/img/soprano_415_reich_cormier.webp" alt="">
+            <img class="card-img--front" src="assets/img/soprano_415_reich_buis.webp" alt="">
+          </div>
+          <div class="card-text">
+            <h2>Soprano en do de B. Reich en 415hz</h2>
+            <p class="card-woods">En buis, olivier et&nbsp;cormier</p>
+          </div>
+          <a class="card-cta" href="soprano.html">Découvrir</a>
+        </article>
+      </div>
+      <div class="cards-lines" aria-hidden="true">
+        <span class="cards-line is-active"><i></i></span>
+        <span class="cards-line"><i></i></span>
+        <span class="cards-line"><i></i></span>
+      </div>
+    </section>
 
   </main>
 

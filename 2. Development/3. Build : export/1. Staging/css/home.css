@@ -91,3 +91,69 @@
   width: 100%;
   height: auto;
 }
+
+/* ==========================================================================
+   Accueil — version mobile (≤ 900px, maquette 41:474)
+   Le titre passe AU-DESSUS de la photo, les colonnes s'empilent, marges 9px.
+   ========================================================================== */
+@media (max-width: 900px) {
+  /* Héro : titre au-dessus de la photo (la maquette ne les superpose plus) */
+  .hero {
+    display: flex;
+    flex-direction: column-reverse; /* .hero-photo (1re dans le HTML) → en bas */
+    padding-top: 0;
+    overflow: hidden; /* recadre la photo élargie */
+  }
+
+  .hero-photo {
+    aspect-ratio: 375 / 304; /* boîte de recadrage de la maquette (41:483) */
+    object-position: left center; /* on garde la partie gauche (tête de flûte) */
+  }
+
+  .hero-title {
+    position: static;
+    padding: 25px 0 20px; /* ~25px sous le menu (maquette top 69) */
+  }
+  .hero-title-block {
+    width: 100%;
+    margin: 0;
+    text-align: right;
+  }
+  .hero-title h1 {
+    font-size: 28px;
+    line-height: 48px;
+    letter-spacing: 1.12px;
+  }
+  .hero-title .hero-tagline {
+    margin-top: 18px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  /* Section « Pourquoi » : une seule colonne, gravure en pleine largeur dessous */
+  .why {
+    margin-top: 0; /* le filet suit directement le bas de la photo */
+  }
+  .why .why-heading {
+    font-size: 24px;
+    line-height: 34px;
+    max-width: none;
+    margin: 36px 0;
+    padding-left: 0;
+  }
+  .why-grid {
+    display: block;
+    padding-left: 0;
+  }
+  .why-text {
+    padding-top: 36px;
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .why-text p + p {
+    margin-top: 30px; /* ligne vide entre paragraphes */
+  }
+  .why-figure {
+    margin-top: 48px;
+  }
+}

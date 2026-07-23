@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-07-19
+> Dernière mise à jour : 2026-07-23
 
 **🌐 Site en ligne :** https://atelier-brandner.ch (GitHub Pages, publication automatique à chaque push — miroir : https://simeonbrandner-gif.github.io/Instruments-a-vent/)
 
@@ -74,7 +74,16 @@ Site_Chr/
 
 **Préview :** `.claude/launch.json` définit « site-staging » (python3 http.server, port 8642, servant Staging). Toujours vérifier à 1440px contre la maquette Figma.
 
-**Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html.
+**Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html. Le header contient désormais aussi, avant le `.rail`, un `.menu-reveal` (voile mobile) et, dans le `.rail`, une `.mobile-bar` (logo + bouton `.menu-toggle` Menu/Retour) — invisibles au-dessus de 900px. La **nav est unique** : la même `ul.site-nav#site-nav` sert de menu horizontal en desktop et de liste plein écran en mobile (voir « Menu mobile » ci-dessous).
+
+### Menu mobile (≤ 900px) — maquettes 41:441 (barre) et 41:492 (menu ouvert)
+
+- **Bascule à 900px** (et non 768) : sous ~793px la nav horizontale débordait (bug connu de longue date) ; le bouton « Menu » la remplace donc dès 900px. Valeur en dur dans les `@media` de `layout.css` (une variable CSS ne peut pas piloter une media query ; `--bp-mobile: 900px` dans tokens.css n'est que documentaire).
+- **Barre du haut** : logo à gauche (réutilise `logo-footer.svg`, 45px → 88px à l'ouverture), bouton « Menu »/« Retour » à droite (fondu croisé des deux mots empilés en grille). Le filet orange du haut n'est plus `.site-header::after` (masqué en mobile) mais le bord bas du voile `.menu-reveal`.
+- **Ouverture animée** (classe `.menu-open` posée sur `<body>` par `main.js`) : 1) le voile noir `.menu-reveal` grandit de 44px à 100dvh — son filet orange « descend » jusqu'en bas ; 2) le logo grandit (`transform: scale(1.955)`, delay 0.5s) ; 3) les 5 entrées apparaissent en fondu, en cascade (delays 0.50→0.90s). **Fermeture = ordre inverse** : les délais d'entrée sont sur les règles `.menu-open`, ceux de sortie sur les règles de base → une seule classe pilote les deux sens.
+- **Liste** : réutilise `ul.site-nav`, `sub-menu` masqué (pas de sous-pages : on passe par la page Instruments), entrées 48px alignées à droite, alignées en haut (~110px). Lien actif **blanc** via l'`aria-current` déjà posé par page (ex. « Instruments » blanc sur les pages instrument).
+- **JS** (`main.js`, avant le `return` des pages instrument, donc actif partout) : le bouton bascule `.menu-open`, met à jour `aria-expanded` ; Échap ferme ; cliquer une entrée ferme. Le voile reste dans le DOM (fermé = barre de 44px) : aucune gestion d'affichage. `body.menu-open { overflow: hidden }` fige la page.
+- **Layering** : `.site-header` passe à `z-index: 100` en mobile ; à l'intérieur voile 40 < liste 41 < barre 42. Vérifié au-dessus du panneau fixe et du rail des pages instrument (z-index 5).
 
 **Sous-menu Instruments (maquette Figma 8:212) :** l'entrée « Instruments » du menu porte un menu déroulant (`li.has-sub` > `ul.sub-menu`, styles dans layout.css) — panneau noir 245px sous le menu, libellés 20px ExtraBold orange avec 18px au-dessus/en-dessous, filet orange 1px entre chaque entrée. Ouverture au survol et au clavier (focus-within).
 ⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano.html, « Alto 415Hz » → alto.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
@@ -89,6 +98,55 @@ Site_Chr/
 - **✅ Toutes les images du site sont livrées et aux poids cibles (2026-07-19)** : 7 instruments (2×, 0,2–0,6 MB), atelier ×7 (600×260), bio ×2 (600×600, cadrage carré par Simeon), héro (2880×1621, 231 KB), gravure (950×1541, 495 KB), carte Genève webp (alpha, 554 KB), têtes de flûtes (2880×1509, 202 KB), hautbois contact (alpha, 347 KB), nouveau `logo-footer.svg`, favicon (`favicon-512.png` de Simeon → `favicon-32.png` + `apple-touch-icon.png` dérivés via sips, liés dans toutes les pages).
 - ⚠️ Le héro Home garde son ratio via le CSS (`aspect-ratio` + `object-fit: cover`) : **ne pas lui mettre d'attribut height**, il écraserait le ratio.
 - Manquant : **vidéo atelier** (MP4 auto-hébergé, < 50 MB) — dernier asset du site.
+- ⚠️ Placeholders temporaires : **`atelier_fenetre_01.jpg` et `atelier_fenetre_02.jpg`** (fenêtres plein écran de l'Atelier mobile, tirés de Figma, ~550 KB, 1624px de haut) — à remplacer par les webp de Simeon (cible : portrait ≥ 750×1624, qualité 80).
+
+### Images de la version mobile (inventaire du 2026-07-23)
+
+Toutes les images affichées par les pages mobiles, avec leur taille d'affichage à 375px
+et la taille d'export recommandée (règle : **2× l'affichage**, qualité 80–85). Les photos
+des cartes/pages instrument grandissent avec la hauteur d'écran (échelle ×k, jusqu'à
+~×1,45 sur un grand téléphone) — c'est intégré dans la colonne « export ».
+
+| Fichier | Usage mobile | Affichage à 375px | Export recommandé | Statut |
+|---|---|---|---|---|
+| `atelier_fenetre_01.jpg` | Atelier — fenêtre fixe 1 (plein écran derrière l'ouverture de 130px) | plein écran, cover (375×812 → ~430×930 max) | **portrait ~900×1700** | ⚠️ **placeholder JPEG à remplacer par webp** |
+| `atelier_fenetre_02.jpg` | Atelier — fenêtre fixe 2 | idem | **portrait ~900×1700** | ⚠️ **placeholder JPEG à remplacer par webp** |
+| `hero-home.webp` | Home — héro (recadré à gauche) | 375×304 cover | 750×608 suffit — l'export actuel 2880×1621 ✓ | webp OK |
+| `gravure_flutes.webp` | Home — gravure pleine largeur | 349×566 | 700×1130 — actuel 950×1541 ✓ | webp OK |
+| `tetes_flutes_atelier.webp` | Atelier — glissement droite→gauche en bas | h 556, larg. ~1061 (déborde de l'écran) | 2122×1112 — actuel 2880×1509 ✓ | webp OK |
+| `bio-portrait.webp` | Biographie — portrait | 284×281 | 568×562 — actuel 600×600 ✓ | webp OK |
+| `bio-atelier.webp` | Biographie — photo atelier | 284×276 | 568×552 — actuel 600×600 ✓ | webp OK |
+| `carte_geneve.webp` | Contact — carte (cadre 375×179, zoom ×1,72→×1,98) | portion centrale ~218×104 agrandie au cadre | actuel 1544×1352 ✓ (large réserve) | webp OK |
+| `contact_hautbois.webp` | Contact — hautbois qui déborde à droite | 415×88 | 830×176 — actuel (alpha, 347 KB) ✓ | webp OK |
+| `hautbois_415_buis_schlegel.webp` | Carte 1 (105×636×k), page hautbois (78% de large), miniature onglet (53px) | jusqu'à ~150×910 (carte) / ~330×2000 (page) | actuel 1600×9705 ✓ | webp OK |
+| `alto_415_bressan_buis/olivier/cormier.webp` | Carte 2 (3 flûtes, 112–121 de large ×k), page alto (80% de large), miniatures | jusqu'à ~175×790 (carte) / ~340×1480 (page) | actuels 1250×~5430 ✓ | webp OK |
+| `soprano_415_reich_buis/olivier/cormier.webp` | Carte 3 (107–121 de large ×k), page soprano, miniatures | jusqu'à ~175×660 (carte) | actuels 1000×3777 ✓ | webp OK |
+| `logo-footer.svg` | Barre du haut, menu ouvert, footer | 45px → 88px (menu), ~304px (footer) | — | vectoriel ✓ |
+
+**Action minimale : remplacer les 2 `atelier_fenetre_0X.jpg` par des webp.** Tous les autres
+exports existants couvrent déjà largement les tailles mobiles (les affichages mobiles sont
+plus petits que les affichages desktop pour lesquels les 2× ont été exportés).
+
+### Optimisation mobile (prochaine session — fine tuning)
+
+Pour servir des images **plus légères en mobile**, il faut des exports dédiés + `srcset`
+(le HTML garde une seule balise `<img>` ; le navigateur choisit la version d'après la
+largeur d'affichage). Plan : Simeon exporte les versions ci-dessous avec le suffixe
+**`_m`** (ex. `hero-home_m.webp`) → Claude câble les `srcset`/`sizes` dans le HTML.
+
+| Export mobile à livrer | Taille (2× l'affichage mobile) | Remplace en mobile |
+|---|---|---|
+| `hero-home_m.webp` | **750×608** (cadré comme l'affichage mobile : gauche) | hero-home.webp (2880) |
+| `gravure_flutes_m.webp` | **700×1135** | gravure_flutes.webp (950) — gain modeste |
+| `tetes_flutes_atelier_m.webp` | **2130×1115** | tetes_flutes_atelier.webp (2880) — gain modeste |
+| `atelier_fenetre_01.webp` / `_02.webp` | **~900×1700** portrait | les 2 placeholders JPEG (seules obligatoires) |
+| `hautbois_415_buis_schlegel_m.webp` | **~660×4000** | version 1600×9705 |
+| `alto_415_bressan_{buis,olivier,cormier}_m.webp` | **~680×2950** | versions 1250 |
+| `soprano_415_reich_{buis,olivier,cormier}_m.webp` | **~680×2570** | versions 1000 |
+| bio, carte, contact_hautbois | — | déjà aux bonnes tailles, rien à exporter |
+
+Qualité 80 partout. NB : les photos instruments mobiles servent 3 usages (carte, page,
+miniature 53px) — la version `_m` ci-dessus couvre les trois.
 
 ## Pages
 
@@ -109,7 +167,12 @@ Site_Chr/
 Toutes les pages sont faites, toutes les images sont livrées, le domaine est en ligne. Reste :
 
 1. **Vidéo atelier** (Simeon la tourne) → ajouter un bloc `<video>` MP4 auto-hébergé dans atelier.html entre le texte et la photo des têtes de flûtes (< 50 MB, compresser via ffmpeg). Le placeholder gris a été **retiré du site en ligne le 2026-07-19** (demande de Simeon) — le bloc sera recréé à la livraison (ancien CSS : `.atelier-video`, marge `56px min(157px, 11%) 0`, `aspect-ratio: 16/9`).
-2. **Responsive** d'après les frames mobiles de Simeon (le menu deviendra un toggle) — aussi un enjeu SEO : Google indexe en mobile-first
+2. **Responsive** d'après les frames mobiles de Simeon — aussi un enjeu SEO : Google indexe en mobile-first.
+   - ✅ **Menu mobile fait le 2026-07-23** (toggle Menu/Retour animé, ≤ 900px — voir « Menu mobile » plus haut).
+   - ✅ **Marges mobiles 9px** (demande de Simeon) : sous 900px, `--rail-gutter` et `--rule-margin` passent à 9px (override dans tokens.css) → tout le site à 9px de marge.
+   - ✅ **Corps de la page Accueil (mobile, maquette 41:474)** : titre au-dessus de la photo (recadrée à gauche), section « Pourquoi » en une colonne + gravure pleine largeur. Cotes : H1 28px/48, sous-titre 18px/28, H2 24px/34, texte 16px/30 (bloc mobile dans home.css).
+   - ✅ **Footer mobile (maquette 41:446)** : colonne empilée (nav → légal → contact → atelier → filet → gros logo centré → filet → copyright centré → filet), 4 filets pleine largeur, réordonné en flex **sans changer le HTML** (partagé par toutes les pages via layout.css). Remplace l'ancien bloc `@media 800px` (2 colonnes).
+   - ✅ **Corps mobile de toutes les pages fait le 2026-07-23** (atelier, biographie, contact, instruments-cartes, pages instrument — voir journal). **Reste** : vérifier les pages légales à 375px (aucune maquette — la colonne de lecture legal.css devrait passer telle quelle) et remplacer les 2 placeholders `atelier_fenetre_0X.jpg` par les webp de Simeon.
 3. **Finitions SEO/qualité** : voir checklist ci-dessous (canonical/sitemap/JSON-LD débloqués maintenant que le domaine est live), Open Graph, Lighthouse, validation HTML
    - ⚠️ **Footer : ajouter 36px de bottom margin**
 4. Validation finale : snapshot dans `2. Versioning/V1`
@@ -148,6 +211,37 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-23 — Corps mobile de toutes les pages (footer-rideau, Atelier, Bio, Contact, cartes Instruments, pages instrument)
+
+Session d'après les maquettes mobiles 43:… / 44:… de Simeon. Tout est sous `@media (max-width: 900px)` ; le desktop est inchangé (vérifié page par page à 1280).
+
+- **Footer-rideau (toutes les pages)** : en mobile le footer **recouvre le site** en glissant par-dessus. Mécanique : `main` passe en `position: sticky` avec un `top` négatif calculé par main.js (`--curtain-top` = 100vh − hauteur du main, ResizeObserver) → le contenu s'épingle quand son bas touche le bas de la fenêtre, et le footer (opaque, bord à bord, `z-index: 30`, filets haut/bas en pseudo-éléments) continue de monter par-dessus. ⚠️ Toute règle qui redonne `position: relative` au main en mobile casse l'effet (le `top` s'applique en relatif → page décalée) — d'où le `position: sticky` re-déclaré dans le bloc mobile d'instruments.css.
+- **Atelier (43:581)** : titre condensé 28px ; les **2 « fenêtres »** sont des `figure.atelier-window` (130px, pleine largeur, `clip-path: inset(0)`) contenant une image en `position: fixed` plein écran → l'image ne bouge pas, seule l'ouverture voyage. ⚠️ Ne jamais mettre de transform/filter sur la fenêtre (ça deviendrait le containing block du fixed). Placeholders `atelier_fenetre_01/02.jpg` (~550 KB, tirés de Figma, redimensionnés à 1624px) **à remplacer par les webp de Simeon**. En bas, les **têtes de flûtes glissent de droite à gauche** au défilement (main.js : course de l'entrée en bas de fenêtre jusqu'à l'épinglage du rideau).
+- **Biographie (43:597)** : simple empilement (portrait 284×281, nom 28/48, filet, texte 16/30, photo atelier dessous via flex order).
+- **Contact (43:608)** : coordonnées 28/48 d'abord (flex order), carte pleine largeur 179px avec **zoom de base ×1,72** (cadrage maquette) **+ zoom lent au défilement** (main.js, +15% max, même double rampe que la page Instruments), hautbois qui déborde du bord droit (123,5%, overflow hidden), filet inter-sections masqué. ⚠️ `align-items: stretch` nécessaire sur `.contact-grid` mobile (le `start` desktop rétrécissait la carte).
+- **Instruments — cartes (44:766/777/791)** : en mobile la vue d'ensemble devient **3 cartes plein écran à balayer** (scroll-snap horizontal natif, `scroll-snap-stop: always`), **sans footer ni défilement vertical** (`body:has(.instr-cards)` : overflow hidden, footer masqué). Unité `--k` = (100dvh − barre)/623 → photos et jalons verticaux homothétiques à toute hauteur d'écran ; textes ancrés comme la maquette (left 70%−75.5px). CTA « Découvrir » 138×44 vers chaque page. **3 traits de progression** en bas : l'actif se **remplit de gauche à droite** (span scaleX 0→1, classe .is-active posée par main.js d'après scrollLeft). Ajouter une carte = copier un `article.instr-card` + un trait.
+- **Pages instrument (44:873/891 hautbois, 44:880/902 alto ; soprano = gabarit alto)** : **deux faces**. Face Photo : grande photo en flux + onglet vertical « Description » docké à droite (pleine hauteur d'écran, ligne orange à sa gauche). Face Texte : onglet gauche avec **miniature en miroir** de la photo (53px, suit le bois affiché), titre 28 condensé, filet, texte 16/30, accordéon des bois en bas (alto/soprano). **Bascule** (main.js, classes sur le main) : `.m-exit` → la **ligne orange glisse à gauche** pendant que la **photo rétrécit et se range dans l'onglet** (transform calculé sur sa position réelle) ; puis `.mode-text` → le **texte entre par la droite** (keyframes 80vw→0) et on **revient en haut de page**. Retour symétrique (la photo repart de l'onglet). `overflow-x: clip` sur le main (les animations débordantes élargissaient le viewport mobile). **Rail des bois → barre horizontale dockée en bas** (fixed, 60px, filet orange au-dessus, Buis/Olivier/Cormier, actif orange — mêmes boutons `.wood-rail-btn`, donc bascule de bois/hash/accordéon inchangés), présente sur les deux faces, recouverte par le footer-rideau ; hautbois sans barre. En mobile le **défilement différencié et l'auto-scroll sont désactivés** (garde `mqInstr` dans main.js, styles inline retirés).
+- **Vérifié en préview staging à 375×812** (chaque page + bascules, bois, cartes, rideau) **et à 1280** (desktop intact partout, console propre). NB préview : le navigateur intégré ne rend les frames qu'à la demande — transitions/scroll-events paraissent figés entre deux captures, c'est un artefact de l'outil, pas du site.
+- **Commité et poussé le 2026-07-23** (demande de Simeon) → GitHub Pages publie la version mobile sur atelier-brandner.ch. **Snapshot** du jalon dans `2. Versioning/2026-07-23/` (copie de « 1. Sources » + LISEZMOI.txt, hors git).
+- **Prochaine session (Simeon)** : fine tuning + images — remplacer les 2 placeholders des fenêtres Atelier, livrer les exports `_m` (voir « Optimisation mobile » plus haut) puis câbler les `srcset`, vérifier les pages légales à 375px.
+
+### 2026-07-23 — Menu mobile animé (début de la version mobile)
+
+- **Premier pas de la version mobile** : le menu devient un bouton « Menu » (barre du haut, ≤ 900px) qui ouvre un plein écran noir animé, d'après les maquettes **41:441** (barre) et **41:492** (menu ouvert). Détails techniques dans la section « Menu mobile » plus haut.
+- **Animation d'ouverture** (demande de Simeon) : le filet orange descend jusqu'en bas (le voile noir se déploie), « Menu » → « Retour » en fondu croisé, le logo grandit (45→88px) une fois le filet en bas, puis les 5 entrées apparaissent en cascade. **Fermeture = même animation à l'envers** (délais d'entrée sur `.menu-open`, délais de sortie sur les règles de base → une seule classe pilote les deux sens). Instruments **sans sous-pages** en mobile (on passe par la page Instruments).
+- **DRY** : une seule `ul.site-nav` sert desktop (horizontal) et mobile (plein écran) ; ajouts HTML minimes par page (`.menu-reveal` + `.mobile-bar`, injectés dans les 11 fichiers via script). CSS dans `layout.css` (bloc « Menu mobile »), token `--header-h-m: 44px` / `--bp-mobile: 900px`, logique dans `main.js` (avant le `return` des pages instrument). Logo = `logo-footer.svg` réutilisé (même figure, ratio identique).
+- **Bascule remontée à 900px** (au lieu de 767) : c'est le seuil où la nav horizontale débordait — le toggle couvre donc toute la zone de débordement. `prefers-reduced-motion` : transitions coupées.
+- **Vérifié en préview staging** : Home 375px (ouverture/fermeture, logo qui grandit, cascade), pages instrument 768px (voile bien au-dessus du panneau fixe + rail z-index 5), desktop 1280px intact, plus aucun débordement horizontal à 768/900. Lien actif blanc par page (Accueil sur Home, Instruments sur soprano).
+- **Pas encore commité/poussé** — publication à la demande de Simeon. Prochaine étape : mise en page mobile du **corps** des pages (frames de Simeon).
+
+### 2026-07-23 — Corps mobile de la page Accueil (maquette 41:474)
+
+- **Marges de page mobile = 9px** (valeur donnée par Simeon) : override de `--rail-gutter` et `--rule-margin` à 9px sous 900px dans tokens.css → tout le site (menu, filets, footer, rail) passe à 9px de marge en mobile.
+- **Accueil mobile** (bloc `@media (max-width: 900px)` dans home.css) : le héro n'est plus une superposition — le **titre passe au-dessus de la photo** (`.hero` en `column-reverse`), la photo est élargie et **recadrée à gauche** (`aspect-ratio: 375/304`, `object-position: left`) pour garder la tête de flûte. Section « Pourquoi » en **une colonne** (`.why-grid` en `block`), gravure en pleine largeur dessous. Cotes de Simeon : **H1 28px** (lh 48), sous-titre 18px (lh 28), **H2 24px** (lh 34), **texte 16px** (lh 30).
+- **Vérifié à 375px** : titre/photo/typo conformes à la maquette, marges 9px, aucun débordement horizontal ; toutes les cotes de police mesurées exactes.
+- **Footer mobile fait ensuite (maquette 41:446)** : colonne empilée, ordre nav → légal → contact → atelier → filet → **gros logo centré** → filet → **copyright centré** → filet. Réordonné entièrement en **flex `order`** dans layout.css (aucun changement de HTML) ; les 4 filets pleine largeur viennent des bords haut/bas du `.site-footer`, du bas du bloc texte et du haut du copyright. L'ancien bloc `@media (max-width: 800px)` (2 colonnes) est supprimé. Rythme 36px autour des filets, 28px entre les blocs de texte, 18px de noir sous le filet du bas. Desktop (> 900px) inchangé (grille 4 colonnes, marges 18px). **Vérifié à 375px et 1280px.**
+- La page **Accueil est donc entièrement mobile** (menu + héro + « Pourquoi » + footer). Menu et footer sont mobiles sur **toutes** les pages ; reste le corps mobile des autres pages.
 
 ### 2026-07-20 — Pages une-page Soprano et Alto pour de vrai
 

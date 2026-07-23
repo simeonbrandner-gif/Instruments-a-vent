@@ -30,9 +30,26 @@
   --rail-max: 1403px;
   --rail-gutter: 19px;
   --header-h: 55px; /* hauteur réelle du menu (padding 17+15 + texte 22 + filet 1) */
+  --header-h-m: 44px; /* hauteur de la barre menu en mobile (maquette 41:441) */
+
+  /* Point de bascule vers la version mobile (menu → bouton Menu/Retour).
+     Réglé à 900px : en dessous, la nav horizontale débordait (voir PROJET.md) ;
+     le bouton Menu la remplace. NB : une variable CSS ne peut pas piloter une
+     media query — la valeur est donc écrite en dur dans les @media. */
+  --bp-mobile: 900px;
 
   /* Filet 1px orange utilisé partout (menu, sections, footer) :
      toujours pleine largeur avec 18px de marge de chaque côté */
   --rule: 1px solid var(--color-accent);
   --rule-margin: 18px;
+}
+
+/* Marges de page en mobile : 9px (demande de Simeon, maquettes mobiles).
+   On rétrécit d'un coup la gouttière du rail (contenu) et la marge des filets
+   pleine page → tout le site passe à 9px de marge sous 900px. */
+@media (max-width: 900px) {
+  :root {
+    --rail-gutter: 9px;
+    --rule-margin: 9px;
+  }
 }

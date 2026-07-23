@@ -17,8 +17,18 @@
 <body class="page-instrument">
 
   <header class="site-header">
+    <div class="menu-reveal" aria-hidden="true"></div>
     <div class="rail">
-      <nav class="site-nav" aria-label="Navigation principale">
+      <div class="mobile-bar">
+        <a class="mobile-logo" href="index.html" aria-label="Accueil — Christoph Brandner">
+          <img src="assets/img/logo-footer.svg" alt="" width="45" height="27">
+        </a>
+        <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+          <span class="menu-toggle__label menu-toggle__label--open">Menu</span>
+          <span class="menu-toggle__label menu-toggle__label--close" aria-hidden="true">Retour</span>
+        </button>
+      </div>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
         <ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="atelier.html">Atelier</a></li>
@@ -38,6 +48,17 @@
   </header>
 
   <main class="instrument instrument--hautbois">
+
+    <!-- Bascule mobile Photo / Description (maquettes 44:873 / 44:891) :
+         ligne orange qui glisse, onglet « Description » à droite en mode photo,
+         onglet photo miniature à gauche en mode texte — invisible en desktop -->
+    <div class="side-dock">
+      <span class="side-line" aria-hidden="true"></span>
+      <button type="button" class="side-btn side-btn--desc">Description</button>
+      <button type="button" class="side-btn side-btn--photo" aria-label="Revenir à la photo">
+        <img src="assets/img/hautbois_415_buis_schlegel.webp" alt="">
+      </button>
+    </div>
 
     <div class="instrument-media">
       <img src="assets/img/hautbois_415_buis_schlegel.webp" width="1600" height="9705" alt="Hautbois baroque en do en buis, posé sur un socle de pierre">

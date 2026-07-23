@@ -17,8 +17,18 @@
 <body>
 
   <header class="site-header">
+    <div class="menu-reveal" aria-hidden="true"></div>
     <div class="rail">
-      <nav class="site-nav" aria-label="Navigation principale">
+      <div class="mobile-bar">
+        <a class="mobile-logo" href="index.html" aria-label="Accueil — Christoph Brandner">
+          <img src="assets/img/logo-footer.svg" alt="" width="45" height="27">
+        </a>
+        <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+          <span class="menu-toggle__label menu-toggle__label--open">Menu</span>
+          <span class="menu-toggle__label menu-toggle__label--close" aria-hidden="true">Retour</span>
+        </button>
+      </div>
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
         <ul>
           <li><a href="index.html">Accueil</a></li>
           <li><a href="atelier.html" aria-current="page">Atelier</a></li>
@@ -54,7 +64,13 @@
           <h1 class="atelier-title">La perce centrale d’une flûte à bec ou d’un hautbois baroque se distingue par sa perce conique irrégulière.</h1>
           <div class="atelier-body">
             <p>Ou autrement dit, la perce ne diminue pas régulièrement, mais possède des paliers, soit des sections, où la conicité de la perce à certains endroits augmente plus fortement. Ces paliers permettent de gérer les octaves d’une même note. C’est une des découvertes majeures pour la fabrication d’instruments à vent de l’époque baroque.</p>
+            <figure class="atelier-window" aria-hidden="true">
+              <img src="assets/img/atelier_fenetre_01.jpg" alt="" loading="lazy">
+            </figure>
             <p>Même si peut-être les facteurs du 17ème et 18ème siècle utilisaient déjà des alésoirs, qui permettent de reproduire de façon standard une perce irrégulière, ils utilisaient sûrement souvent encore des mèches cuillère qui sont à manier avec plus de précautions.</p>
+            <figure class="atelier-window" aria-hidden="true">
+              <img src="assets/img/atelier_fenetre_02.jpg" alt="" loading="lazy">
+            </figure>
             <p>Aujourd’hui la majorité des facteurs d’instruments à vents utilisent des alésoirs, soit des espèces de mèches qui ont la forme irrégulièrement conique de la perce. Ces alésoirs se présentent sous la forme d’un cylindre conique en métal dur qu’il convient de tourner à la bonne forme et sur lequel on enlève par fraisage un quart pour obtenir un bord tranchant.</p>
           </div>
         </div>
