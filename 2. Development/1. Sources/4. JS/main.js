@@ -418,7 +418,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const dock = document.querySelector(".side-dock");
   const instrMain = document.querySelector("main.instrument");
-  if (dock && instrMain) {
+  // Variante mobile simplifiée (m-simple) : pas de bascule Photo/Description —
+  // le CSS masque les onglets, on ne branche donc rien.
+  if (dock && instrMain && !instrMain.classList.contains("m-simple")) {
     const descBtn = dock.querySelector(".side-btn--desc");
     const photoBtn = dock.querySelector(".side-btn--photo");
     const mediaBox = document.querySelector(".instrument-media");

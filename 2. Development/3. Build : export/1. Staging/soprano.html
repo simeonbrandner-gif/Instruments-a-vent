@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flûte à bec soprano en do de B. Reich, 415 Hz — buis, olivier ou cormier — Christoph Brandner</title>
   <meta name="description" content="Flûte à bec soprano en do d’après B. Reich, accordée en 415 Hz, fabriquée en buis, en olivier ou en cormier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
+  <link rel="canonical" href="https://atelier-brandner.ch/soprano.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Atelier Brandner — Christoph Brandner">
+  <meta property="og:locale" content="fr_CH">
+  <meta property="og:title" content="Flûte à bec soprano en do de B. Reich, 415 Hz — buis, olivier ou cormier — Christoph Brandner">
+  <meta property="og:description" content="Flûte à bec soprano en do d’après B. Reich, accordée en 415 Hz, fabriquée en buis, en olivier ou en cormier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
+  <meta property="og:url" content="https://atelier-brandner.ch/soprano.html">
+  <meta property="og:image" content="https://atelier-brandner.ch/assets/img/hero-home.webp">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
   <link rel="icon" type="image/png" sizes="512x512" href="assets/img/favicon-512.png">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -47,7 +56,10 @@
     </div>
   </header>
 
-  <main class="instrument instrument--soprano instrument--bois">
+  <!-- m-simple : variante mobile simplifiée (maquette 46:1108). Pour revenir
+       à l'ancienne version deux faces Photo/Description : retirer la classe
+       m-simple du main (ici et sur hautbois/alto) — rien d'autre à faire. -->
+  <main class="instrument instrument--soprano instrument--bois m-simple">
 
     <!-- Bascule mobile Photo / Description (gabarit des maquettes 44:880 / 44:902) :
          ligne orange qui glisse, onglet « Description » à droite en mode photo,
@@ -75,7 +87,7 @@
     </div>
 
     <div class="instrument-panel">
-      <h1 class="instrument-title">Soprano en do<br>de B. Reich<br>en 415hz</h1>
+      <h1 class="instrument-title">Soprano en do <br>de B. Reich <br>en 415hz</h1>
 
       <div class="instrument-info">
 
@@ -83,6 +95,13 @@
           <p>Cet instrument se trouve dans un musée à Bruxelles, après avoir disparu un certain temps suite probablement à un vol. L’original a été fabriqué en buis.</p>
           <p>Il se distingue par une intonation et un accordage presque parfait. Et cet instrument possède un très bel équilibre entre tous les registre.</p>
         </div>
+
+        <!-- Barre des bois de la variante mobile simplifiée (invisible ailleurs) -->
+        <nav class="wood-bar" aria-label="Choix du bois">
+          <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buis</button>
+          <button type="button" class="wood-rail-btn" data-wood="olivier">Olivier</button>
+          <button type="button" class="wood-rail-btn" data-wood="cormier">Cormier</button>
+        </nav>
 
         <section class="wood-acc is-open" data-wood="buis">
           <h2><button type="button" class="acc-head" aria-expanded="true">Buis</button></h2>

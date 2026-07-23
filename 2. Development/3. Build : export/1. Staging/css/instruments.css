@@ -460,3 +460,98 @@ a.wood-head:focus-visible {
     font-size: 22px;
   }
 }
+
+/* ==========================================================================
+   Variante mobile simplifiée — maquette 46:1108, classe m-simple sur le main
+   Essai d'un gabarit plus simple qui remplace les deux faces Photo/Description
+   par une page qui défile : titre, filet, description, barre des bois en flux
+   (les CTA changent le bois : texte + photo, mêmes interactions), texte du
+   bois, puis la grande photo. Footer-rideau conservé. L'ancien gabarit reste
+   entier dans le code : pour y revenir, retirer « m-simple » du <main> des 3
+   pages instrument — rien d'autre à changer. Desktop identique dans les deux
+   versions.
+   ========================================================================== */
+
+.wood-bar {
+  display: none; /* n'existe qu'en mobile simplifié */
+}
+
+@media (max-width: 900px) {
+  /* Le gabarit deux faces s'efface : onglets dockés + rail/barre du bas */
+  .instrument.m-simple .side-dock,
+  .instrument.m-simple .wood-rail-track {
+    display: none;
+  }
+
+  /* La photo passe sous le texte : panneau puis media, en colonne */
+  .instrument.m-simple {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .instrument.m-simple .instrument-panel {
+    display: block;
+    order: 1;
+    margin: 61px var(--rail-gutter) 0; /* titre à 105px du haut (maquette) */
+    animation: none;
+  }
+
+  /* Le titre s'écoule sur toute la largeur (pas les retours forcés desktop) */
+  .instrument.m-simple .instrument-title br {
+    display: none;
+  }
+
+  .instrument.m-simple .instrument-info {
+    margin-top: 45px; /* filet à 203px du haut */
+  }
+
+  .instrument.m-simple .instrument-intro {
+    padding-top: 36px;
+  }
+
+  .instrument.m-simple .instrument-intro p,
+  .instrument.m-simple .wood-body-inner p {
+    max-width: none;
+  }
+
+  /* Barre des bois en flux, entre la description et le texte du bois :
+     filets orange haut/bas, 3 CTA répartis (actif orange via aria-current) */
+  .instrument.m-simple .wood-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 37px;
+    border-top: var(--rule);
+    border-bottom: var(--rule);
+  }
+
+  .instrument.m-simple .wood-bar .wood-rail-btn {
+    writing-mode: horizontal-tb;
+    font-size: 22px;
+  }
+
+  /* Pas d'accordéon : seul le texte du bois affiché est présent (les entêtes
+     Buis/Olivier/Cormier disparaissent, la barre joue leur rôle) */
+  .instrument.m-simple .acc-head {
+    display: none;
+  }
+  .instrument.m-simple .wood-acc:not(.is-open) {
+    display: none; /* pas de fantômes fermés → pas de gaps en double */
+  }
+  .instrument.m-simple .wood-body-inner p:first-child {
+    padding-top: 0; /* l'espacement vient du gap de .instrument-info */
+  }
+
+  /* La grande photo, sous le texte (centre décalé de 10px comme la maquette) */
+  .instrument.m-simple .instrument-media {
+    order: 2;
+    position: relative;
+    left: 10px;
+    width: var(--media-width);
+    margin: 36px auto 0;
+  }
+  .instrument--hautbois.m-simple .instrument-media {
+    left: 0; /* une seule photo, simplement centrée */
+  }
+}

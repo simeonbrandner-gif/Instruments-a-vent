@@ -175,6 +175,17 @@ Toutes les pages sont faites, toutes les images sont livrées, le domaine est en
    - ✅ **Corps mobile de toutes les pages fait le 2026-07-23** (atelier, biographie, contact, instruments-cartes, pages instrument — voir journal). **Reste** : vérifier les pages légales à 375px (aucune maquette — la colonne de lecture legal.css devrait passer telle quelle) et remplacer les 2 placeholders `atelier_fenetre_0X.jpg` par les webp de Simeon.
 3. **Finitions SEO/qualité** : voir checklist ci-dessous (canonical/sitemap/JSON-LD débloqués maintenant que le domaine est live), Open Graph, Lighthouse, validation HTML
    - ⚠️ **Footer : ajouter 36px de bottom margin**
+   - Mobile menu margins should be improved
+   - Menu mobile : ne doit pas avoir de scroll
+   - Page Contact : Zoom on map a bit stronger
+   - Menu : logo and "menu" are not locked in the bar
+   - Page atelier : bottom image horizontal scroll to be improved, should be slower
+   - All 17ème and 18ème have to be written the same : 17e and 18e (with "e" in "exposant")
+   - On page Instruments, when swiping down: tiny animation to show user needs to swipe to the side (rapid side push of the card to show direction)
+   - Instruments pages:
+     * Bottom menu is not good
+     * Animations from photo to text is not good
+     * Add a "back" CTA to go back to the cards
 4. Validation finale : snapshot dans `2. Versioning/V1`
 
 ### Gabarit pages instrument (2026-07-18, refondu une-page le 2026-07-20)
@@ -203,14 +214,34 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 
 1. **Domaine ✅ (atelier-brandner.ch en ligne) + Google Business Profile — le levier n°1, reste à faire.** Créer une fiche Google Business (« Christoph Brandner, facteur d'instruments à vent, 15 rue des Gares, Genève ») : pour les recherches locales, la carte Google passe devant tous les résultats organiques.
 2. **Backlinks monde de la musique ancienne** — annuaires de facteurs (FLAME…), pages de festivals/ensembles, conservatoires, forums (flute-a-bec.com). Pour un site de niche, quelques bons liens pèsent plus que tout le reste. (Action de Christoph/Simeon, pas de code.)
-3. **Quick wins code (~1-2h, Claude, débloqués)** : balises canonical `https://atelier-brandner.ch/…` sur chaque page, robots.txt + sitemap.xml, JSON-LD `LocalBusiness` sur contact.html + `Person` sur biographie.html, Open Graph. Favicon ✅.
-4. **Titles** : en grande partie fait (pages instrument « Flûte à bec … 415 Hz — Christoph Brandner ») ; à revoir éventuellement pour atelier.html (« Atelier de facture de flûtes à bec et hautbois baroques à Genève — … ») et la Home.
+3. **Quick wins code ✅ fait le 2026-07-23** : canonical `https://atelier-brandner.ch/…` sur les 10 pages (+ gabarit stub), robots.txt + sitemap.xml (10 URLs, priorités 1.0→0.3), Open Graph + Twitter card sur toutes les pages, JSON-LD `LocalBusiness` sur contact.html + `Person` sur biographie.html, `noindex` sur les 2 pages légales (contenu non pertinent pour la recherche). Favicon ✅.
+4. **Titles ✅** : Home et atelier.html retitrés pour inclure « Atelier Brandner » (nom de domaine / requête de marque) — Home : « Atelier Brandner — Christoph Brandner, facteur d'instruments à vent baroques à Genève » ; Atelier : « Atelier de facture de flûtes à bec et hautbois baroques à Genève — Christoph Brandner ». Pages instrument déjà bonnes (« Flûte à bec … 415 Hz — Christoph Brandner »).
 5. **Poids des images ✅** (tous les re-exports sont faits, attributs `width`/`height` posés) — vérifier au passage les `loading="lazy"` sous la ligne de flottaison.
 6. **Une page par instrument ✅** (fait le 2026-07-18) — un title/URL par instrument pour la longue traîne.
 7. **Contenu dupliqué ✅ réglé de fait** : avec le domaine personnalisé configuré, GitHub Pages redirige les URLs github.io vers atelier-brandner.ch. Les canonical (point 3) finiront de verrouiller.
 8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
 
 ## Journal des sessions
+
+### 2026-07-23 — Variante mobile simplifiée des pages instrument (m-simple)
+
+- **Essai demandé par Simeon** (maquette **46:1108**, Alto ; hautbois et soprano dérivés) : un gabarit mobile **plus simple** remplace les deux faces Photo/Description — page qui défile normalement : **titre** (pleine largeur, 28 condensé), **filet**, **description**, **barre des bois en flux** (3 CTA entre filets orange, 60px — remplace l'accordéon ET la barre dockée), **texte du bois affiché**, puis la **grande photo** (80 % de large, centrée +10px) et le footer-rideau. Les CTA gardent toutes les interactions : bascule animée photo + texte, `aria-current`, hash `#bois`. Hautbois : pas de barre.
+- **Bascule 2 secondes (rien n'est supprimé)** : tout tient dans la classe **`m-simple` posée sur le `<main>`** des 3 pages instrument. **La retirer = retour immédiat à l'ancienne version deux faces**, dont le code (CSS « Corps mobile », JS dock, HTML .side-dock) reste entier. Détails : bloc « Variante mobile simplifiée » en fin d'instruments.css ; `main.js` saute la bascule Photo/Description si `m-simple` ; nouvelle `nav.wood-bar` (boutons `.wood-rail-btn` → la logique de bois existante les câble toute seule) insérée dans `.instrument-info`, invisible hors variante ; en variante, les entêtes d'accordéon sont masquées et les sections fermées en `display:none`.
+- ⚠️ Les titres des 3 pages ont maintenant un **espace avant chaque `<br>`** (`Alto en fa <br>…`) : la variante masque les `<br>` pour laisser le titre s'écouler — sans l'espace les mots se collaient. Invisible en desktop. Ne pas « nettoyer » ces espaces.
+- **Vérifié à 375×812** (alto : barre, bascule Cormier, photo/texte ; hautbois sans barre ; rideau) **et à 1280** (desktop identique, rail vertical intact). Poussé sur GitHub (avec les finitions SEO de la session précédente, qui attendaient la publication).
+
+### 2026-07-23 — Finitions SEO code (canonical, robots.txt/sitemap, Open Graph, JSON-LD)
+
+- **Demande de Simeon** : le site ne remonte pas sur la recherche « Atelier Brandner ». Diagnostic — site en ligne depuis seulement 4 jours (pas encore indexé), pas de Google Business Profile, pas de backlinks (leviers hors-code, voir checklist), **et** les quick wins code de la checklist SEO n'étaient pas encore faits. Ces derniers sont maintenant réglés :
+  - **`robots.txt`** (`Allow: /` + référence au sitemap) et **`sitemap.xml`** (10 URLs, priorités 1.0 Accueil → 0.3 pages légales) créés dans `2. HTML/`, copiés à la racine du Staging par `build.sh` (nouvelles lignes de copie explicites, ces fichiers n'étant pas du HTML).
+  - **Canonical** (`<link rel="canonical" href="https://atelier-brandner.ch/…">`) sur les 10 pages réelles + le gabarit `_template-stub.html` (placeholder `{{PAGE}}`).
+  - **Open Graph + Twitter card** sur toutes les pages (title/description dupliqués, image par défaut `hero-home.webp` sauf biographie.html qui utilise `bio-portrait.webp`) — améliore les partages et donne à Google un signal de contenu supplémentaire.
+  - **JSON-LD** : `LocalBusiness` sur contact.html (nom, adresse, tél, email, image) et `Person` sur biographie.html (`worksFor` → le LocalBusiness) — vise le knowledge panel / pack local pour les recherches de marque.
+  - **`noindex, follow`** ajouté aux 2 pages légales (mentions-légales, protection-des-données) — hors sujet pour la recherche, `follow` laisse le maillage interne fonctionner.
+  - **Titles retravaillés** (Home + atelier.html) pour inclure « Atelier Brandner » — nom du domaine, probable requête de marque — sans toucher au H1 visible ni à l'identité visuelle du site.
+  - Build relancé, vérifié en préview staging (robots.txt, sitemap.xml, JSON-LD `contact.html` validé via `JSON.parse`, titres corrects, console propre).
+- **Reste (hors code, prioritaire selon la checklist)** : créer la fiche **Google Business Profile** (Christoph Brandner, 15 rue des Gares, Genève) — le vrai levier pour une recherche de marque/locale — et obtenir quelques **backlinks** (annuaires facteurs, festivals, flute-a-bec.com). Soumettre le sitemap à **Google Search Console** une fois le compte créé accélérerait aussi l'indexation.
+- **Commité et poussé le 2026-07-23**, dans le même push que la variante m-simple (ci-dessus).
 
 ### 2026-07-23 — Corps mobile de toutes les pages (footer-rideau, Atelier, Bio, Contact, cartes Instruments, pages instrument)
 

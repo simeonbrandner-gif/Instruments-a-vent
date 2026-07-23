@@ -18,6 +18,9 @@ for f in "$SRC/2. HTML"/*.html; do
   cp "$f" "$OUT/$base"
 done
 
+cp "$SRC/2. HTML/robots.txt" "$OUT/robots.txt"
+cp "$SRC/2. HTML/sitemap.xml" "$OUT/sitemap.xml"
+
 cp -R "$SRC/3. CSS/"* "$OUT/css/"
 cp -R "$SRC/4. JS/"*  "$OUT/js/"
 cp -R "$SRC/1. assets/"* "$OUT/assets/"

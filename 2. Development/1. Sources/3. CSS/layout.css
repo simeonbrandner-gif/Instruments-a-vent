@@ -268,6 +268,26 @@ main {
     z-index: 42; /* au-dessus du voile et de la liste */
   }
 
+  /* Filet orange de la barre fermée. Il appartient à la barre (collante) et
+     reste donc toujours solidaire du logo et du bouton, y compris pendant le
+     rebond élastique en haut de page — là où le filet du voile (fixe) s'en
+     détachait. À l'ouverture il s'efface : le filet du voile (.menu-reveal)
+     prend le relais pour descendre. */
+  .mobile-bar::after {
+    content: "";
+    position: absolute;
+    left: var(--rule-margin);
+    right: var(--rule-margin);
+    bottom: 0;
+    border-top: var(--rule);
+    transition: opacity 0.2s ease;
+    transition-delay: 1s; /* fermeture : réapparaît une fois le voile replié */
+  }
+  .menu-open .mobile-bar::after {
+    opacity: 0;
+    transition-delay: 0s; /* ouverture : s'efface aussitôt */
+  }
+
   /* Logo — petit dans la barre, grandit à l'ouverture (45 → 88px) */
   .mobile-logo {
     display: block;
@@ -336,7 +356,14 @@ main {
     left: var(--rule-margin);
     right: var(--rule-margin);
     bottom: 0;
-    border-top: var(--rule); /* le filet orange, marges 18px comme partout */
+    border-top: var(--rule); /* le filet orange, marges 9px comme partout */
+    opacity: 0; /* fermé : c'est le filet de la barre (.mobile-bar) qui est visible */
+    transition: opacity 0.2s ease;
+    transition-delay: 1s; /* fermeture : s'efface une fois revenu en haut */
+  }
+  .menu-open .menu-reveal::after {
+    opacity: 1;
+    transition-delay: 0s; /* ouverture : visible dès que le voile descend */
   }
   .menu-open .menu-reveal {
     height: 100vh;
