@@ -50,6 +50,10 @@
   max-width: 614px;
 }
 
+.bio-text p + p {
+  margin-top: var(--text-body-line); /* une ligne vide entre les paragraphes */
+}
+
 /* ==========================================================================
    Corps mobile (maquette 43:597) — simple empilement :
    portrait 284×281, nom 28px, filet, texte 16/30, photo atelier 284×276.
@@ -87,6 +91,10 @@
   .bio-text p {
     font-size: 16px;
     line-height: 30px;
+  }
+
+  .bio-text p + p {
+    margin-top: 30px; /* ligne vide entre paragraphes */
   }
 
   /* La photo d'atelier passe sous le texte */

@@ -41,16 +41,6 @@
   margin-top: 16px;
 }
 
-.legal ul.legal-list {
-  margin-top: 16px;
-  padding-left: 1.2em;
-  list-style: disc;
-}
-
-.legal ul.legal-list li {
-  margin-top: 8px;
-}
-
 .legal a {
   color: var(--color-accent);
   text-decoration: underline;
@@ -62,11 +52,28 @@
   font-style: normal;
 }
 
-.legal .legal-note {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: var(--rule);
-  font-size: var(--text-footer-size);
-  line-height: var(--text-footer-line);
-  opacity: 0.7;
+/* Mobile : mêmes cotes typographiques que les pages instrument / Accueil
+   (titre 28px, corps 16px/30) — les tailles desktop paraissaient trop grandes
+   sur petit écran (retour de Simeon). */
+@media (max-width: 900px) {
+  .legal {
+    padding: 56px 0 80px;
+  }
+
+  .legal-inner {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .legal h1 {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: 0.56px;
+  }
+
+  .legal h2 {
+    margin-top: 40px;
+    font-size: 22px;
+    line-height: 28px;
+  }
 }

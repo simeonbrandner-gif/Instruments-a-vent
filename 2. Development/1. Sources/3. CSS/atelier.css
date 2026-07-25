@@ -124,7 +124,10 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    height: 100dvh;
+    /* lvh = hauteur « barre d'URL masquée », constante. Avec 100dvh, l'apparition
+       de la barre Chrome iOS au scroll vers le haut re-mesurait la hauteur et
+       object-fit: cover rezoomait l'image. Le débord bas est masqué par la fenêtre. */
+    height: 100lvh;
     object-fit: cover;
   }
 

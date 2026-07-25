@@ -117,6 +117,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const slideImg = document.querySelector(".atelier-bottom img");
   if (slideImg && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const mqMobile = window.matchMedia("(max-width: 900px)");
+    /* L'image s'arrête à 10% du bout (demande de Simeon, 2026-07-25) : elle
+       parcourt donc 90% de sa course disponible. ⚠️ Le budget de défilement
+       (slideEnd − slideStart) étant fixé par le footer-rideau, aller plus loin
+       veut mécaniquement dire aller plus vite : on perd le « 2× plus lent » du
+       2026-07-23 (l'ancien SLIDE_SPEED = 0.5 plafonnait la course à 50%, donc
+       l'image s'arrêtait en réalité à 50% du bout, et ce plafond masquait
+       complètement SLIDE_END_MARGIN, qui ne servait à rien). Pour retrouver de
+       la lenteur SANS raccourcir la course, il faudrait retarder le
+       footer-rideau sur cette page (ajustement séparé, non fait). */
+    const SLIDE_END_MARGIN = 0.18; // s'arrête à 18% du bout de l'image
+    /* Départ plus lent (demande de Simeon, 2026-07-25) : la course n'est plus
+       linéaire mais en « ease-in » — l'image démarre doucement puis accélère,
+       et arrive au même point à la fin. 1 = linéaire, 2 = quadratique.
+       C'est le seul réglage de rythme : la vitesse moyenne, elle, reste
+       imposée par le budget de défilement (voir ci-dessus). */
+    const SLIDE_EASE = 3;
     let slideStart = 0;
     let slideEnd = 1;
     let slideTravel = 0;
@@ -124,7 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const updateSlide = () => {
       if (!slideTravel) return;
       const p = Math.min(1, Math.max(0, (window.scrollY - slideStart) / (slideEnd - slideStart)));
-      slideImg.style.transform = "translate3d(" + (-slideTravel * p).toFixed(1) + "px, 0, 0)";
+      const eased = Math.pow(p, SLIDE_EASE); // départ lent, puis accélération
+      slideImg.style.transform = "translate3d(" + (-slideTravel * eased).toFixed(1) + "px, 0, 0)";
     };
 
     const measureSlide = () => {
@@ -138,12 +155,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const wrap = slideImg.parentElement.getBoundingClientRect();
       const top0 = rect.top + window.scrollY;
       const vh = window.innerHeight;
-      slideTravel = Math.max(0, rect.width - wrap.width);
-      slideStart = top0 - vh; // l'image apparaît en bas de la fenêtre
+      slideStart = top0 - vh; // l'image apparaît en bas de la fenêtre (départ inchangé, il est bon)
       const pin = curtainMain
         ? curtainMain.offsetTop + curtainMain.offsetHeight - vh
         : Infinity;
+      // Fin quand le main s'épingle (footer-rideau) : la fin du mouvement reste visible.
       slideEnd = Math.min(top0 + rect.height, Math.max(slideStart + 1, pin));
+      // Course = 90% de ce que l'image peut parcourir (elle s'arrête à 10% du
+      // bout). La vitesse en découle : cette course est parcourue sur le budget
+      // de défilement fixé par le footer-rideau (voir SLIDE_END_MARGIN).
+      const rawTravel = Math.max(0, rect.width - wrap.width);
+      slideTravel = rawTravel * (1 - SLIDE_END_MARGIN);
       updateSlide();
     };
 
@@ -174,6 +196,33 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     cardsTrack.addEventListener("scroll", syncLines, { passive: true });
+
+    /* Indice de balayage : peu après le chargement, la 1re carte fait un petit
+       écart vers la gauche pour montrer qu'on peut balayer (styles et détails
+       dans instruments-index.css). Une seule fois, et seulement si personne n'a
+       encore balayé — si l'utilisateur s'en charge avant, on annule sans rien
+       jouer. Une fois lancée, on laisse l'animation finir : elle se termine à
+       translateX(0), donc rien ne saute si le balayage arrive pendant. */
+    const firstCard = cardsTrack.querySelector(".instr-card");
+    if (
+      firstCard &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      let hintPlayed = false;
+      const hintTimer = setTimeout(() => {
+        if (cardsTrack.scrollLeft > 4) return; // déjà balayé : inutile
+        hintPlayed = true;
+        firstCard.classList.add("is-hint");
+      }, 900);
+
+      cardsTrack.addEventListener(
+        "scroll",
+        () => {
+          if (!hintPlayed) clearTimeout(hintTimer);
+        },
+        { once: true, passive: true }
+      );
+    }
   }
 
   /* ---- Contact (mobile) : zoom lent de la carte au défilement ------------
@@ -185,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mapImg = document.querySelector(".contact-map");
   if (mapImg && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const mqMap = window.matchMedia("(max-width: 900px)");
-    const MAP_GROW = 0.15;
+    const MAP_GROW = 0.3; // zoom au défilement 2× plus fort qu'avant (+15% → +30%)
     const MAP_BASE = 1.72; // cadrage de base de la maquette (contact.css)
     let mapTop0 = 0;
     let mapH = 1;
@@ -382,10 +431,6 @@ document.addEventListener("DOMContentLoaded", () => {
       current = wood;
       history.replaceState(null, "", "#" + wood);
       setStates(wood);
-
-      // Onglet photo mobile : la miniature suit le bois affiché
-      const tabImg = document.querySelector(".side-btn--photo img");
-      if (tabImg) tabImg.src = newImg.getAttribute("src");
     };
 
     railBtns.forEach((btn) => {
@@ -404,70 +449,6 @@ document.addEventListener("DOMContentLoaded", () => {
       current = hashWood;
       setStates(hashWood);
     }
-  }
-
-  /* ---- Bascule mobile Photo / Description --------------------------------
-     Trois temps orchestrés ici, animations dans instruments.css :
-     1. clic « Description » → .m-exit : la ligne orange part vers la gauche,
-        l'onglet s'efface, la photo rétrécit et vient se poser sur l'onglet
-        gauche (transform calculé sur sa position réelle) ;
-     2. après la course → .mode-text : le texte entre par la droite, la
-        miniature apparaît dans l'onglet, retour en haut de page ;
-     3. clic sur la miniature → retour : la photo repart de l'onglet vers sa
-        place (mêmes cotes, transition inversée). */
-
-  const dock = document.querySelector(".side-dock");
-  const instrMain = document.querySelector("main.instrument");
-  // Variante mobile simplifiée (m-simple) : pas de bascule Photo/Description —
-  // le CSS masque les onglets, on ne branche donc rien.
-  if (dock && instrMain && !instrMain.classList.contains("m-simple")) {
-    const descBtn = dock.querySelector(".side-btn--desc");
-    const photoBtn = dock.querySelector(".side-btn--photo");
-    const mediaBox = document.querySelector(".instrument-media");
-    const MORPH_MS = 560; // = transition 0.55s de .is-morph
-    const activeImg = () =>
-      mediaBox.querySelector("img.is-active") || mediaBox.querySelector("img");
-
-    // Translation + échelle amenant l'image sur l'onglet gauche (53px de
-    // large, centrée verticalement sous la barre)
-    const tabTransform = (rect) => {
-      const s = 53 / rect.width;
-      const barH = 44;
-      const top = barH + (window.innerHeight - barH - rect.height * s) / 2;
-      return "translate(" + (9.5 - rect.left) + "px, " + (top - rect.top) + "px) scale(" + s.toFixed(4) + ")";
-    };
-
-    let morphTimer = null;
-
-    descBtn.addEventListener("click", () => {
-      const img = activeImg();
-      clearTimeout(morphTimer);
-      instrMain.classList.add("m-exit"); // la ligne glisse, « Description » s'efface
-      img.classList.add("is-morph");
-      void img.offsetWidth;
-      img.style.transform = tabTransform(img.getBoundingClientRect());
-      morphTimer = setTimeout(() => {
-        instrMain.classList.remove("m-exit");
-        instrMain.classList.add("mode-text");
-        img.classList.remove("is-morph");
-        img.style.transform = "";
-        window.scrollTo(0, 0); // on repart du titre
-      }, MORPH_MS);
-    });
-
-    photoBtn.addEventListener("click", () => {
-      clearTimeout(morphTimer);
-      instrMain.classList.remove("mode-text"); // photo réaffichée, ligne repart à droite
-      window.scrollTo(0, 0);
-      const img = activeImg();
-      img.classList.add("is-morph");
-      img.style.transition = "none"; // état de départ posé sans animation
-      img.style.transform = tabTransform(img.getBoundingClientRect());
-      void img.offsetWidth;
-      img.style.transition = "";
-      img.style.transform = ""; // la photo grandit vers sa place
-      morphTimer = setTimeout(() => img.classList.remove("is-morph"), MORPH_MS);
-    });
   }
 
   /* ---- Défilement automatique ------------------------------------------- */

@@ -40,14 +40,7 @@
     <lastmod>2026-07-23</lastmod>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://atelier-brandner.ch/mentions-legales.html</loc>
-    <lastmod>2026-07-23</lastmod>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://atelier-brandner.ch/protection-des-donnees.html</loc>
-    <lastmod>2026-07-23</lastmod>
-    <priority>0.3</priority>
-  </url>
+  <!-- mentions-legales.html et protection-des-donnees.html sont volontairement
+       absentes : elles portent un <meta name="robots" content="noindex">, les
+       lister ici ne ferait qu'ajouter un avertissement dans Search Console. -->
 </urlset>

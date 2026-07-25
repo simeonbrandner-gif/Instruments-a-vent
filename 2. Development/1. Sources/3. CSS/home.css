@@ -47,6 +47,18 @@
   color: var(--color-accent);
 }
 
+/* Filet orange qui sépare les deux familles d'instruments dans le titre
+   (les flûtes à bec d'un côté, les hautbois de l'autre) : il occupe la hauteur
+   d'une ligne du h1 et se cale à droite comme le texte. */
+.hero-title h1 .hero-rule {
+  display: block;
+  width: calc(120 * var(--hero-px));
+  height: calc(28.5 * var(--hero-px));
+  margin-left: auto;
+  margin-bottom: calc(28.5 * var(--hero-px));
+  border-bottom: var(--rule);
+}
+
 .hero-title .hero-tagline {
   margin-top: calc(18 * var(--hero-px));
   font-size: calc(22 * var(--hero-px));
@@ -92,6 +104,31 @@
   height: auto;
 }
 
+/* La gravure s'étire jusqu'à la marge des filets (18px du bord de l'écran),
+   comme la carte de la page Contact — et non jusqu'au bord du rail.
+   Sur les écrans > 1440 le rail est plafonné à 1403px et centré : son bord
+   droit s'éloigne alors du bord de l'écran, alors que les filets orange, eux,
+   restent à 18px. L'image doit suivre les filets (demande de Simeon).
+   Débord = (écran − largeur du rail) / 2 − marge des filets
+          = 1px jusqu'à 1441px de large, puis croît avec l'écran.
+   Marge négative sur l'élément de grille étiré → la figure (et donc l'image,
+   en width:100%) s'élargit d'autant vers la droite.
+   ⚠️ 100vw inclut la barre de défilement quand elle prend de la place (pas le
+   cas des barres flottantes macOS) : `overflow-x: clip` sur la section garantit
+   qu'aucun défilement horizontal ne peut apparaître dans ce cas. */
+@media (min-width: 901px) {
+  .why {
+    overflow-x: clip;
+  }
+
+  .why-figure {
+    margin-right: calc(-1 * (
+      (100vw - min(var(--rail-max), 100vw - 2 * var(--rail-gutter))) / 2
+      - var(--rule-margin)
+    ));
+  }
+}
+
 /* ==========================================================================
    Accueil — version mobile (≤ 900px, maquette 41:474)
    Le titre passe AU-DESSUS de la photo, les colonnes s'empilent, marges 9px.
@@ -123,6 +160,11 @@
     font-size: 28px;
     line-height: 48px;
     letter-spacing: 1.12px;
+  }
+  .hero-title h1 .hero-rule {
+    width: 90px;
+    height: 24px;
+    margin-bottom: 24px;
   }
   .hero-title .hero-tagline {
     margin-top: 18px;

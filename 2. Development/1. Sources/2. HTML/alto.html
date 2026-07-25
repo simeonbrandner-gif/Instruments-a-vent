@@ -44,9 +44,9 @@
           <li class="has-sub">
             <a href="instruments.html" aria-current="page">Instruments</a>
             <ul class="sub-menu" aria-label="Instruments">
-              <li><a href="soprano.html">Soprano 415Hz</a></li>
-              <li><a href="alto.html">Alto 415Hz</a></li>
-              <li><a href="hautbois.html">Hautbois 415Hz</a></li>
+              <li><a href="soprano.html">Soprano 415&nbsp;Hz</a></li>
+              <li><a href="alto.html">Alto 415&nbsp;Hz</a></li>
+              <li><a href="hautbois.html">Hautbois 415&nbsp;Hz</a></li>
             </ul>
           </li>
           <li><a href="biographie.html">Biographie</a></li>
@@ -56,21 +56,14 @@
     </div>
   </header>
 
-  <!-- m-simple : variante mobile simplifiée (maquette 46:1108). Pour revenir
-       à l'ancienne version deux faces Photo/Description : retirer la classe
-       m-simple du main (ici et sur hautbois/soprano) — rien d'autre à faire. -->
-  <main class="instrument instrument--alto instrument--bois m-simple">
+  <main class="instrument instrument--alto instrument--bois">
 
-    <!-- Bascule mobile Photo / Description (maquettes 44:880 / 44:902) :
-         ligne orange qui glisse, onglet « Description » à droite en mode photo,
-         onglet photo miniature à gauche en mode texte — invisible en desktop -->
-    <div class="side-dock">
-      <span class="side-line" aria-hidden="true"></span>
-      <button type="button" class="side-btn side-btn--desc">Description</button>
-      <button type="button" class="side-btn side-btn--photo" aria-label="Revenir à la photo">
-        <img src="assets/img/alto_415_bressan_buis.webp" alt="">
-      </button>
-    </div>
+    <!-- CTA « retour aux cartes » (croix 60×60, maquette 48:1173) -->
+    <a class="back-to-cards" href="instruments.html" aria-label="Retour aux instruments">
+      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+        <path d="M2 2L30 30M30 2L2 30" />
+      </svg>
+    </a>
 
     <div class="wood-rail-track">
       <nav class="wood-rail" aria-label="Choix du bois">
@@ -87,15 +80,15 @@
     </div>
 
     <div class="instrument-panel">
-      <h1 class="instrument-title">Alto en fa <br>de P.J. Bressan <br>en 415hz</h1>
+      <h1 class="instrument-title">Alto en fa <br>de P.J. Bressan <br>en 415&nbsp;Hz</h1>
 
       <div class="instrument-info">
 
         <div class="instrument-intro">
-          <p>L’original de cette flûte alto en fa se trouve dans la collection de Frans Brüggen. Les plans de l’instrument ont été établis par F. Morgan, un des premiers facteurs de flûte du 20ème siècle à avoir commencé à étudier et copier des flûtes de facteurs du 17ème et 18ème siècle.</p>
-          <p>Pierre Jalliard dit Bressan était un des facteurs les plus doué de la période baroque. Né en 1683 à Bourg-en-Bresse, d’où son pseudonyme, il y effectue un apprentissage de tourneur chez un maître tourneur du nom de Jean Bossier. Bressan arrive en tant que hautboïste à Londres, mais y fait assez rapidement carrière comme facteur de flûtes.</p>
-          <p class="intro-gap">Cet alto en fa est à l’origine accordé en 408hz et a été fabriqué en bois de buis.</p>
-          <p>Je l’ai modifié afin d’obtenir un instrument en 415hz. Il possède des graves splendides, volumineux et puissants. Mais il se distingue également par un excellent équilibre et une homogénéité dans tous les registres jusqu’aux notes aiguës.</p>
+          <p>L’original de cette flûte alto en fa se trouve dans la collection de Frans Brüggen. Les plans de l’instrument ont été établis par F. Morgan, un des premiers facteurs de flûte du 20ᵉ siècle à avoir commencé à étudier et copier des flûtes de facteurs des 17ᵉ et 18ᵉ siècles.</p>
+          <p>Pierre Jalliard dit Bressan était un des facteurs les plus doués de la période baroque. Né en 1683 à Bourg-en-Bresse, d’où son pseudonyme, il y effectue un apprentissage de tourneur chez un maître tourneur du nom de Jean Bossier. Bressan arrive en tant que hautboïste à Londres, mais y fait assez rapidement carrière comme facteur de flûtes.</p>
+          <p class="intro-gap">Cet alto en fa est à l’origine accordé en 408&nbsp;Hz et a été fabriqué en bois de buis.</p>
+          <p>Je l’ai modifié afin d’obtenir un instrument en 415&nbsp;Hz. Il possède des graves splendides, volumineux et puissants. Mais il se distingue également par un excellent équilibre et une homogénéité dans tous les registres jusqu’aux notes aiguës.</p>
         </div>
 
         <!-- Barre des bois de la variante mobile simplifiée (invisible ailleurs) -->
@@ -128,7 +121,7 @@
           <h2><button type="button" class="acc-head" aria-expanded="false">Cormier</button></h2>
           <div class="wood-body">
             <div class="wood-body-inner">
-              <p>Enfin je fabrique une version en cormier. Le cormier donne des instruments avec un charme discret et chaleureux. Cette version est particulièrement adapté à la musique de chambre ou en ensemble de flûte.</p>
+              <p>Enfin je fabrique une version en cormier. Le cormier donne des instruments avec un charme discret et chaleureux. Cette version est particulièrement adaptée à la musique de chambre ou en ensemble de flûte.</p>
             </div>
           </div>
         </section>
@@ -139,7 +132,7 @@
 
   <footer class="site-footer">
     <div class="rail">
-      <img class="footer-logo" src="assets/img/logo-footer.svg" alt="Logo de l'atelier Christoph Brandner">
+      <img class="footer-logo" src="assets/img/logo-footer.svg" alt="Logo de l’atelier Christoph Brandner">
       <div>
         <section class="footer-atelier">
           <h2>Atelier</h2>
@@ -160,7 +153,7 @@
       </div>
       <nav aria-label="Navigation pied de page">
         <ul>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html">Accueil</a></li>
           <li><a href="atelier.html">Atelier</a></li>
           <li><a href="instruments.html">Instruments</a></li>
           <li><a href="biographie.html">Biographie</a></li>
@@ -173,7 +166,7 @@
           <li><a href="protection-des-donnees.html">Protection des données</a></li>
         </ul>
       </nav>
-      <p class="footer-copyright">© 2024 Christoph Brandner - Facteur d'instruments à vent baroques</p>
+      <p class="footer-copyright">© 2026 Christoph Brandner - Facteur d’instruments à vent baroques</p>
     </div>
   </footer>
 

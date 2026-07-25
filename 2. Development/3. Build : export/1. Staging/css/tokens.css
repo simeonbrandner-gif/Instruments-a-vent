@@ -26,11 +26,17 @@
 
   --text-small-size: 12px;
 
-  /* Mise en page — rail central 1403px, gouttières 19px (design 1440) */
+  /* Mise en page — rail central 1403px, gouttières 18px (design 1440).
+     18px = la même marge que les filets orange (--rule-margin) : le contenu du
+     rail (menu compris) et les filets sont donc alignés sur la même verticale.
+     Historique : la valeur était 19px, ce qui décalait le contenu d'1px vers
+     l'intérieur par rapport aux filets. Dans la maquette, la marge exacte vaut
+     (1440 − 1403) / 2 = 18,5px — ni 18 ni 19 ; on retient 18, comme les filets
+     (et comme le mobile, qui met déjà les deux à 9px). Corrigé le 2026-07-25. */
   --rail-max: 1403px;
-  --rail-gutter: 19px;
+  --rail-gutter: 18px;
   --header-h: 55px; /* hauteur réelle du menu (padding 17+15 + texte 22 + filet 1) */
-  --header-h-m: 44px; /* hauteur de la barre menu en mobile (maquette 41:441) */
+  --header-h-m: 53px; /* hauteur de la barre menu en mobile : 9px (haut) + contenu 35px + 9px (bas). Le filet, le voile fermé et le dock des pages instrument s'y calent tous. */
 
   /* Point de bascule vers la version mobile (menu → bouton Menu/Retour).
      Réglé à 900px : en dessous, la nav horizontale débordait (voir PROJET.md) ;
