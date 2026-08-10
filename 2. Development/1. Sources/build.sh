@@ -20,6 +20,8 @@ done
 
 cp "$SRC/2. HTML/robots.txt" "$OUT/robots.txt"
 cp "$SRC/2. HTML/sitemap.xml" "$OUT/sitemap.xml"
+# favicon.ico à la racine : c'est le chemin que le crawler de favicons de Google demande
+cp "$SRC/2. HTML/favicon.ico" "$OUT/favicon.ico"
 
 cp -R "$SRC/3. CSS/"* "$OUT/css/"
 cp -R "$SRC/4. JS/"*  "$OUT/js/"
