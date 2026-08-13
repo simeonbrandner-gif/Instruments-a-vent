@@ -225,6 +225,20 @@
   padding-top: 18px;
 }
 
+/* ---- Prix, en bas de la colonne de texte --------------------------------
+   Dernier enfant de .instrument-info : il se place donc tout seul sous le
+   texte en desktop ET, en mobile, sous le bloc de texte mais avant la grande
+   photo (qui est en order: 2). Pas de filet : une simple ligne de texte
+   courant (taille et graisse héritées du body, comme les paragraphes
+   au-dessus), seule la couleur change.
+   36px au-dessus du mot (demande de Simeon) : .instrument-info pose déjà
+   60px de gap entre ses enfants, on le compense pour retomber pile à 36. */
+
+.instrument-price {
+  margin-top: calc(36px - 60px);
+  color: var(--color-accent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .instrument--bois .instrument-media img,
   .wood-body,
@@ -298,7 +312,8 @@
   }
 
   .instrument-intro p,
-  .wood-body-inner p {
+  .wood-body-inner p,
+  .instrument-price {
     font-size: 16px;
     line-height: 30px;
     max-width: none;
@@ -336,6 +351,14 @@
   }
   .wood-body-inner p:first-child {
     padding-top: 0; /* l'espacement vient du gap de .instrument-info */
+  }
+
+  /* ---- Prix, sous le bloc de texte et avant la photo --------------------
+     Le gap de .instrument-info vaut déjà 36px en mobile : rien à compenser,
+     la marge desktop (négative) est annulée. La taille du texte courant
+     mobile (16/30) est posée plus haut avec les paragraphes. */
+  .instrument-price {
+    margin-top: 0;
   }
 
   /* ---- La grande photo, sous le texte ------------------------------------

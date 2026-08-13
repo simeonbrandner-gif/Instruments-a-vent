@@ -419,8 +419,18 @@ main {
     height: 100%;
     text-align: right;
   }
-  .site-nav .sub-menu {
-    display: none; /* pas de sous-pages : on passe par la page Instruments */
+  /* Pas de sous-pages en mobile : on passe par la page Instruments.
+     ⚠️ Il faut neutraliser AUSSI les règles de survol/focus du desktop :
+     `.site-nav .has-sub:hover .sub-menu` a une spécificité de 0,4,0 contre
+     0,2,0 pour `.site-nav .sub-menu` — elle gagne donc même ici, dans la
+     media query. Conséquence sur écran tactile : le 1er appui sur
+     « Instruments » ne faisait que déclencher l'état :hover (le sous-menu
+     s'affichait sous la fenêtre, invisible) sans suivre le lien ; il fallait
+     appuyer deux fois. */
+  .site-nav .sub-menu,
+  .site-nav .has-sub:hover .sub-menu,
+  .site-nav .has-sub:focus-within .sub-menu {
+    display: none;
   }
   .site-nav li {
     position: static;
