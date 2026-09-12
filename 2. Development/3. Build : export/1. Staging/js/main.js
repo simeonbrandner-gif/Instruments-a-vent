@@ -90,6 +90,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  /* ---- Sélecteur de langue ----------------------------------------------
+     Le panneau desktop s'ouvre déjà au survol et au clavier (CSS, comme le
+     sous-menu Instruments). On n'ajoute ici que le clic — indispensable sur
+     écran tactile, où :hover n'existe pas — et la mémorisation de la langue.
+
+     Mémorisation : chaque page enregistre sa propre langue, et un clic sur une
+     langue l'enregistre AVANT de naviguer. C'est ce que relit le script de
+     détection placé dans le <head> de l'accueil français : un visiteur qui a
+     choisi une langue n'est plus jamais redirigé contre son gré. */
+
+  const langSwitch = document.querySelector(".lang-switch");
+  if (langSwitch) {
+    const langBtn = langSwitch.querySelector(".lang-current");
+    const remember = (code) => {
+      try {
+        localStorage.setItem("lang", code);
+      } catch (e) {
+        /* navigation privée, stockage refusé : on se passe de la mémoire */
+      }
+    };
+
+    remember(document.documentElement.lang);
+
+    langSwitch.querySelectorAll(".lang-list a").forEach((a) => {
+      // synchrone : l'écriture a lieu avant que la navigation ne parte
+      a.addEventListener("click", () => remember(a.getAttribute("lang")));
+    });
+
+    if (langBtn) {
+      const setLang = (open) => {
+        langSwitch.classList.toggle("is-open", open);
+        langBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+
+      langBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // sinon le clic referme aussitôt via document
+        setLang(!langSwitch.classList.contains("is-open"));
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!langSwitch.contains(e.target)) setLang(false);
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setLang(false);
+      });
+    }
+  }
+
   /* ---- Footer-rideau (mobile) -------------------------------------------
      Sous 900px, layout.css épingle le main en sticky pour que le footer
      glisse par-dessus. Le top nécessaire (100vh − hauteur du main, jamais

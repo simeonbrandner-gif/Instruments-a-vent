@@ -1,0 +1,108 @@
+#meta
+title: Flûte à bec soprano en do d’après B. Reich, 415 Hz — Genève
+description: Flûte à bec soprano en do d’après B. Reich, accordée en 415 Hz, fabriquée en buis, en olivier ou en cormier par Christoph Brandner, facteur d’instruments à vent baroques à Genève.
+css: instruments.css
+nav: instruments
+body-class: page-instrument
+robots: index
+#jsonld
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Flûte à bec soprano en do d’après B. Reich, 415 Hz",
+    "category": "Flûte à bec baroque",
+    "url": "https://atelier-brandner.ch/soprano.html",
+    "image": "https://atelier-brandner.ch/assets/img/soprano_groupe.webp",
+    "description": "Copie de la flûte à bec soprano en do de B. Reich, conservée dans un musée à Bruxelles, accordée au diapason 415 Hz. Fabriquée à la main en buis, en olivier ou en cormier. Intonation et accordage presque parfaits, bel équilibre entre les registres graves et aigus.",
+    "material": ["Buis", "Olivier", "Cormier"],
+    "brand": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "manufacturer": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Diapason", "value": "415 Hz" },
+      { "@type": "PropertyValue", "name": "Tonalité", "value": "Do" },
+      { "@type": "PropertyValue", "name": "Modèle d’après", "value": "B. Reich" },
+      { "@type": "PropertyValue", "name": "Époque de l’original", "value": "Baroque" }
+    ],
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/MadeToOrder",
+      "priceCurrency": "CHF",
+      "url": "https://atelier-brandner.ch/contact.html",
+      "seller": { "@id": "https://atelier-brandner.ch/#atelier" }
+    }
+  }
+  </script>
+#main
+  <main class="instrument instrument--soprano instrument--bois">
+
+    <!-- CTA « retour aux cartes » (croix 60×60, maquette 48:1173) -->
+    <a class="back-to-cards" href="instruments.html" aria-label="Retour aux instruments">
+      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+        <path d="M2 2L30 30M30 2L2 30" />
+      </svg>
+    </a>
+
+    <div class="wood-rail-track">
+      <nav class="wood-rail" aria-label="Choix du bois">
+        <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buis</button>
+        <button type="button" class="wood-rail-btn" data-wood="olivier">Olivier</button>
+        <button type="button" class="wood-rail-btn" data-wood="cormier">Cormier</button>
+      </nav>
+    </div>
+
+    <div class="instrument-media">
+      <img class="is-active" data-wood="buis" src="{{ROOT}}assets/img/soprano_415_reich_buis.webp" width="1000" height="3777" alt="Flûte à bec soprano en do en buis, posée sur un socle de pierre">
+      <img data-wood="olivier" src="{{ROOT}}assets/img/soprano_415_reich_olivier.webp" width="1000" height="3777" alt="Flûte à bec soprano en do en olivier, posée sur un socle de pierre">
+      <img data-wood="cormier" src="{{ROOT}}assets/img/soprano_415_reich_cormier.webp" width="1000" height="3777" alt="Flûte à bec soprano en do en cormier, posée sur un socle de pierre">
+    </div>
+
+    <div class="instrument-panel">
+      <h1 class="instrument-title">Soprano en do <br>selon B. Reich <br>en 415&nbsp;Hz</h1>
+
+      <div class="instrument-info">
+
+        <div class="instrument-intro">
+          <p>Cet instrument se trouve dans un musée à Bruxelles, après avoir disparu un certain temps suite probablement à un vol. L’original a été fabriqué en buis.</p>
+          <p>Il se distingue par une intonation et un accordage presque parfaits, ainsi que par un excellent équilibre entre les registres graves et aigus.</p>
+        </div>
+
+        <!-- Barre des bois de la variante mobile simplifiée (invisible ailleurs) -->
+        <nav class="wood-bar" aria-label="Choix du bois">
+          <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buis</button>
+          <button type="button" class="wood-rail-btn" data-wood="olivier">Olivier</button>
+          <button type="button" class="wood-rail-btn" data-wood="cormier">Cormier</button>
+        </nav>
+
+        <section class="wood-acc is-open" data-wood="buis">
+          <h2><button type="button" class="acc-head" aria-expanded="true">Buis</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>La version en buis que je fabrique est par les qualités de ce bois puissante et directe dans l’attaque.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="olivier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Olivier</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Je fabrique cette flûte soprano également en olivier, ce qui donne un instrument visuellement très charmant et au son chaleureux et équilibré. Peut-être plus adapté pour la musique de chambre ou en petite formation.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="cormier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Cormier</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>La version en cormier possède un peu les mêmes qualités sonores que l’instrument en olivier, une certaine retenue et un son chaleureux.</p>
+            </div>
+          </div>
+        </section>
+
+        <p class="instrument-price">Prix sur demande</p>
+      </div>
+    </div>
+
+  </main>

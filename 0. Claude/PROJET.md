@@ -1,7 +1,7 @@
 # Site Christoph Brandner — Guide projet pour Claude
 
 > Document de référence pour toute nouvelle session de travail sur ce projet.
-> Dernière mise à jour : 2026-08-13
+> Dernière mise à jour : 2026-09-12
 
 **🌐 Site en ligne :** https://atelier-brandner.ch (GitHub Pages, publication automatique à chaque push — miroir : https://simeonbrandner-gif.github.io/Instruments-a-vent/)
 
@@ -10,13 +10,13 @@
 Site vitrine statique pour **Christoph Brandner** (le père de Simeon), facteur d'instruments à vent baroques à Genève : flûtes à bec (soprano, alto) et hautbois baroques.
 
 - **Simeon** fait le design dans Figma → **Claude** écrit tout le code (HTML/CSS/JS vanilla, aucun framework, aucune dépendance).
-- Site **français uniquement**.
+- Site **trilingue FR / DE / EN** depuis le 2026-09-12 : le **français reste à la racine** (les URLs indexées ne bougent pas), l'allemand dans `/de/`, l'anglais dans `/en/`, **mêmes noms de fichiers** dans les trois langues. Voir « Multilingue » plus bas.
 - Déploiement : **GitHub Pages + domaine atelier-brandner.ch** (chaque push sur `main` publie le Staging). L'option FTP classique est abandonnée.
 - Contact : liens **mailto/tel uniquement**, pas de formulaire, pas de backend.
 
 ## Figma
 
-- Fichier : `c7zvOYoKuuDCGfB5bYqpo0` (Site_CHR)
+- Fichier : `yuBBEuLyUAH9UV1vCPUFnB` **depuis le 2026-09-12** (les liens que Simeon envoie pointent sur cette clé ; l'ancienne `c7zvOYoKuuDCGfB5bYqpo0` est gardée ici pour mémoire).
 - Frames desktop en **1440px**, préfixe « D - » (D - Home, D - Instruments…)
 - Frames existantes : Home (0:38), sous-menu Instruments (8:212), **Instruments vue d'ensemble « bois groupés » (49:1178) — c'est la maquette en vigueur** (l'ancienne vue à 7 instruments, 31:816, est remplacée depuis le 2026-07-24), Biographie (7:171), Contact (9:274), Atelier (22:201)
 - **Frames instruments (une par instrument/bois)** : Soprano Reich 415 Buis (30:256) / Olivier (30:312) / Cormier (30:358), Alto Bressan 415 Buis (30:233) / Olivier (30:748) / Cormier (30:680), Hautbois Schlegel 415 (30:279). Les anciennes frames accordéon (1:34/1:56/1:78) sont obsolètes.
@@ -51,16 +51,21 @@ Site_Chr/
 └── 2. Development/
     ├── 1. Sources/       ← on développe ICI
     │   ├── 1. assets/    → img/ (webp finaux — plus aucun placeholder), fonts/
-    │   ├── 2. HTML/      → pages (+ _template-stub.html pour les pages à venir,
-    │   │                    exclu du build ; symlinks css/js/assets pour ouvrir
-    │   │                    les fichiers directement pendant le dev)
+    │   ├── 2. HTML/      → _partials/ (head, header/menu, footer — le « chrome »,
+    │   │                    écrit UNE fois pour les 3 langues)
+    │   │                    _i18n/ (fr.conf, de.conf, en.conf — libellés du chrome)
+    │   │                    fr/ de/ en/ (une source par page : front-matter + <main>)
+    │   │                    ⚠️ ces fichiers ne sont PAS des pages autonomes : ils ne
+    │   │                    s'ouvrent pas dans un navigateur, il faut lancer build.sh
+    │   │                    et regarder le Staging.
     │   ├── 3. CSS/       → tokens.css, base.css, layout.css (menu+sous-menu+footer),
     │   │                    home.css, instruments.css (pages instrument),
     │   │                    instruments-index.css (vue d'ensemble), atelier.css,
     │   │                    biographie.css, contact.css, legal.css
     │   ├── 4. JS/        → main.js (scroll différencié + auto-scroll des pages
     │   │                    instrument, zoom de la vue d'ensemble ; garder minimal)
-    │   └── build.sh      → assemble le site déployable dans Staging
+    │   ├── build.py      → assemble les pages (partials + i18n + sources) + sitemap
+    │   └── build.sh      → appelle build.py puis copie css/js/assets dans Staging
     ├── 2. Versioning/    ← snapshots aux jalons : un dossier AAAA-MM-JJ/
     │                       (copie de Sources + LISEZMOI.txt), hors git —
     │                       convention posée par Simeon le 2026-07-20
@@ -70,11 +75,22 @@ Site_Chr/
         └── 3. Archive/
 ```
 
-**Workflow :** modifier les Sources → lancer `build.sh` (copie pure, aucune réécriture : le HTML est écrit avec les chemins finaux `css/…`, `js/…`, `assets/…`) → prévisualiser Staging.
+**Workflow :** modifier les Sources → lancer `build.sh` → prévisualiser Staging.
+
+`build.sh` appelle **`build.py`** (python3, aucune dépendance), qui assemble les 30 pages
+(10 pages × 3 langues) à partir des partials, des `_i18n/*.conf` et des sources de page,
+et engendre `sitemap.xml`. Les chemins `css/…`, `js/…`, `assets/…` passent par le jeton
+`{{ROOT}}` : vide pour le français (racine), `../` pour `/de` et `/en`.
+Le script **échoue bruyamment** si un jeton `{{…}}` n'est pas remplacé, et signale toute
+page absente d'une langue — rien ne part en silence.
+
+**Format d'une source de page** (`2. HTML/<langue>/<page>.html`) : trois sections —
+`#meta` (title, description, css, nav, body-class, robots, et au besoin og-type /
+og-image), `#jsonld` (facultatif, le bloc `<script>` tel quel) et `#main` (le `<main>`).
 
 **Préview :** `.claude/launch.json` définit « site-staging » (python3 http.server, port 8642, servant Staging). Toujours vérifier à 1440px contre la maquette Figma.
 
-**Header/footer :** dupliqués dans chaque page HTML (pas d'include JS). Toute modification du menu ou du footer doit être reportée dans **toutes** les pages + le _template-stub.html. Le header contient désormais aussi, avant le `.rail`, un `.menu-reveal` (voile mobile) et, dans le `.rail`, une `.mobile-bar` (logo + bouton `.menu-toggle` Menu/Retour) — invisibles au-dessus de 900px. La **nav est unique** : la même `ul.site-nav#site-nav` sert de menu horizontal en desktop et de liste plein écran en mobile (voir « Menu mobile » ci-dessous).
+**Header/footer : écrits UNE seule fois**, dans `2. HTML/_partials/` (refonte du 2026-09-12 — ils étaient auparavant copiés-collés dans chaque page). Une modification du menu ou du footer se fait **dans le partial** et se propage aux 30 pages au prochain build. Les libellés traduits vivent dans `_i18n/<langue>.conf`, jamais en dur dans le partial. Le header contient désormais aussi, avant le `.rail`, un `.menu-reveal` (voile mobile) et, dans le `.rail`, une `.mobile-bar` (logo + bouton `.menu-toggle` Menu/Retour) — invisibles au-dessus de 900px. La **nav est unique** : la même `ul.site-nav#site-nav` sert de menu horizontal en desktop et de liste plein écran en mobile (voir « Menu mobile » ci-dessous).
 
 ### Menu mobile (≤ 900px) — maquettes 41:441 (barre) et 41:492 (menu ouvert)
 
@@ -86,7 +102,77 @@ Site_Chr/
 - **Layering** : `.site-header` passe à `z-index: 100` en mobile ; à l'intérieur voile 40 < liste 41 < barre 42. Vérifié au-dessus du panneau fixe et du rail des pages instrument (z-index 5).
 
 **Sous-menu Instruments (maquette Figma 8:212) :** l'entrée « Instruments » du menu porte un menu déroulant (`li.has-sub` > `ul.sub-menu`, styles dans layout.css) — panneau noir 245px sous le menu, libellés 20px ExtraBold orange avec 18px au-dessus/en-dessous, filet orange 1px entre chaque entrée. Ouverture au survol et au clavier (focus-within).
-⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la page, (2) ajouter son entrée dans le `ul.sub-menu` de **toutes** les pages HTML + `_template-stub.html` (et régénérer les stubs), (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano.html, « Alto 415Hz » → alto.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
+⚠️ **Règle : le sous-menu ne liste QUE les instruments dont la page existe.** À chaque création d'une nouvelle page instrument : (1) créer la source dans **les trois** dossiers `fr/`, `de/`, `en/`, (2) ajouter son entrée dans le `ul.sub-menu` de `_partials/header.html` **et** son libellé dans les trois `_i18n/*.conf`, (3) mettre à jour ce document. Entrées actuelles : « Soprano 415Hz » → soprano.html, « Alto 415Hz » → alto.html, « Hautbois 415Hz » → hautbois.html. Le lien « Instruments » du menu et du footer pointe sur instruments.html (vue d'ensemble).
+
+## Multilingue (FR / DE / EN) — posé le 2026-09-12
+
+**URLs.** Le français reste **à la racine** (`/alto.html`) : aucune URL indexée ne bouge.
+L'allemand est dans `/de/`, l'anglais dans `/en/`, avec **les mêmes noms de fichiers**
+(`/de/hautbois.html`, `/en/hautbois.html`) — décision de Simeon : le sélecteur de langue
+n'est alors qu'un changement de dossier, et aucune table de correspondance ne peut dériver.
+Choisi contre des slugs traduits (`/en/oboe.html`), plus jolis mais irréversibles (GitHub
+Pages ne sait pas rediriger).
+
+**Textes.** Source éditoriale = **les trois arbres Notion** (FRENCH / ENGLISH / GERMAN,
+11 pages chacun). ⚠️ Ils ne contiennent **ni `<title>`, ni meta description, ni Open
+Graph** : ceux des pages DE et EN ont été **écrits par Claude** le 2026-09-12 (traduits
+des FR, calibrés sous 60 signes comme le 2026-08-11) — **à faire relire**.
+
+**Le texte allemand de l'accueil n'est pas une traduction du français** (version propre de
+Christoph : Bach/Händel, Traversos, labium/canal/bloc, 23% plus long). C'est voulu — ne
+pas aligner les deux langues.
+
+**Ce qui reste en français dans les trois langues**, volontairement : la marque
+« Atelier Brandner » (elle correspond au nom de domaine), la rue « 15 rue des Gares »,
+et les identifiants internes `data-wood="buis|olivier|cormier"` (clés de code, jamais
+affichées — le CSS et le JS s'appuient dessus).
+
+### Sélecteur de langue (maquettes Figma 2053:60 desktop, 2053:83 mobile)
+
+**Un seul balisage** (`.lang-switch` > `button.lang-current` + `ul.lang-list`, posé par
+`build.py` à la fin de la nav) sert les deux mises en page. Les maquettes ne listent pas
+les langues dans le même ordre : **desktop FR·DE·EN, mobile EN·DE·FR** — les deux sont
+reproduites telles quelles, via `--order-d` / `--order-m` posés sur chaque `<li>` et
+repris par `order` en CSS. Aucun lien n'est dupliqué.
+
+- **Desktop** : « FR » à droite de la barre de menu, **14px ExtraBold orange**, tracking
+  0,56 — centré sur la ligne des entrées et sur le panneau. Au survol / au clavier /
+  au clic, panneau noir de **82px** sous le filet, listant les **deux autres** langues
+  (`li.is-current` est masquée). Rythme **identique au sous-menu Instruments** : 18px
+  au-dessus et en dessous, filet orange après chaque entrée, 20px ExtraBold — mesuré,
+  les deux font 57px par entrée. Le `border-top: 16px solid transparent` fait le pont
+  de survol jusqu'au bas du menu, exactement comme le sous-menu.
+- **Mobile** : ligne des **3 langues** sous la dernière entrée (63px), alignée à droite
+  comme elles, **28px ExtraBold**, gaps de **45px**. L'active est orange, les deux autres
+  en **blanc à 60%** (`--color-muted`, seul gris du site). Elle apparaît en fondu à
+  **1,0 s**, juste après la 5ᵉ entrée (0,90 s), et repart en premier à la fermeture.
+- **JS** (`main.js`) : le CSS fait déjà le survol et le focus ; le JS n'ajoute que le
+  **clic** (indispensable au tactile, où `:hover` n'existe pas), la fermeture au clic
+  extérieur et à Échap, et la mémorisation de la langue.
+
+### Détection de la langue du navigateur
+
+Script **inline dans le `<head>` de l'accueil français uniquement** (nulle part ailleurs :
+pas de boucle possible), donc actif avant le premier affichage :
+
+1. une langue **mémorisée** (localStorage `lang`) gagne toujours — c'est elle qui est
+   appliquée, et un visiteur qui a cliqué « FR » n'est **jamais** renvoyé ailleurs ;
+2. sinon, arrivée depuis le site lui-même (referrer interne) → on ne touche à rien ;
+3. sinon, première correspondance dans `navigator.languages` : `fr` → on reste,
+   `de` / `en` → `location.replace()` vers `/de/` ou `/en/` ;
+4. aucune correspondance (italien…) → on reste en français (c'est le `x-default`).
+
+La mémoire est écrite par `main.js` **à chaque page** (la langue de la page) et, de façon
+synchrone, **au clic sur une langue** — c'est ce clic qui garantit le point 1.
+Cas vérifiés le 2026-09-12 : mémoire=de/nav=fr → `/de/` · mémoire=fr/nav=de → reste ·
+sans mémoire nav=de-CH → `/de/` · nav=en-US → `/en/` · nav=fr-CH → reste · nav=it → reste ·
+referrer interne → reste. Redirection réelle testée dans le navigateur.
+
+⚠️ **Le seul risque SEO connu** : Googlebot annonce `en-US` et serait donc redirigé
+depuis `/` vers `/en/`. Les `hreflang` + le `x-default` sur le français sont là pour que
+Google comprenne la structure. Si les impressions FR de la Home chutaient dans la Search
+Console, c'est la première chose à remettre en cause (il suffit de ne plus émettre le
+bloc `LANG_DETECT` dans `build.py`).
 
 ## Images — règles
 
@@ -180,6 +266,10 @@ le chemin mobile, celui que Google évalue, est déjà propre).
 
 ## Pages
 
+Les 10 pages ci-dessous existent **dans les trois langues** depuis le 2026-09-12
+(français à la racine, allemand dans `/de/`, anglais dans `/en/`) — 30 pages au total.
+La colonne « Notes » décrit la mise en page, commune aux trois.
+
 | Page | État | Notes |
 |---|---|---|
 | index.html (Accueil) | ✅ faite | héro + section « Pourquoi fabriquer… » |
@@ -269,7 +359,7 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 5. **Poids des images ✅** (tous les re-exports sont faits, attributs `width`/`height` posés) — vérifier au passage les `loading="lazy"` sous la ligne de flottaison.
 6. **Une page par instrument ✅** (fait le 2026-07-18) — un title/URL par instrument pour la longue traîne.
 7. **Contenu dupliqué ✅ réglé de fait** : avec le domaine personnalisé configuré, GitHub Pages redirige les URLs github.io vers atelier-brandner.ch. Les canonical (point 3) finiront de verrouiller.
-8. (Optionnel, plus tard) versions DE/EN avec `hreflang` — clientèle internationale, mais décision à part, le site est volontairement FR pour l'instant.
+8. ✅ **FAIT le 2026-09-12 — versions DE et EN avec `hreflang`.** Les 8 pages indexables existent dans les 3 langues (24 URLs au sitemap), chacune déclarant ses sœurs + `x-default` sur le français. Les 2 pages légales restent en `noindex` et **sans** `hreflang` (Google l'ignore sur une page noindex).
 9. **Google Search Console ✅ (2026-08-10)** : propriété de **domaine** `atelier-brandner.ch` validée par enregistrement **TXT** `google-site-verification=…` ajouté dans la zone DNS Infomaniak (racine `@`, en complément des A records GitHub Pages). Couvre http/https + www/non-www d'un coup. ⚠️ Ne pas supprimer ce TXT, la validation serait perdue. **`sitemap.xml` soumis** et **indexation demandée** via l'inspection d'URL le même jour — la Search Console est entièrement configurée, plus rien à faire côté code. Les premières données (impressions, requêtes) mettent quelques jours à deux semaines à apparaître.
 10. **Balisage JSON-LD étendu ✅ (2026-08-10)** : `LocalBusiness` ajouté sur **index.html** (c'est la Home qui ressort sur la requête de marque, elle porte maintenant adresse, téléphone, `founder`, `areaServed`, `knowsAbout`) ; `Product` ajouté sur **soprano/alto/hautbois** (modèle d'après, diapason, tonalité, matériaux, `offers` en `MadeToOrder` sans prix — cohérent avec « prix sur demande »). Toutes les entités « atelier » partagent le même **`@id` `https://atelier-brandner.ch/#atelier`** (index, contact, `worksFor` de biographie) pour que Google n'y voie qu'une seule entreprise et non trois. ⚠️ Ne pas dupliquer cet `@id` sur une entité différente. **Aucune balise `<meta name="keywords">`** : ignorée par Google depuis 2009, inutile.
 11. **Favicon et vignette Google ✅ (2026-08-10)** — après une première apparition dans les résultats Google (globe générique + vignette = `gravure_flutes.webp`, pas la photo hero) :
@@ -286,6 +376,56 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 - **Mots-clés absents du contenu visible, en attente d'infos de Christoph** : « musique ancienne » (0 occurrence sur le site), « diapason » (seulement sur hautbois.html), « sur mesure / commande / délai », « restauration / réparation » (fait-il de la restauration ?). Ce sont des ajouts de **texte**, pas de balises — c'est le vrai levier restant côté code.
 
 ## Journal des sessions
+
+### 2026-09-12 (2) — Le site passe en trois langues + refonte du build en partials
+
+- 🏗️ **Le « chrome » n'est plus dupliqué.** head, header/menu et footer étaient copiés-collés
+  dans les 10 pages ; ils sont désormais dans `2. HTML/_partials/` et assemblés par
+  **`build.py`**. Sans ça, ajouter le sélecteur de langue aurait été une modification à
+  répéter 31 fois, et les 3 blocs `hreflang` par page auraient dû rester cohérents à la main.
+- ✅ **Filet de sécurité de la refonte** : les 10 pages françaises ont d'abord été
+  **regénérées à l'identique, octet pour octet**, avant qu'on ajoute quoi que ce soit —
+  preuve que le passage aux partials ne touche pas au site en ligne. Deux exceptions
+  légitimes ont été découvertes au passage et sont devenues des clés de front-matter :
+  `og-type: profile` et `og-image` propres à biographie.html.
+- 🌍 **18 nouvelles pages** (DE et EN), écrites depuis les arbres Notion. Elles ne sont pas
+  retapées : un script part de la source FR, **remplace les textes un à un et échoue si une
+  phrase française reste introuvable** — la structure ne peut donc pas diverger d'une langue
+  à l'autre. Contrôle final : aucun mot français dans le texte visible des 18 pages, hors
+  « Atelier Brandner » et « rue des Gares », voulus.
+- 🔤 **Sélecteur de langue** desktop + mobile, et **détection du navigateur** : tout est
+  décrit dans la section « Multilingue » ci-dessus.
+- 🧪 **Vérifié sur les 30 pages** : `<html lang>` juste, aucun lien mort, `hreflang` complet
+  sur les 8 pages indexables et absent des 2 pages `noindex`, canonical propre à chaque
+  page, un seul `<h1>`, sélecteur présent. Rendu comparé aux maquettes à 1440 et à 375
+  (et à 375×640, la hauteur exacte de la frame mobile).
+- 🗑️ **`_template-stub.html` supprimé** : il n'a plus d'objet, une nouvelle page est
+  simplement un fichier de plus dans `fr/`, `de/` et `en/`. Idem pour la préview
+  « site-sources » de `launch.json` (elle servait `2. HTML` en direct, ce qui ne veut plus
+  rien dire) — **seule la préview « site-staging » subsiste**.
+- 📄 **`sitemap.xml` est maintenant engendré** par `build.py` (24 URLs). Ne plus l'éditer
+  à la main. La date qu'il porte est la constante `LASTMOD`, à remonter quand le contenu
+  change vraiment.
+- ⏳ **À faire relire par Simeon / Christoph** : les `<title>`, meta descriptions et
+  Open Graph des 18 pages DE/EN (écrits par Claude, absents de Notion), ainsi que les
+  descriptions JSON-LD traduites.
+- ⚠️ **Rien n'a été commité ni poussé** : les 11 corrections françaises en attente sont
+  toujours là, intactes, et cette refonte s'empile dessus.
+
+### 2026-09-12 — Textes allemands : corrections du père relues et appliquées
+
+- 🗂️ **Les textes du site vivent aussi dans Notion** — page parente **GERMAN** (`https://app.notion.com/p/3c1d57d726ea81a68e59de01b21988d7`), une sous-page par page du site (00 à 10), traduite depuis un arbre FRENCH équivalent. Contient les textes visibles + les alt + les `aria-label`, **pas** les `<title>`/meta/Open Graph (eux ne sont que dans les .docx et le HTML). La page GERMAN porte aussi le **glossaire de traduction** (à tenir à jour quand un terme change : « Instrumentenbauer » et « Räumer » y sont corrigés depuis le 2026-09-12). **Notion = la source à mettre à jour en même temps que les .docx.**
+- **Où sont les textes DE** : `1. Crea/Textes/DE/` — ma traduction initiale à la racine, **`Version_corrigee/`** = les fichiers renvoyés corrigés par Christoph (à ne plus toucher, c'est la trace de ce qu'il a envoyé), **`Version_finale/`** = les 11 .docx validés, c'est **la référence** pour intégrer le jour où une version allemande du site sera codée (aucune page DE n'existe à ce jour, le site reste français).
+- **Méthode** (à réutiliser) : extraction du texte des .docx (dézip + `word/document.xml`), diff ma version / sa version, puis un **fichier .txt de retour** avec pour chaque point « Aktuell / Problem / Vorschlag / Antwort » qu'il remplit et renvoie. Marche bien : il a répondu point par point. Les fichiers de retour sont dans `Textes/DE/Rueckmeldung_*.txt`.
+- **Relecture 1** : ses corrections améliorent le texte, mais 8 vraies fautes s'y étaient glissées en tapant (accords, verbe mal placé, « gleichszeitig », un « und » sans virgule qui changeait le sens sur la page hautbois). **Toutes ses réponses sont appliquées dans `Version_finale/` et dans Notion** (16 modifications, vérifiées une à une par diff côté .docx, et par relecture des pages côté Notion).
+- **Décisions de vocabulaire** : « **Räumer** » partout pour l'alésoir (son mot de métier, pas « Reibahle » — la légende d'image qui disait encore « Reibahlen » est alignée) ; « Instrumentenbauer » et non « Instrumentenmacher » (son choix, déjà systématique dans sa version).
+- **Fait sur le site français** : deux erreurs héritées du texte source, les deux confirmées par Christoph — Bressan est né en **1663** (pas 1683) et s'appelle **Pierre Jaillard** (pas « Jalliard », il l'avait mal lu sur Wikipédia). Corrigées **partout** : `alto.html` (texte courant **et** description JSON-LD) + build, et les **trois arbres Notion** (FRENCH, ENGLISH, GERMAN). ⚠️ **Non poussé en ligne à ce stade** — à faire au prochain push.
+- 🗂️ **Notion a trois arbres de textes, pas un seul** : **FRENCH** (`3c1d57d726ea8046bac8c29fd90f6238`), **ENGLISH** (`3c1d57d726ea813ca5ceeb3703080926`) et **GERMAN** (`3c1d57d726ea81a68e59de01b21988d7`), chacun avec les 11 pages 00→10. Le français est la source, l'anglais et l'allemand en sont traduits. ⚠️ **Une correction de fait (date, nom propre, adresse, prix…) doit être reportée dans les trois arbres + le HTML**, sinon la faute survit dans la version qu'on code ensuite. Une correction de langue, elle, ne concerne que son arbre. Il existe aussi un **TYPOGRAPHY GUIDE** séparé dans le même espace.
+- ✅ **Startseite, tour 2 — clos.** Il n'avait pas répondu pour l'accueil car il a retrouvé **sa propre version allemande** du texte (« Wie ist die man auf Idee verfallen.docx »). Elle remplace le titre + les 4 paragraphes de la section « Warum » ; le reste de la page est inchangé. Deuxième feuille de retour envoyée (7 fautes de frappe déjà corrigées + 3 questions), **toutes ses réponses appliquées** dans `Version_finale/01_Startseite.docx` et dans Notion : siècle corrigé en « 17. und 18. », plus-que-parfait → prétérit, et **deux corrections refusées, remises comme il les voulait** (« unter andern » gardé, pas de virgule après « aus dem Barock »).
+- ⚠️ **Son texte allemand n'est plus une traduction du français** (contenu différent : Bach/Händel, Traversos, labium/canal/bloc en fin de section, 23% plus long). **C'est voulu, validé par Simeon — ne pas le signaler comme un écart et ne pas aligner les deux langues.** Sur les textes de son père : ne remonter que les fautes de langue et les erreurs de fait, pas les remarques de style ou d'édition.
+- ✅ **Propagation FR + EN (2026-09-12)** : en corrigeant l'allemand, Christoph a aussi **ajouté des faits** qui ne dépendaient pas de la langue et qui manquaient donc au français (en ligne !) et à l'anglais. Les **9 points** reportés dans les trois arbres Notion **et** dans le HTML français : Schlegel reprend l'atelier de son père **à 16 ans** à la mort de celui-ci · hautbois accordé **à l'origine** en 408/410 · **Brüggen** a recherché et racheté tôt les instruments baroques · les instruments de **Bressan** étaient très recherchés de ses contemporains · alto **réaccordé de 408 à 415 Hz pour correspondre au diapason baroque actuel** · le buis **se déforme avec le temps sous l'effet du jeu**, nœuds **pris dans le bois** · graves de l'alto **chaleureux** (et non « puissants ») · soprano : équilibre **entre graves et aigus** (et non « entre tous les registres ») · **Denise Rutishauser, facteur d'instruments**. ⚠️ Deux de ces points corrigent des descriptions **de ses propres instruments** : ne pas les traiter comme du style. Pensé aussi aux **descriptions JSON-LD** d'alto.html et soprano.html, qui reprenaient les mêmes formules.
+- ⏳ **À faire confirmer par Christoph** : la formulation française de « nœuds imprévisibles, **pris dans le bois** » (all. « eingewachsene Äste ») — terme de métier, il aura peut-être un mot plus juste.
+- ✅ **Plus aucune question ouverte sur les textes allemands** : les 11 fichiers de `Version_finale/` et les 11 pages Notion sont validés par Christoph.
 
 ### 2026-08-13 — Crédit de conception dans les Mentions légales
 

@@ -82,6 +82,95 @@
   letter-spacing: 0.8px;
 }
 
+/* ---- Sélecteur de langue (maquettes 2053:62 barre, 2053:63 déroulant) ---
+   Même gabarit que le sous-menu Instruments — 18px au-dessus et en dessous de
+   chaque entrée, filet orange après chacune, 20px ExtraBold — mais large de
+   82px et calé à droite du rail, sous le filet du menu.
+   Un seul balisage sert les deux mises en page : en desktop un bouton « FR »
+   dans la barre + le panneau déroulant des DEUX autres langues ; en mobile la
+   ligne des trois langues (voir plus bas). D'où les deux ordres --order-d /
+   --order-m posés sur chaque <li> : les maquettes ne listent pas les langues
+   dans le même ordre (desktop FR·DE·EN, mobile EN·DE·FR). */
+
+.site-nav {
+  position: relative; /* repère du sélecteur, calé à droite du rail */
+}
+
+.lang-switch {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0; /* toute la hauteur de la ligne de menu : le panneau part de son bas */
+  width: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lang-current {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.56px;
+  line-height: 1;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.lang-current:hover,
+.lang-current:focus-visible {
+  color: var(--color-text);
+}
+
+.lang-list {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 82px;
+  background: var(--color-bg);
+  background-clip: padding-box; /* le bord transparent fait pont de survol */
+  border-top: 16px solid transparent; /* rejoint le bas du menu sans trou */
+  text-align: center;
+}
+
+/* Survol et clavier comme le sous-menu Instruments ; .is-open (posée par
+   main.js au clic) couvre en plus le tactile, où :hover n'existe pas. */
+.lang-switch:hover .lang-list,
+.lang-switch:focus-within .lang-list,
+.lang-switch.is-open .lang-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.lang-list li {
+  order: var(--order-d); /* ordre du déroulant desktop */
+  border-bottom: var(--rule); /* filet orange après chaque langue */
+}
+
+.lang-list .is-current {
+  display: none; /* déjà affichée dans la barre, on ne la répète pas */
+}
+
+.site-nav .lang-list a {
+  display: block;
+  padding: 18px 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.site-nav .lang-list a:hover,
+.site-nav .lang-list a:focus-visible {
+  color: var(--color-text);
+}
+
 /* ---- Pied de page ------------------------------------------------------ */
 
 .site-footer {
@@ -460,6 +549,81 @@ main {
   .menu-open .site-nav li:nth-child(4) a { transition-delay: 0.80s; }
   .menu-open .site-nav li:nth-child(5) a { transition-delay: 0.90s; }
 
+  /* --- Sélecteur de langue : la ligne des 3 langues (maquette 2053:92) ----
+     Sous la dernière entrée, aligné à droite comme elles. Plus de bouton ni de
+     panneau : les trois langues sont visibles d'un coup, l'active en orange,
+     les deux autres en blanc à 60%. La nav devient une colonne flex pour que
+     la liste occupe la hauteur libre et que la ligne se pose en dessous. */
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  .site-nav > ul {
+    flex: 1;
+    height: auto; /* la hauteur vient du flex, plus du 100% */
+    min-height: 0;
+  }
+
+  .lang-switch {
+    position: static;
+    display: block;
+    width: auto;
+    margin-top: 63px; /* sous la dernière entrée (maquette) */
+    /* fondu décalé, à la suite des 5 entrées — état fermé/sortie */
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .menu-open .lang-switch {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transition-delay: 1s; /* juste après la 5e entrée (0,90s) */
+  }
+
+  .lang-current {
+    display: none; /* pas de bouton : la liste est déjà dépliée */
+  }
+
+  /* La liste redevient une simple ligne. Les trois sélecteurs reprennent ceux
+     du desktop (survol, focus, .is-open) pour les neutraliser tous ici. */
+  .lang-switch .lang-list,
+  .lang-switch:hover .lang-list,
+  .lang-switch:focus-within .lang-list,
+  .lang-switch.is-open .lang-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 45px;
+    position: static;
+    width: auto;
+    border-top: 0;
+    background: none;
+  }
+
+  .lang-list li {
+    order: var(--order-m); /* ordre de la maquette mobile : EN, DE, FR */
+    border-bottom: 0;
+  }
+  .lang-list .is-current {
+    display: block; /* en mobile les trois langues sont affichées */
+  }
+
+  .site-nav .lang-list a {
+    padding: 0;
+    font-size: 28px;
+    letter-spacing: 1.12px;
+    color: var(--color-muted);
+    /* les entrées du menu entrent en fondu une à une, pas les langues :
+       c'est .lang-switch qui porte leur apparition, en bloc */
+    opacity: 1;
+    transform: none;
+    transition: color 0.2s ease;
+  }
+  .site-nav .lang-list a[aria-current] {
+    color: var(--color-accent); /* la langue affichée */
+  }
+
   /* Fige la page derrière le menu ouvert */
   body.menu-open {
     overflow: hidden;
@@ -473,7 +637,9 @@ main {
     .mobile-logo img,
     .menu-toggle__label,
     .site-nav,
-    .site-nav a {
+    .site-nav a,
+    .lang-switch,
+    .site-nav .lang-list a {
       transition: none;
     }
   }

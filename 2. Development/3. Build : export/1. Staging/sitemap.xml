@@ -2,45 +2,126 @@
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://atelier-brandner.ch/</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/instruments.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/soprano.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/alto.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/hautbois.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/atelier.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/biographie.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://atelier-brandner.ch/contact.html</loc>
-    <lastmod>2026-07-23</lastmod>
+    <lastmod>2026-09-12</lastmod>
     <priority>0.7</priority>
   </url>
-  <!-- mentions-legales.html et protection-des-donnees.html sont volontairement
-       absentes : elles portent un <meta name="robots" content="noindex">, les
-       lister ici ne ferait qu'ajouter un avertissement dans Search Console. -->
+  <url>
+    <loc>https://atelier-brandner.ch/de/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/instruments.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/soprano.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/alto.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/hautbois.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/atelier.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/biographie.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/de/contact.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/instruments.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/soprano.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/alto.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/hautbois.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/atelier.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/biographie.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://atelier-brandner.ch/en/contact.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <!-- Fichier ENGENDRÉ par build.py — ne pas éditer à la main.
+       mentions-legales.html et protection-des-donnees.html sont
+       volontairement absentes (elles sont en noindex) : les lister
+       n'ajouterait qu'un avertissement dans la Search Console. -->
 </urlset>

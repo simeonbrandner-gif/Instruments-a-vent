@@ -1,0 +1,108 @@
+#meta
+title: Sopranblockflöte in C nach B. Reich, 415 Hz — Genf
+description: Sopranblockflöte in C nach B. Reich, gestimmt auf 415 Hz, aus Buchsbaum, Olive oder Speierling gefertigt von Christoph Brandner, Instrumentenbauer in Genf.
+css: instruments.css
+nav: instruments
+body-class: page-instrument
+robots: index
+#jsonld
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Sopranblockflöte in C nach B. Reich, 415 Hz",
+    "category": "Barocke Blockflöte",
+    "url": "https://atelier-brandner.ch/de/soprano.html",
+    "image": "https://atelier-brandner.ch/assets/img/soprano_groupe.webp",
+    "description": "Kopie der Sopranblockflöte in C von B. Reich, die in einem Museum in Brüssel aufbewahrt wird, gestimmt auf 415 Hz. Von Hand aus Buchsbaum, Olive oder Speierling gefertigt. Nahezu perfekte Intonation und Stimmung, schönes Gleichgewicht zwischen tiefen und hohen Lagen.",
+    "material": ["Buchsbaum", "Olive", "Speierling"],
+    "brand": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "manufacturer": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Stimmton", "value": "415 Hz" },
+      { "@type": "PropertyValue", "name": "Tonart", "value": "C" },
+      { "@type": "PropertyValue", "name": "Vorbild", "value": "B. Reich" },
+      { "@type": "PropertyValue", "name": "Zeit des Originals", "value": "Barock" }
+    ],
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/MadeToOrder",
+      "priceCurrency": "CHF",
+      "url": "https://atelier-brandner.ch/de/contact.html",
+      "seller": { "@id": "https://atelier-brandner.ch/#atelier" }
+    }
+  }
+  </script>
+#main
+  <main class="instrument instrument--soprano instrument--bois">
+
+    <!-- CTA « retour aux cartes » (croix 60×60, maquette 48:1173) -->
+    <a class="back-to-cards" href="instruments.html" aria-label="Zurück zu den Instrumenten">
+      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+        <path d="M2 2L30 30M30 2L2 30" />
+      </svg>
+    </a>
+
+    <div class="wood-rail-track">
+      <nav class="wood-rail" aria-label="Holzauswahl">
+        <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buchsbaum</button>
+        <button type="button" class="wood-rail-btn" data-wood="olivier">Olive</button>
+        <button type="button" class="wood-rail-btn" data-wood="cormier">Speierling</button>
+      </nav>
+    </div>
+
+    <div class="instrument-media">
+      <img class="is-active" data-wood="buis" src="{{ROOT}}assets/img/soprano_415_reich_buis.webp" width="1000" height="3777" alt="Sopranblockflöte in C aus Buchsbaum, auf einem Steinsockel">
+      <img data-wood="olivier" src="{{ROOT}}assets/img/soprano_415_reich_olivier.webp" width="1000" height="3777" alt="Sopranblockflöte in C aus Olivenholz, auf einem Steinsockel">
+      <img data-wood="cormier" src="{{ROOT}}assets/img/soprano_415_reich_cormier.webp" width="1000" height="3777" alt="Sopranblockflöte in C aus Speierling, auf einem Steinsockel">
+    </div>
+
+    <div class="instrument-panel">
+      <h1 class="instrument-title">Sopran in C <br>nach B. Reich <br>in 415&nbsp;Hz</h1>
+
+      <div class="instrument-info">
+
+        <div class="instrument-intro">
+          <p>Diese Sopranblockflöte befindet sich in einem Museum in Brüssel, nachdem sie einige Zeit verschwunden war, vermutlich infolge eines Diebstahls. Das Original wurde aus Buchsbaum gefertigt.</p>
+          <p>Sie zeichnet sich durch eine nahezu perfekte Intonation und Stimmung aus, ebenso durch ein ausgezeichnetes Gleichgewicht zwischen den tiefen und hohen Lagen.</p>
+        </div>
+
+        <!-- Barre des bois de la variante mobile simplifiée (invisible ailleurs) -->
+        <nav class="wood-bar" aria-label="Choix du bois">
+          <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Buchsbaum</button>
+          <button type="button" class="wood-rail-btn" data-wood="olivier">Olive</button>
+          <button type="button" class="wood-rail-btn" data-wood="cormier">Speierling</button>
+        </nav>
+
+        <section class="wood-acc is-open" data-wood="buis">
+          <h2><button type="button" class="acc-head" aria-expanded="true">Buchsbaum</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Die Ausführung in Buchsbaum, die ich baue, ist dank der Eigenschaften dieses Holzes kraftvoll und direkt in der Ansprache.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="olivier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Olive</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Ich baue diese Sopranblockflöte ebenfalls in Olivenholz, was ein optisch sehr reizvolles Instrument mit warmem und ausgewogenem Klang ergibt. Vielleicht besser geeignet für Kammermusik oder für das Spiel in kleinen Besetzungen.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="cormier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Speierling</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>Die Ausführung in Speierling besitzt in etwa dieselben klanglichen Qualitäten wie das Instrument aus Olivenholz: eine gewisse Zurückhaltung und einen warmen Klang.</p>
+            </div>
+          </div>
+        </section>
+
+        <p class="instrument-price">Preis auf Anfrage</p>
+      </div>
+    </div>
+
+  </main>

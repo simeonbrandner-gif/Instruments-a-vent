@@ -8,6 +8,9 @@
   --color-bg: #000000;
   --color-text: #fafafa;
   --color-accent: #fe990a;
+  /* Blanc à 60% — langues inactives du sélecteur mobile (maquette 2053:92).
+     Seul gris du site : partout ailleurs le texte est #fafafa ou orange. */
+  --color-muted: rgba(255, 255, 255, 0.6);
 
   /* Typographie */
   --font-sans: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;

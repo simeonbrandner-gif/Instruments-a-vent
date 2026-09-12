@@ -3,10 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+  /* Détection de la langue du navigateur — accueil français seulement.
+     Ne se déclenche qu'à la PREMIÈRE visite : dès qu'un visiteur a vu une page
+     (ou cliqué une langue dans le menu), son choix est mémorisé et cette
+     redirection ne le contrarie plus jamais. Les liens profonds partagés ne
+     sont jamais redirigés : seul « / » l'est. Inline dans le <head> pour agir
+     avant le premier affichage. */
+  (function () {
+    try {
+      var saved = localStorage.getItem("lang");
+      if (saved) {
+        if (saved !== "fr") location.replace(saved + "/");
+        return;
+      }
+      /* venu d'une autre page du site : c'est une navigation, pas une arrivée */
+      if (document.referrer && document.referrer.indexOf(location.origin) === 0) return;
+      var list = navigator.languages || [navigator.language || ""];
+      for (var i = 0; i < list.length; i++) {
+        var code = String(list[i]).slice(0, 2).toLowerCase();
+        if (code === "fr") return;
+        if (code === "de" || code === "en") { location.replace(code + "/"); return; }
+      }
+    } catch (e) {}
+  })();
+  </script>
   <title>Atelier Brandner — Flûtes à bec et hautbois baroques, Genève</title>
   <meta name="description" content="Atelier Brandner : flûtes à bec soprano et alto, hautbois baroques fabriqués à la main par Christoph Brandner, facteur d’instruments à vent baroques à Genève.">
   <meta name="robots" content="max-image-preview:large">
   <link rel="canonical" href="https://atelier-brandner.ch/">
+  <link rel="alternate" hreflang="fr" href="https://atelier-brandner.ch/">
+  <link rel="alternate" hreflang="de" href="https://atelier-brandner.ch/de/">
+  <link rel="alternate" hreflang="en" href="https://atelier-brandner.ch/en/">
+  <link rel="alternate" hreflang="x-default" href="https://atelier-brandner.ch/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Atelier Brandner — Christoph Brandner">
   <meta property="og:locale" content="fr_CH">
@@ -94,6 +123,14 @@
           <li><a href="biographie.html">Biographie</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
+        <div class="lang-switch">
+          <button type="button" class="lang-current" aria-expanded="false" aria-controls="lang-list" aria-label="Choisir la langue">FR</button>
+          <ul class="lang-list" id="lang-list" aria-label="Langue">
+            <li data-lang="en" style="--order-d:2;--order-m:0"><a href="en/index.html" lang="en" hreflang="en">EN</a></li>
+            <li data-lang="de" style="--order-d:1;--order-m:1"><a href="de/index.html" lang="de" hreflang="de">DE</a></li>
+            <li data-lang="fr" class="is-current" style="--order-d:0;--order-m:2"><a href="index.html" lang="fr" hreflang="fr" aria-current="true">FR</a></li>
+          </ul>
+        </div>
       </nav>
     </div>
   </header>

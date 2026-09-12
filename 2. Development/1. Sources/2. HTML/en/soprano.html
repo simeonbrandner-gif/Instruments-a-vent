@@ -1,0 +1,108 @@
+#meta
+title: Soprano recorder in C after B. Reich, 415 Hz — Geneva
+description: Soprano recorder in C after B. Reich, tuned at 415 Hz, made in boxwood, olive or service tree by Christoph Brandner, maker of baroque instruments in Geneva.
+css: instruments.css
+nav: instruments
+body-class: page-instrument
+robots: index
+#jsonld
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Soprano recorder in C after B. Reich, 415 Hz",
+    "category": "Baroque recorder",
+    "url": "https://atelier-brandner.ch/en/soprano.html",
+    "image": "https://atelier-brandner.ch/assets/img/soprano_groupe.webp",
+    "description": "Copy of the soprano recorder in C by B. Reich, preserved in a museum in Brussels, tuned at 415 Hz. Handmade in boxwood, olive or service tree. Almost perfect intonation and tuning, fine balance between the low and high registers.",
+    "material": ["Boxwood", "Olive", "Service tree"],
+    "brand": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "manufacturer": { "@id": "https://atelier-brandner.ch/#atelier" },
+    "additionalProperty": [
+      { "@type": "PropertyValue", "name": "Pitch", "value": "415 Hz" },
+      { "@type": "PropertyValue", "name": "Key", "value": "C" },
+      { "@type": "PropertyValue", "name": "Model after", "value": "B. Reich" },
+      { "@type": "PropertyValue", "name": "Date of the original", "value": "Baroque" }
+    ],
+    "offers": {
+      "@type": "Offer",
+      "availability": "https://schema.org/MadeToOrder",
+      "priceCurrency": "CHF",
+      "url": "https://atelier-brandner.ch/en/contact.html",
+      "seller": { "@id": "https://atelier-brandner.ch/#atelier" }
+    }
+  }
+  </script>
+#main
+  <main class="instrument instrument--soprano instrument--bois">
+
+    <!-- CTA « retour aux cartes » (croix 60×60, maquette 48:1173) -->
+    <a class="back-to-cards" href="instruments.html" aria-label="Back to the instruments">
+      <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false">
+        <path d="M2 2L30 30M30 2L2 30" />
+      </svg>
+    </a>
+
+    <div class="wood-rail-track">
+      <nav class="wood-rail" aria-label="Choice of wood">
+        <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Boxwood</button>
+        <button type="button" class="wood-rail-btn" data-wood="olivier">Olive</button>
+        <button type="button" class="wood-rail-btn" data-wood="cormier">Service tree</button>
+      </nav>
+    </div>
+
+    <div class="instrument-media">
+      <img class="is-active" data-wood="buis" src="{{ROOT}}assets/img/soprano_415_reich_buis.webp" width="1000" height="3777" alt="Soprano recorder in C in boxwood, resting on a stone plinth">
+      <img data-wood="olivier" src="{{ROOT}}assets/img/soprano_415_reich_olivier.webp" width="1000" height="3777" alt="Soprano recorder in C in olive, resting on a stone plinth">
+      <img data-wood="cormier" src="{{ROOT}}assets/img/soprano_415_reich_cormier.webp" width="1000" height="3777" alt="Soprano recorder in C in service tree, resting on a stone plinth">
+    </div>
+
+    <div class="instrument-panel">
+      <h1 class="instrument-title">Soprano in C <br>after B. Reich <br>at 415&nbsp;Hz</h1>
+
+      <div class="instrument-info">
+
+        <div class="instrument-intro">
+          <p>This instrument is now in a museum in Brussels, having disappeared for some time, probably following a theft. The original was made in boxwood.</p>
+          <p>It stands out for its almost perfect intonation and tuning, and for an excellent balance between the low and high registers.</p>
+        </div>
+
+        <!-- Barre des bois de la variante mobile simplifiée (invisible ailleurs) -->
+        <nav class="wood-bar" aria-label="Choix du bois">
+          <button type="button" class="wood-rail-btn" data-wood="buis" aria-current="true">Boxwood</button>
+          <button type="button" class="wood-rail-btn" data-wood="olivier">Olive</button>
+          <button type="button" class="wood-rail-btn" data-wood="cormier">Service tree</button>
+        </nav>
+
+        <section class="wood-acc is-open" data-wood="buis">
+          <h2><button type="button" class="acc-head" aria-expanded="true">Boxwood</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>The boxwood version I make is, thanks to the qualities of that wood, powerful and direct in its attack.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="olivier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Olive</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>I also make this soprano recorder in olive, which gives a visually very charming instrument with a warm, balanced sound. Perhaps better suited to chamber music or small ensembles.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="wood-acc" data-wood="cormier">
+          <h2><button type="button" class="acc-head" aria-expanded="false">Service tree</button></h2>
+          <div class="wood-body">
+            <div class="wood-body-inner">
+              <p>The service tree version has much the same tonal qualities as the olive instrument: a certain restraint and a warm sound.</p>
+            </div>
+          </div>
+        </section>
+
+        <p class="instrument-price">Price on request</p>
+      </div>
+    </div>
+
+  </main>
