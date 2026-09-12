@@ -409,8 +409,15 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
 - ⏳ **À faire relire par Simeon / Christoph** : les `<title>`, meta descriptions et
   Open Graph des 18 pages DE/EN (écrits par Claude, absents de Notion), ainsi que les
   descriptions JSON-LD traduites.
-- ⚠️ **Rien n'a été commité ni poussé** : les 11 corrections françaises en attente sont
-  toujours là, intactes, et cette refonte s'empile dessus.
+- 🚀 **Commité, poussé, en ligne** : commit **`9bd95a7`** (89 fichiers, +7161/−1906),
+  déploiement GitHub Pages réussi en 16 s. Vérifié en direct : `/`, `/de/`, `/en/`,
+  `/de/alto.html` et `sitemap.xml` répondent tous 200 avec le bon `<title>`.
+  Les 11 corrections françaises qui attendaient depuis le matin sont parties dans
+  **ce même commit** — le site en ligne n'a plus de retard sur les Sources.
+- 💾 **Snapshot `2. Versioning/2026-09-12/`** (5,9 Mo, symlinks préservés). Son LISEZMOI
+  prévient que c'est **le premier snapshot de la nouvelle arborescence** : chez les
+  précédents (2026-07-20 → 07-25), `2. HTML/` contient 10 pages autonomes ; ici il ne
+  contient plus que des gabarits. Ne pas confondre les deux lors d'un retour arrière.
 
 ### 2026-09-12 — Textes allemands : corrections du père relues et appliquées
 
