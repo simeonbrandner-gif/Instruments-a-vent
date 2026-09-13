@@ -371,11 +371,28 @@ Les bases on-page sont déjà bonnes (titles/descriptions uniques, un seul h1 pa
     - Home « Atelier Brandner — Flûtes à bec et hautbois baroques, Genève » (on garde « Atelier Brandner » en tête — décision du 2026-07-23 sur la requête de marque — et on supprime la répétition « Christoph Brandner », déjà présente dans les autres titles) ; atelier « Facture de flûtes à bec et hautbois baroques à Genève » ; instruments « … 415 Hz — Atelier Brandner » ; les 3 pages instrument « … 415 Hz — Genève ».
     - Les pages instrument perdent « buis, olivier ou cormier » du title : ces mots restent dans la description, le corps de page et le JSON-LD `material`.
     - ⚠️ **Les H1 visibles ne sont pas touchés**, seulement les balises `<title>`/`og:title`.
-    - **Reste ouvert** : 6 descriptions dépassent 155 signes (instruments 202, alto 180, soprano 179) — elles seront tronquées, mais l'enjeu est faible tant que Google les réécrit.
+    - **Reste ouvert** : 6 descriptions dépassent 155 signes — **les 6 françaises** (instruments 202, alto 180, soprano 179, index 158, atelier 157, hautbois 157). Elles seront tronquées, mais l'enjeu est faible tant que Google les réécrit (il affiche le pied de page, cf. plus haut). Les 20 autres pages (DE, EN, légales) sont dans les clous depuis le 2026-09-13.
 - **Description réécrite par Google (constat du 2026-08-11)** : sous le titre, Google n'affiche **pas** la meta description mais le **pied de page** (adresse, e-mail, téléphone). Aucune balise ne force la description — c'est le choix de Google, fréquent, et plutôt bienvenu pour un artisan local. Le seul vrai levier serait un **court paragraphe d'introduction visible en haut de la Home** (aujourd'hui : hero en image + h1, puis la section « Pourquoi fabriquer… », historique et non descriptive de l'activité) — changement **visible**, à décider avec Christoph.
 - **Mots-clés absents du contenu visible, en attente d'infos de Christoph** : « musique ancienne » (0 occurrence sur le site), « diapason » (seulement sur hautbois.html), « sur mesure / commande / délai », « restauration / réparation » (fait-il de la restauration ?). Ce sont des ajouts de **texte**, pas de balises — c'est le vrai levier restant côté code.
 
 ## Journal des sessions
+
+### 2026-09-13 — Deux finitions rapides après la mise en ligne trilingue
+
+- ✂️ **Les 6 meta descriptions DE/EN qui dépassaient 155 signes sont resserrées**
+  (de/hautbois 167→135, de/instruments 159→149, de/atelier 157→152, en/alto 157→145,
+  de/alto 156→148, en/soprano 156→144). C'étaient **mes** textes, pas ceux de Christoph,
+  et ils sont invisibles sur la page : aucune prose touchée. Contrôle sur les 30 pages :
+  **0 title > 60 signes**, et les seules descriptions encore trop longues sont les
+  **6 françaises**, dont la longueur avait été jugée sans enjeu le 2026-08-11.
+- 🧹 **Les symlinks `css`, `js`, `assets` de `2. HTML/` sont supprimés.** Ils servaient à
+  ouvrir les pages sources directement dans un navigateur — ce qui n'a plus de sens
+  depuis le passage aux gabarits (une source n'est plus une page). Vérifié : ni
+  `build.py` ni `build.sh` ne s'en servaient (le build copie `3. CSS/`, `4. JS/` et
+  `1. assets/` en direct). Les 30 pages revalidées après coup, aucun lien mort.
+- Les autres points ouverts ne se règlent pas au clavier : relecture des titles/meta
+  DE/EN par Simeon, vidéo de l'atelier, vitesse du glissement mobile de l'Atelier
+  (jugement de Simeon), et le terme « nœuds imprévisibles » (jugement de Christoph).
 
 ### 2026-09-12 (2) — Le site passe en trois langues + refonte du build en partials
 
